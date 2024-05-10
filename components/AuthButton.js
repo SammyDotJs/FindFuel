@@ -2,13 +2,14 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { theme } from '../infrastructure/theme'
 import { Button } from 'react-native-elements'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function AuthButton(props) {
     return (
         <Button title={props.title}
             buttonStyle={{
                 backgroundColor: props.backgroundColor,
-                width: 100 + "%",
+                width: wp(90),
                 borderRadius: 20,
                 color: props.color,
                 borderWidth: props.borderWidth,
@@ -22,7 +23,7 @@ export default function AuthButton(props) {
             titleStyle={{
                 color: props.color,
                 fontFamily: theme.fonts.bold,
-                fontSize: 20,
+                fontSize: hp(2),
                 fontWeight: '600'
             }} onPress={props.handleLogin} />
     )

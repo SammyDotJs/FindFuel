@@ -1,6 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { Image } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import AppNavigation from "./navigation/appNavigation";
 import styled from "styled-components";
 import {
@@ -9,6 +7,7 @@ import {
   Poppins_600SemiBold,
   Poppins_700Bold
 } from "@expo-google-fonts/poppins";
+import { theme } from "./infrastructure/theme";
 
 const Loading = styled(View)`
   flex: 1;
@@ -25,19 +24,8 @@ export default function App() {
 
   if (!poppinsLoaded) {
     return (
-      <Loading>
-        <Text>Loading...</Text>
-      </Loading>
+      <ActivityIndicator size="small" color={theme.colors.bg.primary}/>
     );
   }
   return <AppNavigation />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#145858",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

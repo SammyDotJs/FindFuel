@@ -5,6 +5,8 @@ import Onboarding from "react-native-onboarding-swiper";
 import { Button } from "react-native-elements";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -97,12 +99,12 @@ export default function OnboardingScreen() {
         subTitleStyles={{
           fontFamily: theme.fonts.heading,
           color: theme.colors.text.primary,
-          fontSize: 35,
+          fontSize: hp(4),
           fontWeight: "600",
           lineHeight: 60,
           paddingHorizontal: 20,
           marginLeft: 0,
-          width: width,
+          width: wp(100),
           marginTop: 20,
         }}
         titleStyles={{
@@ -187,32 +189,32 @@ const styles = StyleSheet.create({
     color: theme.colors.text.primary,
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.text.primary,
-    fontSize: 16,
-    marginLeft: 10,
-    marginBottom: 20,
+    fontSize: hp(2),
+    marginLeft: wp(3),
+    marginBottom: hp(2),
   },
   nextStyle: {},
   titleStyles: {
     color: theme.colors.text.primary,
-    fontSize: 35,
+    fontSize: hp(3),
     fontWeight: "600",
-    lineHeight: 60,
+    lineHeight: hp(60),
     paddingLeft: 20,
     marginLeft: 0,
-    width: width,
+    width: wp(100),
     marginTop: 20,
   },
   onboardContainer: {
     justifyContent: "center",
     alignItems: "flex-end",
-    width: width * 0.9,
-    height: height * 0.5,
+    width: wp(90),
+    height: hp(50),
     marginLeft: "auto",
     marginTop: 10,
     paddingBottom: 0,
   },
   onboradImage: {
-    width: width * 0.85,
+    width: wp(80),
     resizeMode: "contain",
     padding: 0,
   },
