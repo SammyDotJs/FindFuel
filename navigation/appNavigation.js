@@ -4,10 +4,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
-import HomeScreen from "../screens/HomeScreen";
+import MyTabs from "../screens/MyTabs";
 import AuthScreen from "../screens/AuthScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import SignUpScreen from "../screens/Auth/SignUpScreen";
+import OtpScreen from "../screens/Auth/OtpScreen";
+import { theme } from "../infrastructure/theme";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,22 +20,39 @@ const ScreenOptions = {
 const AppNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Onboarding">
+      <Stack.Navigator initialRouteName="Tabs">
         <Stack.Screen
-          name="Home"
+          name="Tabs"
           options={ScreenOptions}
-          component={HomeScreen}
+          component={MyTabs}
         />
         <Stack.Screen
           name="Onboarding"
           options={ScreenOptions}
           component={OnboardingScreen}
         />
-        <Stack.Screen name="Auth" options={ScreenOptions} component={AuthScreen} />
-        <Stack.Screen name="Login" options={ScreenOptions} component={LoginScreen} />
-        <Stack.Screen name="SignUp" options={ScreenOptions} component={SignUpScreen} />
+        <Stack.Screen
+          name="Auth"
+          options={ScreenOptions}
+          component={AuthScreen}
+        />
+        <Stack.Screen
+          name="Login"
+          options={ScreenOptions}
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          name="SignUp"
+          options={ScreenOptions}
+          component={SignUpScreen}
+        />
+        <Stack.Screen
+          name="otp"
+          options={ScreenOptions}
+          component={OtpScreen}
+        />
       </Stack.Navigator>
-      <ExpoStatusBar style="auto" />
+      <ExpoStatusBar style="auto" backgroundColor={theme.colors.bg.white} />
     </NavigationContainer>
   );
 };

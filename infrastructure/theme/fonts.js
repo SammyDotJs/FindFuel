@@ -3,6 +3,7 @@ export const fonts = {
   heading: "Poppins_600SemiBold",
   monospace: "Oswald_400Regular",
   bold: "Poppins_700Bold",
+  medium: "Poppins_500Medium",
 };
 
 export const fontWeights = {

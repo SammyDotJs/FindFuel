@@ -3,6 +3,7 @@ export const colors = {
     primary: "#145858",
     secondary: "#F7B318",
     tertiary: "#C8E0CA",
+    inactive: "#939393",
   },
   ui: {
     primary: "#145858",
@@ -12,14 +13,19 @@ export const colors = {
     white: "#FFFFFF",
     error: "#D0421B",
     success: "#138000",
+    inactive: "#939393",
+    black: "#000000",
   },
   bg: {
     primary: "#145858",
-    secondary:"#F7B318",
-    tertiary:"#C8E0CA",
+    secondary: "#F7B318",
+    tertiary: "#C8E0CA",
     white: "#FFFFFF",
     whiteFaded: "#F1F1F1",
-    transparent:""
+    transparent: "",
+    inactive: "#939393",
+    black: "#000000",
+    error: "#D0421B",
   },
   text: {
     primary: "#145858",
@@ -27,6 +33,8 @@ export const colors = {
     tertiary: "#C8E0CA",
     foundation: "#759696",
     white: "#FFFFFF",
-    black:"#000000"
+    black: "#000000",
+    inactive: "#939393",
+    error: "#D0421B",
   },
 };

@@ -3,14 +3,16 @@ import {
   Text,
   Image,
   TextInput,
-  StyleSheet,
+  loginStylesheet,
   Dimensions,
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  Alert,
+  StyleSheet,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { theme } from "../../infrastructure/theme";
 import AuthButton from "../../components/AuthButton";
@@ -21,6 +23,13 @@ import {
 } from "react-native-responsive-screen";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SafeArea } from "../../components/utils/Safe-area.component";
+import {
+  lowercaseRegex,
+  numberRegex,
+  symbolRegex,
+  uppercaseRegex,
+} from "../../components/InputAuthentications";
+import { loginStyles } from "./LoginScreenStyles";
 
 const AuthInput = styled(View)`
   position: relative;
@@ -35,15 +44,6 @@ const LoginStyle = styled(SafeAreaView)`
   padding: 0 ${wp(2)}px;
   align-items: start;
 `;
-
-// const AuthTextInput = styled(TextInput)`
-//         width: wp(90);
-//         height: hp(3.5);
-//         border-bottom-width: ${bottomBarFocus};
-//         border-bottom-color: ${theme.colors.text.foundation};
-//         font-size: hp(2);
-//         font-family: ${theme.fonts.bold};
-// `
 
 const googleIconJsx = () => {
   return (
@@ -62,73 +62,132 @@ const googleIconJsx = () => {
 };
 
 export default function LoginScreen(props) {
-  const [bottomBarFocus, setBottomBarFocus] = useState(1);
-
   const navigation = useNavigation();
-  const [text, setText] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const [conditionsMet, setConditionsMet] = useState(false);
+
+  const hasUpper = uppercaseRegex.test(password);
+  const hasLowercase = lowercaseRegex.test(password);
+  const hasNumber = numberRegex.test(password);
+  const hasSymbol = symbolRegex.test(password);
+  const lengthValid = password.length < 8;
+  const emailIsValid = email.includes("@");
 
   const handleLogin = () => {
-    console.log("login");
+    //backend config
   };
   const handleSignup = () => {
     navigation.navigate("SignUp");
   };
-  const customOnFocus = () => {
-    props?.onFocus;
-    setBottomBarFocus(3);
+  const handleOtp = () => {
+    !conditionsMet && Alert.alert("Please fill in your details")
+    conditionsMet && navigation.navigate("otp");
   };
-  const customOnBlur = () => {
+
+  const customEmailOnBlur = () => {
     props?.onBlur;
-    setBottomBarFocus(1);
+    setEmailError("");
   };
+
+
+  const customPasswordOnBlur = () => {
+    setPasswordError("");
+  };
+
+  const emailChangeHandler = (mail) => {
+    setEmail(mail);
+  };
+  const passwordChangeHandler = (pass) => {
+    setPassword(pass);
+  }
+  useEffect(() => {
+    // Check email validity
+    if (email.length === 0) {
+      setEmailError("");
+    } else if (!emailIsValid) {
+      setEmailError("email must include '@' symbol");
+    } else {
+      setEmailError("");
+    }
+  
+    // Check password validity
+    if (password.length === 0) {
+      setPasswordError("");
+    } else if (lengthValid) {
+      setPasswordError("password must be at least 8 characters long");
+    } else if (!hasUpper) {
+      setPasswordError("password must include at least one uppercase letter");
+    } else if (!hasLowercase) {
+      setPasswordError("password must include at least one lowercase letter");
+    } else if (!hasNumber) {
+      setPasswordError("password must contain at least one number");
+    } else if (!hasSymbol) {
+      setPasswordError("password must contain at least one symbol");
+    } else {
+      setPasswordError("");
+    }
+  
+    // Update conditionsMet based on errors
+    setConditionsMet(emailIsValid && !lengthValid && hasUpper && hasLowercase && hasNumber && hasSymbol);
+  
+  }, [password, email]);
+  
   return (
     <KeyboardAvoidingView
       enabled
       behavior={Platform.OS === "ios" ? "padding" : ""}
-      style={styles.container}
+      style={loginStyles.container}
     >
       <ScrollView>
         <LoginStyle>
-          <View style={styles.intro}>
-            <Text style={styles.welcome}>Welcome!</Text>
-            <Text style={styles.subWelcome}>Log In to continue</Text>
+          <View style={loginStyles.intro}>
+            <Text style={loginStyles.welcome}>Welcome!</Text>
+            <Text style={loginStyles.subWelcome}>Log In to continue</Text>
           </View>
-          <View style={styles.onboardContainer}>
+          <View style={loginStyles.onboardContainer}>
             <Image
-              style={styles.onboradImage}
+              style={loginStyles.onboradImage}
               source={require("../../assets/onboard-5.png")}
             />
           </View>
-          <View style={styles.form}>
+          <View style={loginStyles.form}>
             <AuthInput>
               <View>
-                <Text style={styles.authTextLabel}>Email</Text>
+                <Text style={loginStyles.authTextLabel}>Email</Text>
                 <TextInput
-                  onFocus={customOnFocus}
-                  onBlur={customOnBlur}
-                  style={styles.authTextInput}
-                  // style={{width: wp(90),
-                  //     height: hp(3.5),
-                  //     borderBottomWidth: bottomBarFocus,
-                  //     borderBottomColor: theme.colors.text.foundation,
-                  //     fontSize: hp(2),
-                  //     fontFamily: theme.fonts.bold,
-                  // }}
-                  onChangeText={(newText) => setText(newText)}
-                  defaultValue={text}
+                  onBlur={customEmailOnBlur}
+                  style={loginStyles.authTextInput}
+                  onChangeText={(mail) => emailChangeHandler(mail)}
+                  defaultValue={email}
                 />
               </View>
+              <Text
+                style={{
+                  textAlign: "left",
+                  width: wp(90),
+                  color: theme.colors.text.error,
+                  fontFamily: theme.fonts.heading,
+                  paddingTop: hp(1),
+                  fontSize: hp(1.4),
+                }}
+              >
+                {emailError}
+              </Text>
             </AuthInput>
-            <AuthInput style={{ marginTop: hp(2) }}>
+            <AuthInput style={{ marginTop: hp(1) }}>
               <View>
-                <Text style={styles.authTextLabel}>Password</Text>
-                <View style={styles.authPassword}>
+                <Text style={loginStyles.authTextLabel}>Password</Text>
+                <View style={loginStyles.authPassword}>
                   <TextInput
+                    onBlur={customPasswordOnBlur}
                     secureTextEntry={showPassword}
-                    style={styles.authTextInputP}
-                    onChangeText={(newPassword) => setPassword(newPassword)}
+                    style={loginStyles.authTextInputP}
+                    onChangeText={(pass) => passwordChangeHandler(pass)}
                     defaultValue={password}
                   />
                   <TouchableOpacity
@@ -147,36 +206,49 @@ export default function LoginScreen(props) {
                   </TouchableOpacity>
                 </View>
               </View>
+              <Text
+                style={{
+                  textAlign: "left",
+                  width: wp(90),
+                  color: theme.colors.text.error,
+                  fontFamily: theme.fonts.heading,
+                  // borderWidth:1,
+                  paddingTop: hp(1),
+                  fontSize: hp(1.4),
+                }}
+              >
+                {passwordError}
+              </Text>
             </AuthInput>
           </View>
-          <View style={styles.forgotPassword}>
-            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+          <View style={loginStyles.forgotPassword}>
+            <Text style={loginStyles.forgotPasswordText}>Forgot Password?</Text>
           </View>
-          <View style={styles.btns}>
+          <View style={loginStyles.btns}>
             {/* login handler */}
-            <View style={styles.mt}>
+            <View style={loginStyles.mt}>
               <AuthButton
-                handleLogin={handleLogin}
+                handleAction={handleOtp}
                 title="Login"
                 backgroundColor={theme.colors.bg.primary}
                 color={theme.colors.text.white}
               />
             </View>
-            <View style={styles.or}>
+            <View style={loginStyles.or}>
               <Image
-                style={styles.dashLine}
+                style={loginStyles.dashLine}
                 source={require("../../assets/dashedLine.png")}
               />
-              <Text style={styles.ortext}>OR</Text>
+              <Text style={loginStyles.ortext}>OR</Text>
               <Image
-                style={styles.dashLine}
+                style={loginStyles.dashLine}
                 source={require("../../assets/dashedLine.png")}
               />
             </View>
             {/* login with google handler */}
-            <View style={styles.mt}>
+            <View style={loginStyles.mt}>
               <AuthButton
-                handleLogin={handleLogin}
+                handleAction={handleLogin}
                 title={googleIconJsx}
                 backgroundColor={theme.colors.bg.white}
                 color={theme.colors.text.primary}
@@ -185,10 +257,10 @@ export default function LoginScreen(props) {
               />
             </View>
           </View>
-          <View style={styles.accountQuestion}>
-            <Text style={styles.signup}>
+          <View style={loginStyles.accountQuestion}>
+            <Text style={loginStyles.signup}>
               Don't have an account?
-              <Text onPress={handleSignup} style={styles.signupLink}>
+              <Text onPress={handleSignup} style={loginStyles.signupLink}>
                 SIGN UP
               </Text>
             </Text>
@@ -198,120 +270,3 @@ export default function LoginScreen(props) {
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  authTextLabel: {
-    color: theme.colors.text.foundation,
-    fontSize: hp(2),
-    fontFamily: theme.fonts.heading,
-    padding: 0,
-    textAlign: "left",
-    marginTop: hp(2),
-  },
-  authTextInput: {
-    width: wp(90),
-    height: hp(3.5),
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.text.foundation,
-    fontSize: hp(2),
-    fontFamily: theme.fonts.bold,
-  },
-  authTextInputP: {
-    width: wp(78),
-    height: hp(3.5),
-    fontSize: hp(2),
-    fontFamily: theme.fonts.bold,
-  },
-  authPassword: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.text.foundation,
-  },
-  onboardContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: wp(100),
-    height: hp(35),
-    marginLeft: "auto",
-    paddingBottom: 0,
-  },
-  onboradImage: {
-    width: wp(50),
-    resizeMode: "contain",
-    padding: 0,
-  },
-  forgotPassword: {
-    justifyContent: "center",
-    alignItems: "center",
-    color: theme.colors.text.secondary,
-    fontSize: hp(1.6),
-    // flex: 1
-  },
-  accountQuestion: {
-    justifyContent: "center",
-    alignItems: "center",
-    color: theme.colors.text.secondary,
-    fontSize: hp(1.6),
-    // flex: 1
-  },
-  forgotPasswordText: {
-    marginTop: hp(3),
-    color: theme.colors.text.secondary,
-    fontSize: hp(1.6),
-    fontFamily: theme.fonts.body,
-  },
-  dashLine: {
-    width: 100,
-    margin: hp(1),
-  },
-  or: {
-    marginTop: hp(1),
-    width: wp(100),
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  ortext: {
-    color: theme.colors.text.primary,
-    fontSize: hp(2),
-    fontWeight: "700",
-    fontFamily: theme.fonts.body,
-  },
-  btns: {
-    // flex: 2
-  },
-  mt: {
-    marginTop: hp(2),
-    justifyContent: "center",
-    alignItems: "center",
-    // flex: 1
-  },
-  signup: {
-    marginTop: hp(3),
-    color: theme.colors.text.primary,
-    fontSize: hp(1.6),
-    fontFamily: theme.fonts.body,
-  },
-  signupLink: {
-    color: theme.colors.text.secondary,
-    fontWeight: "600",
-  },
-  welcome: {
-    color: theme.colors.text.primary,
-    fontSize: hp(3.2),
-    fontFamily: theme.fonts.bold,
-  },
-  subWelcome: {
-    color: theme.colors.text.foundation,
-    fontSize: hp(2),
-    fontFamily: theme.fonts.body,
-  },
-  intro: {
-    // marginTop: hp(4),
-    // flex: 1
-  },
-});
