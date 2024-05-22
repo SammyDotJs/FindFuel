@@ -28,6 +28,7 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "googleMapsApiKey": "AIzaSyDZnqPKvw0Me0Q8Rg_wtQ6ExIfjggD9Mdo"
   }
 }

@@ -21,8 +21,9 @@ import { SafeArea } from "../components/utils/Safe-area.component";
 const { width, height } = Dimensions.get("window");
 
 const AuthView = styled(View)`
-  background-color: ${theme.colors.bg.primary};
   flex: 1;
+
+  background-color: ${theme.colors.bg.primary};
   padding: 20px;
 `;
 const LogoView = styled(View)`

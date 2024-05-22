@@ -9,7 +9,6 @@ import AuthScreen from "../screens/AuthScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import SignUpScreen from "../screens/Auth/SignUpScreen";
 import OtpScreen from "../screens/Auth/OtpScreen";
-import { theme } from "../infrastructure/theme";
 
 const Stack = createNativeStackNavigator();
 
@@ -52,7 +51,7 @@ const AppNavigation = () => {
           component={OtpScreen}
         />
       </Stack.Navigator>
-      <ExpoStatusBar style="auto" backgroundColor={theme.colors.bg.white} />
+      <ExpoStatusBar style="auto"/>
     </NavigationContainer>
   );
 };

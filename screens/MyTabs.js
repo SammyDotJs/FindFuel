@@ -4,7 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import { SafeArea } from "../components/utils/Safe-area.component";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./Tabs/HomeScreen";
-import MapScreen from "./Tabs/MapScreen";
+import MapScreen from "./Tabs/Map/MapScreen";
 import HistoryScreen from "./Tabs/HistoryScreen";
 import ProfileScreen from "./Tabs/ProfileScreen";
 import { SafeAreaView } from "react-native-safe-area-context";

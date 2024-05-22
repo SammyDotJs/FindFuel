@@ -1,0 +1,948 @@
+{
+    "html_attributions": [],
+    "next_page_token": "AUGGfZm9MIBviMTwWfcmOGh4jUSN_tsd6mcLA1m3IQwOwkevYn32hnGFI41sN7kk0ME-F2nTnIbQbujIA7qhGULwiymXrm47xeY9VIAT5_9nxObZ0PHUEHa7njNNibBMFO-VfpJOUCJwblZ_PBC0yGdy48jiW3ETgK7HrwvH52Nmcn2X1TpUiGL3xlA85jciLYIzchoVvTtnjdKj8gDIl6uEtf_jMaum0Gu6retPE7XhbVJy3eFCtePCeoEawNCUqJXuX7HsrJslTC1ruKwOdSy5P7XKUTaeV9xxgJeRjORU6uXaIVmeJ9LpBmqHlzej6smukv9l4kO2jQDPuNwoi8llZzjw7R1F4JxrRQob1x_GoVaKXibPjBQjwI2ZkmR8hYJ8Rprm9sYKlLHJnEuUtFk5O4cCkW_SHk9kglPeieFf5d678wa4fO2LMqC0U6eR",
+    "results": [
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.1593348,
+                    "lng": 7.311673000000002
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.160565730291502,
+                        "lng": 7.313174530291501
+                    },
+                    "southwest": {
+                        "lat": 9.157867769708497,
+                        "lng": 7.310476569708497
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "TotalEnergies Arab Road Service Station",
+            "opening_hours": {
+                "open_now": false
+            },
+            "photos": [
+                {
+                    "height": 1296,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/118162607888788587984\">TotalEnergies Arab Road Service Station</a>"
+                    ],
+                    "photo_reference": "AUGGfZkXRDAPlg_En494YeZwQ2Es0vXetDCGH6PCoRIj0Tkb6KbGFjcJakgQrHqn49BbwZx_jtXPnouN2YRgbtrtC5nhFs2AAmk2oFRthZDC6ekRUM8tPivhi0e3dtqMPNGJZ1BEcmJVtA0ByI-Msw_CwCynQ_n7CznZ7_-RxvfA21WkAcKf",
+                    "width": 1936
+                }
+            ],
+            "place_id": "ChIJ5b3F8KoLThARbzvecFC4bc8",
+            "plus_code": {
+                "compound_code": "5856+PM Kubwa, Nigeria",
+                "global_code": "6FX95856+PM"
+            },
+            "rating": 3.4,
+            "reference": "ChIJ5b3F8KoLThARbzvecFC4bc8",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 148,
+            "vicinity": "Zeberced Quarry, Arab Road, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.0532947,
+                    "lng": 7.4846294
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.054641430291502,
+                        "lng": 7.485975080291502
+                    },
+                    "southwest": {
+                        "lat": 9.051943469708498,
+                        "lng": 7.483277119708498
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "TotalEnergies House",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 3456,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/107013724899995498698\">Amith Innocent</a>"
+                    ],
+                    "photo_reference": "AUGGfZm72LkNqDmmO3FK8NF-Onzzro38GUFN_FHgL_dajhuOAas7sQYEAtnJBkXnGgi3sikyE2Tt2pm81x-Iw_1gtsQPxSp0brhiNqvUT7bg1DxnsCMGYVqbQlFSZiPL3WxDF4qJvNJ_83lzCszGwtyHEsR_hIYA0yD-Qqv_aN2ZwTPORyk4",
+                    "width": 5184
+                }
+            ],
+            "place_id": "ChIJxWFH2KYLThARpEGSTaY6LWE",
+            "plus_code": {
+                "compound_code": "3F3M+8V Abuja, Nigeria",
+                "global_code": "6FX93F3M+8V"
+            },
+            "rating": 4.1,
+            "reference": "ChIJxWFH2KYLThARpEGSTaY6LWE",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 217,
+            "vicinity": "opposite Nnpc Towers, Herbert Macaulay Way, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.049603299999999,
+                    "lng": 7.476699699999999
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.050812180291503,
+                        "lng": 7.477804430291503
+                    },
+                    "southwest": {
+                        "lat": 9.048114219708498,
+                        "lng": 7.475106469708498
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "Forte Oil - Spring Fuels Olusegun Obasanjo Way",
+            "opening_hours": {
+                "open_now": true
+            },
+            "place_id": "ChIJkYHqpAsLThARBTrbAsw7nt4",
+            "plus_code": {
+                "compound_code": "2FXG+RM Abuja, Nigeria",
+                "global_code": "6FX92FXG+RM"
+            },
+            "rating": 3.4,
+            "reference": "ChIJkYHqpAsLThARBTrbAsw7nt4",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 7,
+            "vicinity": "Plot No. 105, Olusegun Obasanjo Way, Central Business District, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.0021933,
+                    "lng": 7.472633600000001
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.003664030291503,
+                        "lng": 7.473988930291501
+                    },
+                    "southwest": {
+                        "lat": 9.000966069708499,
+                        "lng": 7.471290969708497
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "NNPC Limited Filling Station, Gudu, Abuja",
+            "opening_hours": {
+                "open_now": false
+            },
+            "photos": [
+                {
+                    "height": 3120,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/118087821681189057485\">Jerry Ojila Olatunde Otache</a>"
+                    ],
+                    "photo_reference": "AUGGfZljWqpc3_MobDds1JiNZxSRDfn2jmCKAgRmPudzsf6vsJfOToZWVVdEnjJlHcKtozFlEixqIiQ6EMK1iLUopm77GQE6IX2Ker4ZwueIte9fXNecU4qDGLy4-5xz8U_O6-9D4vPpWkprAbocwvk-jhIxKH-pCAZ7oyocmT8lXafKjQ08",
+                    "width": 4160
+                }
+            ],
+            "place_id": "ChIJQ9nW3PIMThARl8KwJgQprD4",
+            "rating": 4,
+            "reference": "ChIJQ9nW3PIMThARl8KwJgQprD4",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 424,
+            "vicinity": "2F2F+V3C, Ahmadu Bello Way, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.029060599999999,
+                    "lng": 7.6091316
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.030454330291501,
+                        "lng": 7.610484930291502
+                    },
+                    "southwest": {
+                        "lat": 9.027756369708497,
+                        "lng": 7.607786969708497
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "NNPC - Karu Service Station",
+            "opening_hours": {
+                "open_now": false
+            },
+            "photos": [
+                {
+                    "height": 1728,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/112409280456643163454\">TZONE “TZONE” O</a>"
+                    ],
+                    "photo_reference": "AUGGfZllSA3Foh-Tq_TH7yr6itjjuKBlBDdwE4-b44LIQ2c-IAJTKQ9QoiEVpGeeINphgoHwoLQNOdGC7oy9s_p60mh23nDhRtQOkiNrJrY71cFjpQX9DreJTEvsKQAy2ztMwyMzUxIefdiYYP6qyXBkYhHl_PLnwzerOhW2a6NTq5VMu79v",
+                    "width": 3072
+                }
+            ],
+            "place_id": "ChIJId0VmakIThARBTDA2C45DjA",
+            "plus_code": {
+                "compound_code": "2JH5+JM Ado, Nigeria",
+                "global_code": "6FX92JH5+JM"
+            },
+            "rating": 3.2,
+            "reference": "ChIJId0VmakIThARBTDA2C45DjA",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 15,
+            "vicinity": "Karu, Ado"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 8.942588600000001,
+                    "lng": 7.549578200000001
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 8.943927630291503,
+                        "lng": 7.550733180291505
+                    },
+                    "southwest": {
+                        "lat": 8.941229669708498,
+                        "lng": 7.5480352197085
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "TotalEnergies - Kurudu Service Station",
+            "opening_hours": {
+                "open_now": false
+            },
+            "photos": [
+                {
+                    "height": 1296,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/116983649910975435746\">TotalEnergies - Kurudu Service Station</a>"
+                    ],
+                    "photo_reference": "AUGGfZlJvOtLqiVmE_A9-32u_eU8KZ5FR33WbS-ljC2lJAYpyPYXoGNqL0ITEg5MXhy9INu9j7bgI7da5Ls2h25dAhcN6NYA09NWYwxeIGvm5ttdsdze6JDpccaywUgaJz5lLQhs9biF7-1rFudOwuAI71tWKoOhTQO9g1wmJ7iPP4eilLp1",
+                    "width": 1936
+                }
+            ],
+            "place_id": "ChIJ5b3F8KoLThARomte8qR1LTA",
+            "plus_code": {
+                "compound_code": "WGVX+2R Abuja, Nigeria",
+                "global_code": "6FW9WGVX+2R"
+            },
+            "rating": 3.7,
+            "reference": "ChIJ5b3F8KoLThARomte8qR1LTA",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 184,
+            "vicinity": "Plot No. 2, Jummai Estate Layout, Nyanya-Karshi Road, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.066115799999999,
+                    "lng": 7.456431499999998
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.067446380291502,
+                        "lng": 7.457767580291502
+                    },
+                    "southwest": {
+                        "lat": 9.064748419708497,
+                        "lng": 7.455069619708498
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "TotalEnergies HERBERT MACUALAY SERVICE STATION",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 1296,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/100076155346141357126\">TotalEnergies HERBERT MACUALAY SERVICE STATION</a>"
+                    ],
+                    "photo_reference": "AUGGfZkDIG0W5kMAL2qhXfomm2XkynssftiuJHO-8atrDZHkiyTd6tBMERTXibKL6mPEJQNuajvY8oPR5gbyLt6TRitgm2aW0sPyv8OOEQsSz55wjIoV-gQHmHAtGQux7joTcIQIhQ3xTbnqJ8C_H4QFLKzRfuh8z6OB55gnlzybEKFDIrA4",
+                    "width": 1936
+                }
+            ],
+            "place_id": "ChIJAQAAQB8LThARrhJEYUCalhc",
+            "plus_code": {
+                "compound_code": "3F84+CH Abuja, Nigeria",
+                "global_code": "6FX93F84+CH"
+            },
+            "rating": 4,
+            "reference": "ChIJAQAAQB8LThARrhJEYUCalhc",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 216,
+            "vicinity": "Herbert Macaulay Way Revenue Service Opposite Sky Memorial Plaza, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.0229295,
+                    "lng": 7.6083908
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.024160830291502,
+                        "lng": 7.609582630291501
+                    },
+                    "southwest": {
+                        "lat": 9.021462869708497,
+                        "lng": 7.606884669708497
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "TotalEnergies - Mararaba Service Station 1",
+            "opening_hours": {
+                "open_now": false
+            },
+            "photos": [
+                {
+                    "height": 1296,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/101639857026211966210\">TotalEnergies - Mararaba Service Station 1</a>"
+                    ],
+                    "photo_reference": "AUGGfZko5tlxMiJpyyg76YF8Tn8FCHg5Q65OKXtXyNQ0EvOfP1WspKEdORkUkq48qlHxDKkQUy8XF5RF77THTHmLvXqvYV9rrYxdo0Q89mv6ru_71bpu8TZgBkaLgMGWyymGd2IiAwCdQmvQ3-aOuPZT2bHMA6cFe9eP9NOKHrug08vnCxjg",
+                    "width": 1936
+                }
+            ],
+            "place_id": "ChIJGZ8VOKrmURARM1bYd50mcCQ",
+            "plus_code": {
+                "compound_code": "2JF5+59 New Karu, Nigeria",
+                "global_code": "6FX92JF5+59"
+            },
+            "rating": 3.7,
+            "reference": "ChIJGZ8VOKrmURARM1bYd50mcCQ",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 3,
+            "vicinity": "Abuja - Keffi Expressway, New Karu"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.0585922,
+                    "lng": 7.487933599999999
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.059969680291502,
+                        "lng": 7.489333780291502
+                    },
+                    "southwest": {
+                        "lat": 9.057271719708497,
+                        "lng": 7.486635819708497
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "Jokem Universal Services Limited",
+            "place_id": "ChIJAXPIXK8LThARJeLdHwFWXYk",
+            "plus_code": {
+                "compound_code": "3F5Q+C5 Abuja, Nigeria",
+                "global_code": "6FX93F5Q+C5"
+            },
+            "rating": 4,
+            "reference": "ChIJAXPIXK8LThARJeLdHwFWXYk",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 1,
+            "vicinity": "Jenifa Plaza, A Ademulagun Street, C Area, FCT - Abuja, Constitution Avenue"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.0505605,
+                    "lng": 7.506932099999999
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.052027230291502,
+                        "lng": 7.508140080291501
+                    },
+                    "southwest": {
+                        "lat": 9.049329269708497,
+                        "lng": 7.505442119708497
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "TotalEnergies Service Station Asokoro",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 1296,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/114257140917097270549\">TotalEnergies Service Station</a>"
+                    ],
+                    "photo_reference": "AUGGfZnfmQldtCQecbSjhkGZwxgvjQdkoJptalMh2hw6bFnRS_LjIF5oIZVZURkqQrSwXfP9r46np4So0c1YDhv_L40Ur-bAesDz8rkz519Z_oewwRiwyXrvPbXN9SMo9Vdf-YhZarWTOmGesW_bgXWjBv5L4kxoEA2p3gWg4Jin6-jPQ0Bb",
+                    "width": 1936
+                }
+            ],
+            "place_id": "ChIJ5b3F8KoLThARKpHDs24wx3M",
+            "plus_code": {
+                "compound_code": "3G24+6Q Abuja, Nigeria",
+                "global_code": "6FX93G24+6Q"
+            },
+            "rating": 4,
+            "reference": "ChIJ5b3F8KoLThARKpHDs24wx3M",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 1097,
+            "vicinity": "Area - 11, opposite Nigerian Police Headquaters, Shehu Shagari Way, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.066666699999999,
+                    "lng": 7.483333300000003
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.067661780291502,
+                        "lng": 7.484576730291505
+                    },
+                    "southwest": {
+                        "lat": 9.064963819708497,
+                        "lng": 7.481878769708501
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "Forte Oil - Rafin Sanyi",
+            "opening_hours": {
+                "open_now": true
+            },
+            "place_id": "ChIJ5b3F8KoLThAR8PEjv-3Ft6I",
+            "rating": 4.7,
+            "reference": "ChIJ5b3F8KoLThAR8PEjv-3Ft6I",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 3,
+            "vicinity": "Rafinsanyi Suleja, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.066666699999999,
+                    "lng": 7.483333300000003
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.067661780291502,
+                        "lng": 7.484576730291505
+                    },
+                    "southwest": {
+                        "lat": 9.064963819708497,
+                        "lng": 7.481878769708501
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "TotalEnergies Wuse 2 Service Station",
+            "opening_hours": {
+                "open_now": false
+            },
+            "photos": [
+                {
+                    "height": 1296,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/112753168275209185899\">TotalEnergies Wuse 2 Service Station</a>"
+                    ],
+                    "photo_reference": "AUGGfZmK4_qctRw2Tl0R1Lkfcc54KVUodGmwhOi9vdtm5T2jyv4hM_S6_-JOeSXZwbe6xNH1LgdFlokMmQDovoJMShqO-kNUzIotEahLb6jHQSb7341BuAbqRImPpOnVUqfpqVbLt8U4nT3QdRqJw8y-NqNflRae4gbSZTRDH4_eD8gqMAE",
+                    "width": 1936
+                }
+            ],
+            "place_id": "ChIJ0TsuVSYLThARy4B2I3XSAJA",
+            "rating": 3,
+            "reference": "ChIJ0TsuVSYLThARy4B2I3XSAJA",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 7,
+            "vicinity": "ZONE 6, ROUNDABOUT, BERGER JUNCTION, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.0631901,
+                    "lng": 7.475985499999998
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.064606780291502,
+                        "lng": 7.477337930291499
+                    },
+                    "southwest": {
+                        "lat": 9.061908819708497,
+                        "lng": 7.474639969708495
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "Oando - Herbert Macaulay Way",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 1024,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/100463360283631261341\">Solomon Ajaguna</a>"
+                    ],
+                    "photo_reference": "AUGGfZmhtxU3VFdZghRbwf72ZeDZYmlXIEjxOX9aRYUNsoAN4KWcaRg4kj4FVM6ovFpowlfqyJDMQ4KPMyVC4JHRrDMkTDMX6tRw2kb6FTEHqPQ4DgU9pJw8JHojYHad0-xVMKCpnJAmY1rtOPRTAPVv7Ug8Wi5jFd0qX0bW-azeDYeCnszC",
+                    "width": 768
+                }
+            ],
+            "place_id": "ChIJFXqBqgYLThARqrgIyVsY5Og",
+            "plus_code": {
+                "compound_code": "3F7G+79 Abuja, Nigeria",
+                "global_code": "6FX93F7G+79"
+            },
+            "rating": 3.8,
+            "reference": "ChIJFXqBqgYLThARqrgIyVsY5Og",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 123,
+            "vicinity": "3 Herbert Macaulay Way, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.052379499999999,
+                    "lng": 7.4758077
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.053787880291502,
+                        "lng": 7.477244430291502
+                    },
+                    "southwest": {
+                        "lat": 9.051089919708497,
+                        "lng": 7.474546469708497
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "NNPC Limited Mega Gas Station Abuja",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 1080,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/107336980075525436303\">ogbonna christian</a>"
+                    ],
+                    "photo_reference": "AUGGfZntS-0hsfsG0vS0dDkXorRHrf9R_g2UXXCwFwB9lJx_nr5mvly5b59hK2ncWrEBqdGIRUONWiVK5LCowoc9MeTfxwZa4Iu7EnrbZm9_A7sA4i7FXhO_Hv2z8Lt2Z809HaswDwDwlNOz6OphvSh4Itz65yiHKfMrTu9WpbWh4QjygLmw",
+                    "width": 1920
+                }
+            ],
+            "place_id": "ChIJWb_Y5wsLThAR9Rbu3O9JD1E",
+            "plus_code": {
+                "compound_code": "3F2G+X8 Abuja, Nigeria",
+                "global_code": "6FX93F2G+X8"
+            },
+            "rating": 4.2,
+            "reference": "ChIJWb_Y5wsLThAR9Rbu3O9JD1E",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 1022,
+            "vicinity": "B27 Nal Boulevard, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.054287499999999,
+                    "lng": 7.4741228
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.055640280291502,
+                        "lng": 7.475473030291502
+                    },
+                    "southwest": {
+                        "lat": 9.052942319708498,
+                        "lng": 7.472775069708498
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "THLD Group Autogas refuelling station, Zone 1 Abuja",
+            "place_id": "ChIJY_ap7Q4LThARY4vaKi_9iGo",
+            "plus_code": {
+                "compound_code": "3F3F+PJ Abuja, Nigeria",
+                "global_code": "6FX93F3F+PJ"
+            },
+            "rating": 5,
+            "reference": "ChIJY_ap7Q4LThARY4vaKi_9iGo",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 1,
+            "vicinity": "Oando Filling Station, Wuse Phase 2900211, Olusegun Obasanjo Way, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.0313835,
+                    "lng": 7.497467500000002
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.032732480291504,
+                        "lng": 7.498816480291504
+                    },
+                    "southwest": {
+                        "lat": 9.030034519708499,
+                        "lng": 7.496118519708499
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "Forte Oil - Spring Fuels Mohammed Buhari Road",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 4000,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/117211612650594383321\">bassey edoho</a>"
+                    ],
+                    "photo_reference": "AUGGfZkRT2Fz9BlHFfuMVNXILseKhUXCNdeweb6y9mZXzCywp91WYSOLrVvUk1cdnOJ2TMDqQt3A3ktlWTuKOc4ANYokRSKiC9B59sMXhH6DUjAtmPbBWpuAsbf4AKOlFxuY6BhOcCNdnjuYLQVeETgIMSxAX3eYA9OtPr7Vrmr8y8DCQTb9",
+                    "width": 6000
+                }
+            ],
+            "place_id": "ChIJm8b0oo4LThAR0BcEMPkxPl4",
+            "plus_code": {
+                "compound_code": "2FJW+HX Abuja, Nigeria",
+                "global_code": "6FX92FJW+HX"
+            },
+            "rating": 3.4,
+            "reference": "ChIJm8b0oo4LThAR0BcEMPkxPl4",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 8,
+            "vicinity": "Mohammed Buhari Way, Garki 2, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.0311793,
+                    "lng": 7.477575199999999
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.032527930291502,
+                        "lng": 7.478947380291504
+                    },
+                    "southwest": {
+                        "lat": 9.029829969708498,
+                        "lng": 7.476249419708499
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "TotalEnergies JS Tarka Service Station",
+            "opening_hours": {
+                "open_now": false
+            },
+            "photos": [
+                {
+                    "height": 3456,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/102432675084830838417\">Zainab Umar</a>"
+                    ],
+                    "photo_reference": "AUGGfZmZ14ux9pv6fz-cuE00uJdoJFiSiYMG6HYpYoQkZN-112Y4DkYfJOB3g1Ibgo_uHtyRopGuaiXhUSjwIbTQZMmOpirYanmvu9uVeybk6UccEQbMR1dzryUKkWXeUclmqFr4bKd8Cp8FBDe0Xwx125tX2A8gRLaxz7mUMeZSjxLu6HiU",
+                    "width": 4608
+                }
+            ],
+            "place_id": "ChIJVVVVFX8LThARxby0LaGBQKM",
+            "plus_code": {
+                "compound_code": "2FJH+F2 Abuja, Nigeria",
+                "global_code": "6FX92FJH+F2"
+            },
+            "rating": 4,
+            "reference": "ChIJVVVVFX8LThARxby0LaGBQKM",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 233,
+            "vicinity": "Area 3 J. S. Tarkar Street, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.0172341,
+                    "lng": 7.4820123
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.018600830291502,
+                        "lng": 7.483336780291502
+                    },
+                    "southwest": {
+                        "lat": 9.015902869708498,
+                        "lng": 7.480638819708497
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "TotalEnergies Lugbe Service Station",
+            "opening_hours": {
+                "open_now": false
+            },
+            "place_id": "ChIJBxJeg30MThARjjVU6XkF2go",
+            "rating": 4,
+            "reference": "ChIJBxJeg30MThARjjVU6XkF2go",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 12,
+            "vicinity": "2nd Avenue, H - Close, Lugbe Inside Federal Housing, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.0003688,
+                    "lng": 7.472999799999999
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.001665430291501,
+                        "lng": 7.474354980291502
+                    },
+                    "southwest": {
+                        "lat": 8.998967469708496,
+                        "lng": 7.471657019708497
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "A Y M Shafa Petrol Station- Gudu",
+            "photos": [
+                {
+                    "height": 540,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/118087113106285088715\">Elisha Justice Elison</a>"
+                    ],
+                    "photo_reference": "AUGGfZlR1QVdw5V1jTTkwawy5lFWUeDqdDW39tBQh8FtQPHvT3ke5b4SiTfUnWrYSbgBOlFMeGqKwRphXt41DX0PSMj-jpSBVApSC_KAY9ukERp6ZlVkpfA9d7Fa_pyNSPfe5Af5uGWNYM6NI5L-Kuu1hI_YQrzY6DGm8-3KRqIiejmMk-nw",
+                    "width": 720
+                }
+            ],
+            "place_id": "ChIJn-8BWvIMThARGCmMBbRJT6Y",
+            "rating": 4.1,
+            "reference": "ChIJn-8BWvIMThARGCmMBbRJT6Y",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 485,
+            "vicinity": "2F2F+45X, Oladipo Diya Street, Abuja"
+        },
+        {
+            "business_status": "OPERATIONAL",
+            "geometry": {
+                "location": {
+                    "lat": 9.063918900000001,
+                    "lng": 7.424557800000002
+                },
+                "viewport": {
+                    "northeast": {
+                        "lat": 9.065285930291502,
+                        "lng": 7.425912980291502
+                    },
+                    "southwest": {
+                        "lat": 9.062587969708497,
+                        "lng": 7.423215019708497
+                    }
+                }
+            },
+            "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/gas_station-71.png",
+            "icon_background_color": "#909CE1",
+            "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/gas_pinlet",
+            "name": "Nipco Gas Station",
+            "opening_hours": {
+                "open_now": true
+            },
+            "photos": [
+                {
+                    "height": 3264,
+                    "html_attributions": [
+                        "<a href=\"https://maps.google.com/maps/contrib/116790483578853299340\">UWEM KELVIN</a>"
+                    ],
+                    "photo_reference": "AUGGfZnJ7vGdZ7ki5kuOeRggyflnSCkoOgPrYupI9S_m0mAaozhVOYvRv0ELXRRFyH7Fn1cV2N_hKkEtOy8yFQnnTBxMLDmhS0bjl5Fc_JppKaIMxjCKUjhRRcZxm6XWm2nVBcjYyuiCu42Fsp7GGDRS6pdeM27A-i-_G6W_4DNL-S3gkoIl",
+                    "width": 2448
+                }
+            ],
+            "place_id": "ChIJmdw2G9Z0ThAR2qvTGxblgzc",
+            "plus_code": {
+                "compound_code": "3C7F+HR Abuja, Nigeria",
+                "global_code": "6FX93C7F+HR"
+            },
+            "rating": 4.1,
+            "reference": "ChIJmdw2G9Z0ThAR2qvTGxblgzc",
+            "scope": "GOOGLE",
+            "types": [
+                "gas_station",
+                "point_of_interest",
+                "establishment"
+            ],
+            "user_ratings_total": 383,
+            "vicinity": "Ebitu Ukiwe Street, Abuja"
+        }
+    ],
+    "status": "OK"
+}

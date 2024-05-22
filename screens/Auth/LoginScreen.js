@@ -105,37 +105,6 @@ export default function LoginScreen(props) {
   const passwordChangeHandler = (pass) => {
     setPassword(pass);
   }
-  useEffect(() => {
-    // Check email validity
-    if (email.length === 0) {
-      setEmailError("");
-    } else if (!emailIsValid) {
-      setEmailError("email must include '@' symbol");
-    } else {
-      setEmailError("");
-    }
-  
-    // Check password validity
-    if (password.length === 0) {
-      setPasswordError("");
-    } else if (lengthValid) {
-      setPasswordError("password must be at least 8 characters long");
-    } else if (!hasUpper) {
-      setPasswordError("password must include at least one uppercase letter");
-    } else if (!hasLowercase) {
-      setPasswordError("password must include at least one lowercase letter");
-    } else if (!hasNumber) {
-      setPasswordError("password must contain at least one number");
-    } else if (!hasSymbol) {
-      setPasswordError("password must contain at least one symbol");
-    } else {
-      setPasswordError("");
-    }
-  
-    // Update conditionsMet based on errors
-    setConditionsMet(emailIsValid && !lengthValid && hasUpper && hasLowercase && hasNumber && hasSymbol);
-  
-  }, [password, email]);
   
   return (
     <KeyboardAvoidingView
