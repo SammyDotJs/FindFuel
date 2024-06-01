@@ -10,7 +10,7 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import AuthButton from "../../components/AuthButton";
 import { theme } from "../../infrastructure/theme";
@@ -27,6 +27,7 @@ import {
 } from "../../components/InputAuthentications";
 import PhoneInput from "react-native-phone-input";
 import { signupStyles } from "./SignUpScreenStyles";
+import { UserContext } from "../../services/user/UserContext";
 
 const googleIconJsx = () => {
   return (
@@ -97,6 +98,8 @@ export default function SignUpScreen() {
   const [showPassword, setShowPassword] = useState(true);
   const [showCpassword, setShowCpassword] = useState(true);
 
+  const { userDetails, setDetails } = useContext(UserContext)
+
   const handleSignup = () => {
     //backend config
     console.log("sign up");
@@ -106,6 +109,12 @@ export default function SignUpScreen() {
   };
   const handleOtp = () => {
     !conditionsMet && Alert.alert("Please fill in your details");
+    setDetails({
+      name: name,
+      email: email,
+      phone_no: phoneNo,
+      password: password
+    })
     conditionsMet && navigation.navigate("otp");
     setName("")
     setEmail("")
@@ -165,11 +174,11 @@ export default function SignUpScreen() {
     // Update conditionsMet based on errors
     setConditionsMet(
       emailIsValid &&
-        !lengthValid &&
-        hasUpper &&
-        hasLowercase &&
-        hasNumber &&
-        hasSymbol
+      !lengthValid &&
+      hasUpper &&
+      hasLowercase &&
+      hasNumber &&
+      hasSymbol
     );
   }, [password, email, cpassword]);
 

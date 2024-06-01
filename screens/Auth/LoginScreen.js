@@ -3,16 +3,13 @@ import {
   Text,
   Image,
   TextInput,
-  loginStylesheet,
-  Dimensions,
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
   Platform,
   Alert,
-  StyleSheet,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { theme } from "../../infrastructure/theme";
 import AuthButton from "../../components/AuthButton";
@@ -22,13 +19,6 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { SafeArea } from "../../components/utils/Safe-area.component";
-import {
-  lowercaseRegex,
-  numberRegex,
-  symbolRegex,
-  uppercaseRegex,
-} from "../../components/InputAuthentications";
 import { loginStyles } from "./LoginScreenStyles";
 
 const AuthInput = styled(View)`
@@ -71,29 +61,16 @@ export default function LoginScreen(props) {
 
   const [conditionsMet, setConditionsMet] = useState(false);
 
-  const hasUpper = uppercaseRegex.test(password);
-  const hasLowercase = lowercaseRegex.test(password);
-  const hasNumber = numberRegex.test(password);
-  const hasSymbol = symbolRegex.test(password);
-  const lengthValid = password.length < 8;
-  const emailIsValid = email.includes("@");
-
   const handleLogin = () => {
     //backend config
   };
   const handleSignup = () => {
     navigation.navigate("SignUp");
   };
-  const handleOtp = () => {
-    !conditionsMet && Alert.alert("Please fill in your details")
-    conditionsMet && navigation.navigate("otp");
-  };
-
   const customEmailOnBlur = () => {
     props?.onBlur;
     setEmailError("");
   };
-
 
   const customPasswordOnBlur = () => {
     setPasswordError("");
@@ -105,7 +82,7 @@ export default function LoginScreen(props) {
   const passwordChangeHandler = (pass) => {
     setPassword(pass);
   }
-  
+
   return (
     <KeyboardAvoidingView
       enabled
@@ -197,7 +174,7 @@ export default function LoginScreen(props) {
             {/* login handler */}
             <View style={loginStyles.mt}>
               <AuthButton
-                handleAction={handleOtp}
+                handleAction={handleLogin}
                 title="Login"
                 backgroundColor={theme.colors.bg.primary}
                 color={theme.colors.text.white}

@@ -6,10 +6,12 @@ import {
   Poppins_400Regular,
   Poppins_600SemiBold,
   Poppins_700Bold,
-  Poppins_500Medium
+  Poppins_500Medium,
 } from "@expo-google-fonts/poppins";
 import { theme } from "./infrastructure/theme";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
+import { LocationContextProvider } from "./services/LocationContext";
+import UserContextProvider from "./services/user/UserContext";
 
 const LoadingContainer = styled(View)`
   flex: 1;
@@ -22,7 +24,7 @@ export default function App() {
     Poppins_400Regular,
     Poppins_600SemiBold,
     Poppins_700Bold,
-    Poppins_500Medium
+    Poppins_500Medium,
   });
 
   if (!poppinsLoaded) {
@@ -37,5 +39,11 @@ export default function App() {
       </LoadingContainer>
     );
   }
-  return <AppNavigation />;
+  return (
+    <UserContextProvider>
+      <LocationContextProvider>
+        <AppNavigation />
+      </LocationContextProvider>
+    </UserContextProvider>
+  );
 }

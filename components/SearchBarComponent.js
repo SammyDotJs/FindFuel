@@ -1,58 +1,33 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput } from "react-native";
 import React, { useState } from "react";
-import { SearchBar } from "@rneui/themed";
-import { Searchbar } from "react-native-paper";
+import { searchStyles } from "./SearchBarStyles";
 import { theme } from "../infrastructure/theme";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import styled from "styled-components";
 import { Fontisto } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 
-const SearchContainer = styled(View)`
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  z-index: 999;
-  top: 30px;
-  width: 100%;
-`;
 
-const SearchInputContainer = styled(View)`
-  display: flex;
-  flex-direction: row;
-  background: ${theme.colors.bg.white};
-  border-radius: 25px;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-`;
-
-const SearchInput = styled(TextInput)`
-  width: auto;
-  padding: 6px;
-  font-family: ${theme.fonts.medium};
-  width: 65%;
-`;
 
 export default function SearchBarComponent() {
   const [search, setSearch] = useState("");
 
   const handleSearch = () => {
     console.log(search);
+    setSearch("");
   };
 
   const updateSearch = (search) => {
     setSearch(search);
   };
   return (
-    <SearchContainer>
-      <SearchInputContainer>
+    <View style={searchStyles.searchContainer}>
+      <View style={searchStyles.searchInputContainer}>
         <SimpleLineIcons
           name="equalizer"
-          size={24}
+          size={20}
           color={theme.colors.bg.primary}
           style={{
             marginHorizontal: 20,
@@ -60,21 +35,23 @@ export default function SearchBarComponent() {
             transform: [{ rotate: "90deg" }],
           }}
         />
-        <SearchInput
+        <TextInput
+          style={searchStyles.searchInput}
           placeholder="Seach for a Fuel station"
-          placeholderTextColor={theme.colors.text.primary}
+          placeholderTextColor={theme.colors.text.foundation}
           onChangeText={updateSearch}
           value={search}
+          mode="bar"
         />
         <Fontisto
           name="search"
-          size={24}
+          size={20}
           color={theme.colors.bg.primary}
           style={{ marginHorizontal: 20, marginLeft: "auto" }}
           onPress={handleSearch}
         />
-      </SearchInputContainer>
-    </SearchContainer>
+      </View>
+    </View>
   );
 }
 

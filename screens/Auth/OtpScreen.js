@@ -26,7 +26,7 @@ export default function OtpScreen() {
   const navigation = useNavigation();
 
   const handleLogin = (props) => {
-    navigation.navigate("Login");
+    navigation.navigate("Tabs");
   };
   // const handleFilled = (code) => {
   //   code.length === 4 && setDisabled(false);
@@ -103,6 +103,7 @@ export default function OtpScreen() {
               fontWeight: "600",
             }}
             disabled={disabled}
+            onPress={handleLogin}
           />
         </OtpContainer>
         <View style={styles.forgotPassword}>
