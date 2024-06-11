@@ -138,7 +138,8 @@ export const HomeScreenStyles = StyleSheet.create({
     fillingStationName: {
         fontSize: hp(1.5),
         fontFamily: theme.fonts.heading,
-        color: theme.colors.text.primary
+        color: theme.colors.text.primary,
+        width: wp(5)
     },
     fillingStationPrice: {
         fontSize: hp(1.5),
