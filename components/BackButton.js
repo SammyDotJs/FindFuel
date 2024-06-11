@@ -24,16 +24,18 @@ const BackArrowBackground = styled(View)`
   align-items: center;
 `;
 
-export default function BackButton() {
- 
+export default function BackButton({ onPress }) {
+
   return (
-    <TouchableOpacity style={styles.BackArrowBackground} activeOpacity={0.8}>
-      <MaterialIcons
-        name="keyboard-arrow-left"
-        size={hp(4)}
-        color={theme.colors.bg.primary}
-      />
-    </TouchableOpacity>
+    <View style={styles.buttonContainer}>
+      <TouchableOpacity onPress={onPress} style={styles.BackArrowBackground} activeOpacity={0.8}>
+        <MaterialIcons
+          name="keyboard-arrow-left"
+          size={hp(4)}
+          color={theme.colors.bg.primary}
+        />
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -41,14 +43,20 @@ const styles = StyleSheet.create({
   BackArrowBackground: {
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute",
     zIndex: 999,
-    top: hp(3.5),
-    backgroundColor: theme.colors.bg.tertiary,
+    backgroundColor: theme.colors.bg.white,
     borderRadius: 50,
-    width: hp(4),
-    height: hp(4),
+    width: hp(4.5),
+    height: hp(4.5),
     marginLeft: wp(4),
     opacity: 0.9,
   },
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "flex-start",
+    position: "absolute",
+    zIndex: 999,
+    top: hp(9),
+    width: "80%",
+  }
 });

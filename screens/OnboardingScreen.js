@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
 import { theme } from "../infrastructure/theme";
 import Onboarding from "react-native-onboarding-swiper";
@@ -7,8 +7,6 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-
-const { width, height } = Dimensions.get("window");
 
 const Square = ({ isLight, selected }) => {
   let backgroundColor;

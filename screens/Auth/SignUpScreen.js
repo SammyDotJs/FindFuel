@@ -28,6 +28,7 @@ import {
 import PhoneInput from "react-native-phone-input";
 import { signupStyles } from "./SignUpScreenStyles";
 import { UserContext } from "../../services/user/UserContext";
+import axios from "axios";
 
 const googleIconJsx = () => {
   return (
@@ -77,6 +78,9 @@ const inputErrorStyles = {
 export default function SignUpScreen() {
   const navigation = useNavigation();
   const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const [email, setEmail] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
   const [password, setPassword] = useState("");
@@ -107,22 +111,25 @@ export default function SignUpScreen() {
   const handleLogin = () => {
     navigation.navigate("Login");
   };
-  const handleOtp = () => {
-    !conditionsMet && Alert.alert("Please fill in your details");
-    setDetails({
-      name: name,
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  useEffect(() => {
+    const updatedUserDetails = {
+      first_name: firstName,
+      last_name: lastName,
       email: email,
-      phone_no: phoneNo,
-      password: password
-    })
-    conditionsMet && navigation.navigate("otp");
-    setName("")
-    setEmail("")
-    setPhoneNo("")
-    setPassword("")
-    setCpassword("")
-    //send otp
-  };
+      password: password,
+      phone_no: phoneNo
+    };
+    setDetails(updatedUserDetails)
+  }, [password, email, firstName, lastName, phoneNo])
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  useEffect(() => {
+    const fullname = name.split(" ")
+    setFirstName(fullname[0])
+    setLastName(fullname[1] || "")
+  }, [name])
+
 
   const fullNameHandler = (fname) => {
     setName(fname);
@@ -136,6 +143,7 @@ export default function SignUpScreen() {
   const phoneNoChangeHandler = (phone) => {
     setPhoneNo(phone);
   };
+
   useEffect(() => {
     // Check email validity
     if (email.length === 0) {
@@ -182,6 +190,29 @@ export default function SignUpScreen() {
     );
   }, [password, email, cpassword]);
 
+  const handleOtp = async () => {
+    !conditionsMet && Alert.alert("Please fill in your details");
+
+    const url = 'http://8569-105-112-113-222.ngrok-free.app/api/auth/register/';
+    try {
+      const response = await axios.post(url,  {...userDetails}, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log('Data sent successfully! Response:', response);
+    } catch (error) {
+      console.error('Error sending data:', error);
+    }
+
+    // conditionsMet && navigation.navigate("otp");
+    // setName("")
+    // setEmail("")
+    // setPhoneNo("")
+    // setPassword("")
+    // setCpassword("")
+    //send otp
+  };
   return (
     <KeyboardAvoidingView
       enabled
@@ -338,5 +369,4 @@ export default function SignUpScreen() {
     </KeyboardAvoidingView>
   );
 }
-3.
 

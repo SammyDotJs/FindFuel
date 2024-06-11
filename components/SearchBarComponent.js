@@ -1,18 +1,36 @@
-import { View, StyleSheet, TextInput } from "react-native";
-import React, { useState } from "react";
+// 
+import React, { useState, useEffect, useRef } from "react";
+import { View, TextInput, StyleSheet, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { searchStyles } from "./SearchBarStyles";
 import { theme } from "../infrastructure/theme";
+import { Fontisto, SimpleLineIcons, Feather } from "@expo/vector-icons";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Fontisto } from "@expo/vector-icons";
-import { SimpleLineIcons } from "@expo/vector-icons";
-
-
 
 export default function SearchBarComponent() {
   const [search, setSearch] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
+  const inputRef = useRef(null);
+
+  const width = useSharedValue(50);
+
+  useEffect(() => {
+    if (isExpanded) {
+      width.value = withTiming(wp(80), { duration: 300, easing: Easing.out(Easing.exp) });
+      inputRef.current.focus();
+    } else {
+      width.value = withTiming(40, { duration: 300, easing: Easing.out(Easing.exp) });
+    }
+  }, [isExpanded, width]);
+
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      width: width.value,
+    };
+  });
 
   const handleSearch = () => {
     console.log(search);
@@ -22,46 +40,63 @@ export default function SearchBarComponent() {
   const updateSearch = (search) => {
     setSearch(search);
   };
+
+  const handleBodyPress = () => {
+    if (isExpanded) {
+      setIsExpanded(false);
+      Keyboard.dismiss();
+    }
+  };
+
   return (
-    <View style={searchStyles.searchContainer}>
-      <View style={searchStyles.searchInputContainer}>
-        <SimpleLineIcons
-          name="equalizer"
-          size={20}
-          color={theme.colors.bg.primary}
-          style={{
-            marginHorizontal: 20,
-            // marginRight: 20,
-            transform: [{ rotate: "90deg" }],
-          }}
-        />
-        <TextInput
-          style={searchStyles.searchInput}
-          placeholder="Seach for a Fuel station"
-          placeholderTextColor={theme.colors.text.foundation}
-          onChangeText={updateSearch}
-          value={search}
-          mode="bar"
-        />
-        <Fontisto
-          name="search"
-          size={20}
-          color={theme.colors.bg.primary}
-          style={{ marginHorizontal: 20, marginLeft: "auto" }}
-          onPress={handleSearch}
-        />
+    <TouchableWithoutFeedback onPress={handleBodyPress}>
+      <View style={searchStyles.searchContainer}>
+        <Animated.View style={[styles.searchBar, animatedStyles]}>
+          <Fontisto
+            name="search"
+            size={hp(2)}
+            color={theme.colors.bg.primary}
+            style={searchStyles.searchIcon}
+            onPress={() => setIsExpanded(!isExpanded)}
+          />
+          {isExpanded && (
+            <TextInput
+              ref={inputRef}
+              style={searchStyles.searchInput}
+              placeholder="Search for a Fuel station"
+              placeholderTextColor={theme.colors.text.foundation}
+              onChangeText={updateSearch}
+              value={search}
+              mode="bar"
+              onBlur={() => setIsExpanded(false)}
+            />
+          )}
+          {isExpanded && (
+            <Feather
+              name="x"
+              size={hp(2.5)}
+              color={theme.colors.bg.primary}
+              style={styles.equalizerIcon}
+            />
+          )}
+
+        </Animated.View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  search: {
-    backgroundColor: "#f5f5f5", // Set background color for search bar itself
-    borderRadius: 25, // Adjust border radius if needed
-    height: 40,
-    width: wp(100),
-    justifyContent: "center",
+  searchBar: {
+    flexDirection: "row",
     alignItems: "center",
+    backgroundColor: "#f5f5f5",
+    borderRadius: 25,
+    overflow: "hidden",
+  },
+  equalizerIcon: {
+    marginHorizontal: wp(3),
+    marginLeft: "auto",
+
   },
 });

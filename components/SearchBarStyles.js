@@ -8,14 +8,14 @@ import {
 export const searchStyles = StyleSheet.create({
   searchContainer: {
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-end",
     position: "absolute",
     zIndex: 999,
     top: hp(9),
-    width: "100%",
-    marginTop: 20,
+    width: "80%",
   },
   searchInputContainer: {
+    elevation:5,
     flexDirection: "row",
     backgroundColor: theme.colors.bg.white,
     borderRadius: 25,
@@ -29,9 +29,18 @@ export const searchStyles = StyleSheet.create({
     shadowRadius: 4, // iOS shadow
   },
   searchInput: {
-    padding: wp(2),
+    paddingVertical: wp(2),
     fontFamily: theme.fonts.medium,
     width: "65%",
-    fontSize: hp(1.5),
+    fontSize: hp(1.2),
+    // borderWidth:1
+  },
+  searchIcon: {
+    // marginHorizontal: 20,
+    margin: "auto",
+    // elevation:5,
+    // margin:10,
+    // borderWidth:1,
+    marginVertical: wp(2),
   },
 });

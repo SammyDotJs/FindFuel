@@ -23,13 +23,13 @@ export const loginStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.text.foundation,
     fontSize: hp(2),
-    fontFamily: theme.fonts.bold,
+    fontFamily: theme.fonts.medium,
   },
   authTextInputP: {
     width: wp(78),
     height: hp(3.5),
     fontSize: hp(2),
-    fontFamily: theme.fonts.bold,
+    fontFamily: theme.fonts.medium,
   },
   authPassword: {
     flexDirection: "row",

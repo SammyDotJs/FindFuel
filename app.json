@@ -21,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.sammyjs.FindFuel"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -29,6 +30,11 @@
     "plugins": [
       "expo-font"
     ],
-    "googleMapsApiKey": "AIzaSyDZnqPKvw0Me0Q8Rg_wtQ6ExIfjggD9Mdo"
+    "googleMapsApiKey": "AIzaSyDZnqPKvw0Me0Q8Rg_wtQ6ExIfjggD9Mdo",
+    "extra": {
+      "eas": {
+        "projectId": "9b382d73-60a2-449c-84b9-d500dfdabc96"
+      }
+    }
   }
 }

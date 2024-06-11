@@ -7,7 +7,7 @@ import HistoryScreen from "./Tabs/HistoryScreen";
 import ProfileScreen from "./Tabs/ProfileScreen";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 import { ScreenOptions } from "./TabScreenOptions";
-import { ThemeProvider } from "styled-components/native";
+import HomeScreenNavigator from "./Tabs/Home/homescreen.navigator";
 
 const ios = Platform.OS === "ios";
 
@@ -17,7 +17,7 @@ export default function MyTabs() {
   return (
     <KeyboardAvoidingView behavior={ios ? "padding" : null} style={{ flex: 1 }}>
       <Tab.Navigator initialRouteName="Home" screenOptions={ScreenOptions}>
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" component={HomeScreenNavigator} />
         <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="History" component={HistoryScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />

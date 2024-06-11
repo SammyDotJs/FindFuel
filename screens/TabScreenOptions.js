@@ -18,12 +18,16 @@ export const ScreenOptions = ({ route }) => ({
     fontSize: hp(1.4),
     marginTop: 5,
   },
+  style:{
+    borderTopWidth:0
+  },
   tabBarStyle: {
     position: "absolute",
     elevation: 0,
     height: hp(10),
     justifyContent: "flex-end",
     alignItems: "center",
+    borderTopWidth:0,
   },
   tabBarHideOnKeyboard: true,
   tabBarButton: (props) => {

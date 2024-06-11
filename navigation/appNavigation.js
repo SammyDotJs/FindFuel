@@ -9,6 +9,8 @@ import AuthScreen from "../screens/AuthScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import SignUpScreen from "../screens/Auth/SignUpScreen";
 import OtpScreen from "../screens/Auth/OtpScreen";
+import HomeScreenNavigator from "../screens/Tabs/Home/homescreen.navigator";
+import ViewAllFillingStations from "../screens/Tabs/Home/AllFillingStations/ViewAllFillingStations";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,11 +22,7 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Tabs">
-        <Stack.Screen
-          name="Tabs"
-          options={ScreenOptions}
-          component={MyTabs}
-        />
+        <Stack.Screen name="Tabs" options={ScreenOptions} component={MyTabs} />
         <Stack.Screen
           name="Onboarding"
           options={ScreenOptions}
@@ -51,7 +49,7 @@ const AppNavigation = () => {
           component={OtpScreen}
         />
       </Stack.Navigator>
-      <ExpoStatusBar style="auto"/>
+      <ExpoStatusBar style="auto" />
     </NavigationContainer>
   );
 };

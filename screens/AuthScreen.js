@@ -57,7 +57,7 @@ export default function AuthScreen() {
             <Text style={styles.title}>Let’s{"\n"}get started</Text>
             <Text style={styles.subtitle}>Find fuel anytime and anywhere</Text>
           </View>
-          <View style={{ top: -hp(2), gap: 30 }}>
+          <View style={{ top: -hp(2), gap: 30, justifyContent: "center", alignItems: "center" }}>
             <Button
               title="Login"
               buttonStyle={{

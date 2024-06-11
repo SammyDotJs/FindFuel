@@ -84,14 +84,14 @@ export const HomeScreenStyles = StyleSheet.create({
         fontSize: hp(1.5)
     },
     listsContainer: {
-        marginTop:hp(3)
+        marginTop: hp(3)
     },
     listTextContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         marginHorizontal: wp(3),
-        marginBottom:hp(1)
+        marginBottom: hp(1)
     },
     listHeader: {
         fontSize: hp(2.5),
@@ -107,6 +107,13 @@ export const HomeScreenStyles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    fillingStationAll: {
+        // width:wp(90),
+        justifyContent: "start",
+        alignItems: "flex-start",
+        flexDirection: "row",
+        marginBottom: hp(3),
+    },
     fillingStationImage: {
         marginHorizontal: wp(3),
         justifyContent: "space-between",
@@ -120,6 +127,13 @@ export const HomeScreenStyles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         marginTop: hp(1)
+    },
+    fillingStationInfoAll: {
+        width: wp(50),
+        justifyContent: "space-between",
+        // alignItems: "flex-end",
+        marginTop: hp(1),
+        // borderWidth:1
     },
     fillingStationName: {
         fontSize: hp(1.5),
@@ -138,5 +152,12 @@ export const HomeScreenStyles = StyleSheet.create({
         borderRadius: 50,
         paddingVertical: hp(0.5),
         paddingHorizontal: wp(9),
-    }
+    },
+    fsButtonStyleAll: {
+        backgroundColor: theme.colors.bg.primary,
+        borderRadius: 50,
+        paddingVertical: hp(0.5),
+        paddingHorizontal: wp(9),
+        marginLeft: "auto"
+    },
 })

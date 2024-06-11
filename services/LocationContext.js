@@ -110,7 +110,7 @@ const debounce = (func, wait) => {
 
 export const LocationContextProvider = ({ children }) => {
   const [fillingStations, setFillingStations] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [region, setRegion] = useState(null);
   const [track, setTrack] = useState(true);
@@ -142,7 +142,7 @@ export const LocationContextProvider = ({ children }) => {
   const fetchFillingStations = useCallback(
     debounce(async (latitude, longitude, pageToken = null) => {
       try {
-        let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=8000&type=gas_station&key=${API_KEY}`;
+        let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5700&type=gas_station&key=${API_KEY}`;
         if (pageToken) {
           url += `&pagetoken=${pageToken}`;
         }
@@ -152,6 +152,7 @@ export const LocationContextProvider = ({ children }) => {
           ...prevFillingStations,
           ...data.results,
         ]);
+        setIsLoading(false)
         setTrack(true);
         if (data.next_page_token) {
           setTimeout(() => {
@@ -161,6 +162,8 @@ export const LocationContextProvider = ({ children }) => {
         }
       } catch (error) {
         console.error(error);
+        setIsLoading(false)
+
       }
     }, 500), // 500 milliseconds debounce time
     []
