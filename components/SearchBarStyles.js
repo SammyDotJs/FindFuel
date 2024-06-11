@@ -32,7 +32,7 @@ export const searchStyles = StyleSheet.create({
     paddingVertical: wp(2),
     fontFamily: theme.fonts.medium,
     width: "65%",
-    fontSize: hp(1.2),
+    fontSize: hp(1.4),
     // borderWidth:1
   },
   searchIcon: {

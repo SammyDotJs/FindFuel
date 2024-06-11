@@ -110,6 +110,8 @@ const debounce = (func, wait) => {
 
 export const LocationContextProvider = ({ children }) => {
   const [fillingStations, setFillingStations] = useState([]);
+  const [fillingStationsData, setFillingStationsData] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [region, setRegion] = useState(null);
@@ -152,6 +154,10 @@ export const LocationContextProvider = ({ children }) => {
           ...prevFillingStations,
           ...data.results,
         ]);
+        setFillingStationsData((prevFillingStations) => [
+          ...prevFillingStations,
+          ...data.results,
+        ]);
         setIsLoading(false)
         setTrack(true);
         if (data.next_page_token) {
@@ -168,6 +174,11 @@ export const LocationContextProvider = ({ children }) => {
     }, 500), // 500 milliseconds debounce time
     []
   );
+
+  const searchFillingStations = (searchTerm) => {
+    setFillingStations(searchTerm.length == 0 ? fillingStationsData : fillingStationsData.filter(station => station.name.toUpperCase().includes(searchTerm.toUpperCase())))
+    // console.log(searchTerm);
+  }
 
   useEffect(() => {
     if (userLocation) {
@@ -187,6 +198,7 @@ export const LocationContextProvider = ({ children }) => {
         region,
         fillingStations,
         track,
+        searchFillingStations: searchFillingStations
       }}
     >
       {children}

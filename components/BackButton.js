@@ -27,7 +27,7 @@ const BackArrowBackground = styled(View)`
 export default function BackButton({ onPress }) {
 
   return (
-    <View style={styles.buttonContainer}>
+    // <View style={styles.buttonContainer}>
       <TouchableOpacity onPress={onPress} style={styles.BackArrowBackground} activeOpacity={0.8}>
         <MaterialIcons
           name="keyboard-arrow-left"
@@ -35,7 +35,7 @@ export default function BackButton({ onPress }) {
           color={theme.colors.bg.primary}
         />
       </TouchableOpacity>
-    </View>
+    // </View>
   );
 }
 

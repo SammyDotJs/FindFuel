@@ -26,8 +26,7 @@ import { theme } from "../../../infrastructure/theme";
 
 
 export default function MapScreen({ route, navigation }) {
-  const { userLocation, region, fillingStations, track } = useContext(LocationContext);
-
+  const { userLocation, region, fillingStations, track, searchFillingStations } = useContext(LocationContext);
   const backToHome = () => {
     navigation.navigate("Home")
   }
@@ -63,16 +62,31 @@ export default function MapScreen({ route, navigation }) {
     Keyboard.dismiss();
     // }
   };
+  const getSearch = (data) => {
+    // console.log(data);
+    searchFillingStations(data)
+  }
 
   return (
     <TouchableWithoutFeedback onPress={handleBodyPress}>
       <SafeAreaView style={{ flex: 1 }}>
         {/* <View style={{ width: "100%", position: "absolute", marginTop: hp(5), backgroundColor: "#000" }}> */}
-        {/* <View style={{ borderWidth: 1, width: "95%", height: 80, }}> */}
+        <View style={{ top: hp(9), zIndex: 999, position: "absolute" }}>
           <BackButton onPress={backToHome} />
-        {/* </View> */}
+        </View>
         <View style={{ width: "95%", justifyContent: "center", alignItems: "flex-end", marginRight: wp(3), }}>
-          <SearchBarComponent />
+          <SearchBarComponent onSearch={getSearch} />
+          <View style={{
+            backgroundColor: "#fff", justifyContent: "center",
+            padding: hp(2),
+            position: "absolute",
+            zIndex: 999,
+            top: hp(15),
+            width: "80%",
+            borderRadius: 10
+          }}>
+            {fillingStations.map(item => <Text style={{ marginBottom: hp(1) }}>{item.name}</Text>)}
+          </View>
         </View>
         {/* </View> */}
         <MapView showsUserLocation={false} region={region} style={styles.map}>

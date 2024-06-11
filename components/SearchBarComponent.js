@@ -10,7 +10,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-export default function SearchBarComponent() {
+export default function SearchBarComponent({ onSearch }) {
   const [search, setSearch] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
   const inputRef = useRef(null);
@@ -36,6 +36,11 @@ export default function SearchBarComponent() {
     console.log(search);
     setSearch("");
   };
+
+  useEffect(() => {
+    console.log(search);
+    onSearch(search)
+  }, [search])
 
   const updateSearch = (search) => {
     setSearch(search);
@@ -64,7 +69,7 @@ export default function SearchBarComponent() {
               ref={inputRef}
               style={searchStyles.searchInput}
               placeholder="Search for a Fuel station"
-              placeholderTextColor={theme.colors.text.foundation}
+              placeholderTextColor={theme.colors.text.placeholder}
               onChangeText={updateSearch}
               value={search}
               mode="bar"
@@ -93,6 +98,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     borderRadius: 25,
     overflow: "hidden",
+    shadowColor: '#C7C7C7',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    // Elevation for Android
+    elevation: 7,
   },
   equalizerIcon: {
     marginHorizontal: wp(3),

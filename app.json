@@ -22,7 +22,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.sammyjs.FindFuel"
+      "package": "com.sammyjs.FindFuel",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDZnqPKvw0Me0Q8Rg_wtQ6ExIfjggD9Mdo"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

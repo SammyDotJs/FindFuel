@@ -36,5 +36,6 @@ export const colors = {
     black: "#000000",
     inactive: "#939393",
     error: "#D0421B",
+    placeholder:"#B9CDCD"
   },
 };

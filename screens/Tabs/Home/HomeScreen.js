@@ -161,7 +161,7 @@ export default function HomeScreen({ route, navigation }) {
                   </TouchableOpacity>
                 );
               }}
-              keyExtractor={(item) => item.name} horizontal={true} initialNumToRender={3} maxToRenderPerBatch={3} showsHorizontalScrollIndicator={false} />
+              keyExtractor={(item) => `${item.place_id}`} horizontal={true} initialNumToRender={3} maxToRenderPerBatch={3} showsHorizontalScrollIndicator={false} />
           }
         </View>
         {/* Map recently visited */}
@@ -172,7 +172,6 @@ export default function HomeScreen({ route, navigation }) {
           {isLoading ? renderSkeletonLoader() :
             <FlatList data={data}
               renderItem={({ item }) => {
-                // console.log(item);
                 return (
                   <TouchableOpacity
                     // onPress={(e) => navigation.navigate("RestaurantDetail", { item })}
@@ -182,7 +181,7 @@ export default function HomeScreen({ route, navigation }) {
                   </TouchableOpacity>
                 );
               }}
-              keyExtractor={(item) => item.name} horizontal={true} initialNumToRender={3} maxToRenderPerBatch={3} showsHorizontalScrollIndicator={false} />
+              keyExtractor={(item) => `${item.place_id}`} horizontal={true} initialNumToRender={3} maxToRenderPerBatch={3} showsHorizontalScrollIndicator={false} />
           }
         </View>
       </Animated.ScrollView>
