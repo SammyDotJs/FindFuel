@@ -117,6 +117,8 @@ export const LocationContextProvider = ({ children }) => {
   const [region, setRegion] = useState(null);
   const [track, setTrack] = useState(true);
   const [userLocation, setUserLocation] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedStation, setSelectedStation] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -189,6 +191,22 @@ export const LocationContextProvider = ({ children }) => {
     }
   }, [userLocation, fetchFillingStations]);
 
+  const handleStationSelect = (station) => {
+    setSelectedStation(station);
+    setRegion({
+      latitude: station.geometry.location.lat,
+      longitude: station.geometry.location.lng,
+      latitudeDelta: 0.02,
+      longitudeDelta: 0.02,
+    });
+    setModalVisible(true);
+  };
+
+  const setMapRegion = (reg)=>{
+    setRegion(reg)
+  }
+
+
   return (
     <LocationContext.Provider
       value={{
@@ -198,7 +216,12 @@ export const LocationContextProvider = ({ children }) => {
         region,
         fillingStations,
         track,
-        searchFillingStations: searchFillingStations
+        searchFillingStations: searchFillingStations,
+        handleStationSelect,
+        modalVisible,
+        setModalVisible,
+        selectedStation,
+        setMapRegion
       }}
     >
       {children}

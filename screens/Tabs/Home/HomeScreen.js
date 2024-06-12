@@ -7,8 +7,9 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { theme } from "../../../infrastructure/theme";
 import { Button } from "@rneui/themed";
 import { UserContext } from "../../../services/user/UserContext";
@@ -45,19 +46,33 @@ const SkeletonLoader = () => {
 
 
 export default function HomeScreen({ route, navigation }) {
+  const { fillingStations, isLoading, fetchFillingStations, userLocation , setLoading} = useContext(LocationContext);
   const translateY = useSharedValue(0);
+  const { loggedInDetails } = useContext(UserContext)
+  const [userName, setUserName] = useState("")
+  const [profileLetter, setProfileLetter] = useState("")
+  const [refreshing, setRefreshing] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
+  const data = fillingStations.slice(0, 3)
+
+  const readMore = () => {
+    navigation.navigate("DashboardInfo")
+  }
+  const viewNotifications = () => {
+    navigation.navigate("Notifications")
+  }
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       translateY.value = event.contentOffset.y;
     },
   });
-  const { loggedInDetails } = useContext(UserContext)
-  const [userName, setUserName] = useState("")
-  const [profileLetter, setProfileLetter] = useState("")
 
-  const { fillingStations, isLoading } = useContext(LocationContext)
-  const data = fillingStations.slice(0, 3)
+  const viewAll = async () => {
+    await navigation.navigate("AllStations", fillingStations)
+  }
+
+
 
   useEffect(() => {
     // setUserName(loggedInDetails?.user.first_name)
@@ -66,11 +81,7 @@ export default function HomeScreen({ route, navigation }) {
     setUserName("John Doe")
     setProfileLetter("J")
   }, [loggedInDetails])
-  console.log(loggedInDetails);
-
-  const viewAll = async () => {
-    await navigation.navigate("AllStations", fillingStations)
-  }
+  // console.log(loggedInDetails);
   useEffect(() => {
     const backAction = () => {
       Alert.alert("Exit App", "Are you sure you want to exit?", [
@@ -96,12 +107,34 @@ export default function HomeScreen({ route, navigation }) {
     return () => backHandler.remove();
   }, [route]);
 
-  const readMore = () => {
-    navigation.navigate("DashboardInfo")
-  }
-  const viewNotifications = () => {
-    navigation.navigate("Notifications")
-  }
+  // const fetchData = async () => {
+  //   setRefreshing(true);
+  //   try {
+  //     console.log(userLocation);
+  //     console.log(refreshing,"try");
+  //     await fetchFillingStations(userLocation.coords.latitude, userLocation.coords.longitude);
+  //     // Handle success
+  //   } catch (error) {
+  //     console.error(error);
+  //     // Handle error
+  //   } finally {
+  //     setRefreshing(false);
+  //   }
+  // };
+
+  // const onRefresh = useCallback(() => {
+  //   console.log(refreshing);
+  //   if (!refreshing) {
+  //     setLoading(true)
+  //     fetchData();
+  //   }
+  // }, [refreshing, fetchData]);
+
+  // useEffect(() => {
+  //   if (userLocation) {
+  //     fetchData();
+  //   }
+  // }, [userLocation]);
 
   const renderSkeletonLoader = () =>
   (<View style={{ flexDirection: "row" }}>
@@ -151,7 +184,6 @@ export default function HomeScreen({ route, navigation }) {
           {isLoading ? renderSkeletonLoader() :
             <FlatList data={data}
               renderItem={({ item }) => {
-                // console.log(item);
                 return (
                   <TouchableOpacity
                     // onPress={(e) => navigation.navigate("RestaurantDetail", { item })}
@@ -161,7 +193,8 @@ export default function HomeScreen({ route, navigation }) {
                   </TouchableOpacity>
                 );
               }}
-              keyExtractor={(item) => `${item.place_id}`} horizontal={true} initialNumToRender={3} maxToRenderPerBatch={3} showsHorizontalScrollIndicator={false} />
+              keyExtractor={(item) => `${item.name}-${item.geometry.location.lat}-${item.geometry.location.lat}`}
+              horizontal={true} initialNumToRender={3} maxToRenderPerBatch={3} showsHorizontalScrollIndicator={false} />
           }
         </View>
         {/* Map recently visited */}
@@ -181,7 +214,8 @@ export default function HomeScreen({ route, navigation }) {
                   </TouchableOpacity>
                 );
               }}
-              keyExtractor={(item) => `${item.place_id}`} horizontal={true} initialNumToRender={3} maxToRenderPerBatch={3} showsHorizontalScrollIndicator={false} />
+              keyExtractor={(item) => `${item.name}-${item.geometry.location.lat}-${item.geometry.location.lon}`}
+              horizontal={true} initialNumToRender={3} maxToRenderPerBatch={3} showsHorizontalScrollIndicator={false} />
           }
         </View>
       </Animated.ScrollView>

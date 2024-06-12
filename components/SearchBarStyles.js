@@ -13,34 +13,32 @@ export const searchStyles = StyleSheet.create({
     zIndex: 999,
     top: hp(9),
     width: "80%",
+
   },
   searchInputContainer: {
-    elevation:5,
-    flexDirection: "row",
-    backgroundColor: theme.colors.bg.white,
     borderRadius: 25,
-    justifyContent: "center",
+    backgroundColor: theme.colors.bg.white,
+    overflow: "hidden",
+    shadowColor: '#C7C7C7',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 7,
     alignItems: "center",
-    width: wp(80),
-    elevation: 5,
-    shadowColor: '#000', // iOS shadow
-    shadowOffset: { width: 0, height: 2 }, // iOS shadow
-    shadowOpacity: 0.3, // iOS shadow
-    shadowRadius: 4, // iOS shadow
+    justifyContent: "center",
+
+
   },
   searchInput: {
-    paddingVertical: wp(2),
     fontFamily: theme.fonts.medium,
     width: "65%",
     fontSize: hp(1.4),
-    // borderWidth:1
   },
   searchIcon: {
-    // marginHorizontal: 20,
     margin: "auto",
-    // elevation:5,
-    // margin:10,
-    // borderWidth:1,
-    marginVertical: wp(2),
+
   },
 });

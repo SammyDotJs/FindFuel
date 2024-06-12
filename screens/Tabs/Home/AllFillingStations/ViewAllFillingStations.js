@@ -79,7 +79,8 @@ export default function ViewAllFillingStations({ route, navigation }) {
                         </TouchableOpacity>
                     );
                 }}
-                keyExtractor={(item) => `${item.name}-${item.geometry.location.lat}}`} contentContainerStyle={{ paddingBottom: hp(10) }} showsVerticalScrollIndicator={false} />}
+                keyExtractor={(item) => `${item.name}-${item.latitude}-${item.longitude}`}
+                contentContainerStyle={{ paddingBottom: hp(10) }} showsVerticalScrollIndicator={false} />}
         </SafeArea>
     )
 }
