@@ -19,7 +19,7 @@ export const searchStyles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: theme.colors.bg.white,
     overflow: "hidden",
-    shadowColor: '#C7C7C7',
+    shadowColor: '#000000',
     shadowOffset: {
       width: 0,
       height: 2,

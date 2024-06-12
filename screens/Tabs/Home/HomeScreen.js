@@ -6,6 +6,7 @@ import {
   ImageBackground,
   FlatList,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import { theme } from "../../../infrastructure/theme";
@@ -157,12 +158,10 @@ export default function HomeScreen({ route, navigation }) {
             <FlatList data={data}
               renderItem={({ item }) => {
                 return (
-                  <TouchableOpacity
-                    onPress={() => locate(item)}
-                    activeOpacity={0.5}
+                  <TouchableWithoutFeedback
                   >
                     <StationsCard stations={item} locate={() => locate(item)} />
-                  </TouchableOpacity>
+                  </TouchableWithoutFeedback>
                 );
               }}
               keyExtractor={(item) => `${item.name}-${item.geometry.location.lat}-${item.geometry.location.lat}`}
@@ -178,12 +177,11 @@ export default function HomeScreen({ route, navigation }) {
             <FlatList data={data}
               renderItem={({ item }) => {
                 return (
-                  <TouchableOpacity
-                    onPress={() => locate(item)}
-                    activeOpacity={0.5}
+                  <TouchableWithoutFeedback
+
                   >
                     <StationsCard stations={item} locate={() => locate(item)} />
-                  </TouchableOpacity>
+                  </TouchableWithoutFeedback>
                 );
               }}
               keyExtractor={(item) => `${item.name}-${item.geometry.location.lat}-${item.geometry.location.lon}`}

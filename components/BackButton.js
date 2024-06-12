@@ -31,7 +31,7 @@ export default function BackButton({ onPress }) {
       <TouchableOpacity onPress={onPress} style={styles.BackArrowBackground} activeOpacity={0.8}>
         <MaterialIcons
           name="keyboard-arrow-left"
-          size={hp(4)}
+          size={hp(4.5)}
           color={theme.colors.bg.primary}
         />
       </TouchableOpacity>
@@ -46,10 +46,18 @@ const styles = StyleSheet.create({
     zIndex: 999,
     backgroundColor: theme.colors.bg.white,
     borderRadius: 50,
-    width: hp(4.5),
-    height: hp(4.5),
-    marginLeft: wp(4),
+    height: hp(5),
+    width: hp(5),
+    marginLeft: wp(3.5),
     opacity: 0.9,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 7,
   },
   buttonContainer: {
     justifyContent: "center",

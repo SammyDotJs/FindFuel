@@ -181,6 +181,9 @@ export const LocationContextProvider = ({ children }) => {
     setFillingStations(searchTerm.length == 0 ? fillingStationsData : fillingStationsData.filter(station => station.name.toUpperCase().includes(searchTerm.toUpperCase())))
     // console.log(searchTerm);
   }
+  const setFillingStation = (marker) => {
+    setFillingStations(marker)
+  }
 
   useEffect(() => {
     if (userLocation) {
@@ -193,16 +196,16 @@ export const LocationContextProvider = ({ children }) => {
 
   const handleStationSelect = (station) => {
     setSelectedStation(station);
+    setModalVisible(true);
     setRegion({
       latitude: station.geometry.location.lat,
       longitude: station.geometry.location.lng,
       latitudeDelta: 0.02,
       longitudeDelta: 0.02,
     });
-    setModalVisible(true);
   };
 
-  const setMapRegion = (reg)=>{
+  const setMapRegion = (reg) => {
     setRegion(reg)
   }
 
@@ -216,12 +219,14 @@ export const LocationContextProvider = ({ children }) => {
         region,
         fillingStations,
         track,
-        searchFillingStations: searchFillingStations,
+        searchFillingStations,
         handleStationSelect,
         modalVisible,
         setModalVisible,
         selectedStation,
-        setMapRegion
+        setMapRegion,
+        fetchFillingStations,
+        setFillingStation
       }}
     >
       {children}
