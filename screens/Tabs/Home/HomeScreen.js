@@ -46,13 +46,11 @@ const SkeletonLoader = () => {
 
 
 export default function HomeScreen({ route, navigation }) {
-  const { fillingStations, isLoading, fetchFillingStations, userLocation , setLoading} = useContext(LocationContext);
+  const { fillingStations, isLoading, fetchFillingStations, userLocation, setLoading, handleStationSelect } = useContext(LocationContext);
   const translateY = useSharedValue(0);
   const { loggedInDetails } = useContext(UserContext)
   const [userName, setUserName] = useState("")
   const [profileLetter, setProfileLetter] = useState("")
-  const [refreshing, setRefreshing] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
 
   const data = fillingStations.slice(0, 3)
 
@@ -107,34 +105,6 @@ export default function HomeScreen({ route, navigation }) {
     return () => backHandler.remove();
   }, [route]);
 
-  // const fetchData = async () => {
-  //   setRefreshing(true);
-  //   try {
-  //     console.log(userLocation);
-  //     console.log(refreshing,"try");
-  //     await fetchFillingStations(userLocation.coords.latitude, userLocation.coords.longitude);
-  //     // Handle success
-  //   } catch (error) {
-  //     console.error(error);
-  //     // Handle error
-  //   } finally {
-  //     setRefreshing(false);
-  //   }
-  // };
-
-  // const onRefresh = useCallback(() => {
-  //   console.log(refreshing);
-  //   if (!refreshing) {
-  //     setLoading(true)
-  //     fetchData();
-  //   }
-  // }, [refreshing, fetchData]);
-
-  // useEffect(() => {
-  //   if (userLocation) {
-  //     fetchData();
-  //   }
-  // }, [userLocation]);
 
   const renderSkeletonLoader = () =>
   (<View style={{ flexDirection: "row" }}>
@@ -143,6 +113,10 @@ export default function HomeScreen({ route, navigation }) {
     <SkeletonLoader />
   </View>)
 
+  const locate = (item) => {
+    navigation.navigate("Map")
+    handleStationSelect(item)
+  }
   return (
     <SafeArea>
       {/* <PanGestureHandler> */}
@@ -186,10 +160,10 @@ export default function HomeScreen({ route, navigation }) {
               renderItem={({ item }) => {
                 return (
                   <TouchableOpacity
-                    // onPress={(e) => navigation.navigate("RestaurantDetail", { item })}
+                    onPress={() => locate(item)}
                     activeOpacity={0.5}
                   >
-                    <StationsCard stations={item} />
+                    <StationsCard stations={item} locate={() => locate(item)} />
                   </TouchableOpacity>
                 );
               }}
@@ -207,10 +181,10 @@ export default function HomeScreen({ route, navigation }) {
               renderItem={({ item }) => {
                 return (
                   <TouchableOpacity
-                    // onPress={(e) => navigation.navigate("RestaurantDetail", { item })}
+                    onPress={() => locate(item)}
                     activeOpacity={0.5}
                   >
-                    <StationsCard stations={item} />
+                    <StationsCard stations={item} locate={() => locate(item)} />
                   </TouchableOpacity>
                 );
               }}

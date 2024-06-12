@@ -318,7 +318,7 @@ export default function MapScreen({ route, navigation }) {
         <View style={styles.searchContainer}>
           <SearchBarComponent onSearch={getSearch} filteredStations={filteredStations} expanded={isExpanded} dropdownVisible={isDropdownVisible} />
         </View>
-        <MapView showsUserLocation={false} region={region} style={styles.map} customMapStyle={MapStyle}>
+        <MapView showsUserLocation={false} region={region} style={styles.map}>
           {userLocation && (
             <Marker
               coordinate={{
@@ -346,7 +346,7 @@ export default function MapScreen({ route, navigation }) {
           ))}
 
         </MapView>
-        <Modal isVisible={modalVisible} onBackdropPress={toggleModal} style={styles.modal} backdropOpacity={0}>
+        <Modal isVisible={modalVisible} onBackdropPress={toggleModal} style={styles.modal} backdropOpacity={0} animationType="slide">
           <View style={styles.modalContent}>
             {selectedStation && (
               <View style={ms.modalContainer}>

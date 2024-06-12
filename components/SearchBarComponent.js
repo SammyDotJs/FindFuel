@@ -109,70 +109,72 @@ export default function SearchBarComponent({ expanded, dropdownVisible }) {
   return (
     <TouchableWithoutFeedback onPress={handleBodyPress} >
       <View style={searchStyles.searchContainer}>
-        <Animated.View style={[searchStyles.searchInputContainer, animatedStyles, dynamicStyles.searchBar]}>
-          <View style={styles.searchRow}>
-            <Fontisto
-              name="search"
-              size={hp(2)}
-              color={theme.colors.bg.primary}
-              style={searchStyles.searchIcon}
-              onPress={() => setIsExpanded(true)}
-            />
-            {isExpanded && (
-              <>
-                <TextInput
-                  ref={inputRef}
-                  style={searchStyles.searchInput}
-                  placeholder="Search for a Fuel station"
-                  placeholderTextColor={theme.colors.text.placeholder}
-                  onChangeText={updateSearch}
-                  value={search}
-                  mode="bar"
-                  onBlur={!isDropdownVisible && customOnBlur}
-                />
-                <Feather
-                  name="x"
-                  size={hp(2.5)}
-                  color={theme.colors.bg.primary}
-                  style={styles.equalizerIcon}
-                  onPress={customOnBlur}
-                />
-              </>
-            )}
-          </View>
-          {isDropdownVisible && (
-            fillingStations.length > 0 ? (
-              <FlatList
-                data={fillingStations}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
-                  <TouchableOpacity onPress={() => handleSelectItem(item)}>
-                    <View style={{ flexDirection: "row", alignItems: "center", padding: hp(1) }}>
-                      <SimpleLineIcons
-                        name={"location-pin"}
-                        size={hp(2)}
-                        color={theme.colors.bg.primary}
-                      />
-                      <View style={{ flexDirection: "column", paddingHorizontal: hp(1) }}>
-                        <Text style={styles.stationText}>{item.name}</Text>
-                        <Text style={styles.stationVicinity}>{truncateText(item.vicinity, 30)}</Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                )}
-                style={styles.stationList}
+        <TouchableWithoutFeedback onPress={!isExpanded ? () => { setIsExpanded(true) } : () => { }}>
+          <Animated.View style={[searchStyles.searchInputContainer, animatedStyles, dynamicStyles.searchBar]}>
+            <View style={styles.searchRow}>
+              <Fontisto
+                name="search"
+                size={hp(2)}
+                color={theme.colors.bg.primary}
+                style={searchStyles.searchIcon}
+                // onPress={() => setIsExpanded(true)}
               />
-            ) : (
-              <View style={styles.unavailableView}>
-                <Text style={styles.unavailableText}>
-                  Filling Station Unavailable
-                </Text>
-              </View>
-            )
-          )}
-        </Animated.View>
-      </View>
-    </TouchableWithoutFeedback>
+              {isExpanded && (
+                <>
+                  <TextInput
+                    ref={inputRef}
+                    style={searchStyles.searchInput}
+                    placeholder="Search for a Fuel station"
+                    placeholderTextColor={theme.colors.text.placeholder}
+                    onChangeText={updateSearch}
+                    value={search}
+                    mode="bar"
+                    onBlur={!isDropdownVisible && customOnBlur}
+                  />
+                  <Feather
+                    name="x"
+                    size={hp(2.5)}
+                    color={theme.colors.bg.primary}
+                    style={styles.equalizerIcon}
+                    onPress={customOnBlur}
+                  />
+                </>
+              )}
+            </View>
+            {isDropdownVisible && (
+              fillingStations.length > 0 ? (
+                <FlatList
+                  data={fillingStations}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => handleSelectItem(item)}>
+                      <View style={{ flexDirection: "row", alignItems: "center", padding: hp(1) }}>
+                        <SimpleLineIcons
+                          name={"location-pin"}
+                          size={hp(2)}
+                          color={theme.colors.bg.primary}
+                        />
+                        <View style={{ flexDirection: "column", paddingHorizontal: hp(1) }}>
+                          <Text style={styles.stationText}>{item.name}</Text>
+                          <Text style={styles.stationVicinity}>{truncateText(item.vicinity, 30)}</Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                  style={styles.stationList}
+                />
+              ) : (
+                <View style={styles.unavailableView}>
+                  <Text style={styles.unavailableText}>
+                    Filling Station Unavailable
+                  </Text>
+                </View>
+              )
+            )}
+          </Animated.View>
+        </TouchableWithoutFeedback>
+      </View >
+    </TouchableWithoutFeedback >
   );
 }
 

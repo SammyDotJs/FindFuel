@@ -34,8 +34,7 @@ const SkeletonLoader = () => {
 
 
 export default function ViewAllFillingStations({ route, navigation }) {
-
-    const { isLoading } = useContext(LocationContext)
+    const { handleStationSelect, isLoading } = useContext(LocationContext);
 
     const backToHome = () => {
         navigation.navigate("HomeScreen")
@@ -54,7 +53,10 @@ export default function ViewAllFillingStations({ route, navigation }) {
 
     </View>)
 
-
+    const locate = (item) => {
+        navigation.navigate("Map")
+        handleStationSelect(item)
+    }
     const fillingStations = route.params
     return (
         <SafeArea style={{}}>
@@ -75,11 +77,11 @@ export default function ViewAllFillingStations({ route, navigation }) {
                             // onPress={(e) => navigation.navigate("RestaurantDetail", { item })}
                             activeOpacity={0.5}
                         >
-                            <StationsCard viewAll stations={item} />
+                            <StationsCard viewAll stations={item} locate={() => locate(item)} />
                         </TouchableOpacity>
                     );
                 }}
-                keyExtractor={(item) => `${item.name}-${item.latitude}-${item.longitude}`}
+                keyExtractor={(item, index) => `${index}-${item.latitude}-${item.longitude}`}
                 contentContainerStyle={{ paddingBottom: hp(10) }} showsVerticalScrollIndicator={false} />}
         </SafeArea>
     )
