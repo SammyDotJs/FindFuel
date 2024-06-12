@@ -4,10 +4,8 @@ import {
   BackHandler,
   Alert,
   ImageBackground,
-  ScrollView,
   FlatList,
   TouchableOpacity,
-  RefreshControl,
 } from "react-native";
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import { theme } from "../../../infrastructure/theme";

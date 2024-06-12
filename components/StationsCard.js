@@ -8,6 +8,12 @@ export default function StationsCard({ stations, viewAll, locate }) {
     const navLocation = () => {
         locate()
     }
+    const truncateText = (text, maxLength) => {
+        if (text.length <= maxLength) {
+            return text;
+        }
+        return text.slice(0, maxLength) + '...';
+    };
     return viewAll ? <View style={hs.fillingStationAll}>
         <ImageBackground style={hs.fillingStationImage} source={{ uri: "https://nairametrics.com/wp-content/uploads/2023/07/NNPC.jpg" }} imageStyle={hs.imageStyle}>
 
@@ -26,7 +32,7 @@ export default function StationsCard({ stations, viewAll, locate }) {
 
         </ImageBackground>
         <View style={hs.fillingStationInfo}>
-            <Text style={hs.fillingStationName}>{stations.name}</Text>
+            <Text style={hs.fillingStationName}>{truncateText(stations.name, 30)}</Text>
             <Text style={hs.fillingStationPrice}>N680 per liter</Text>
             <Button title="Locate" buttonStyle={hs.buttonStyle} titleStyle={hs.titleStyle} onPress={() => navLocation()} />
         </View>
