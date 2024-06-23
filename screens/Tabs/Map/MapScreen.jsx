@@ -40,7 +40,7 @@ const AnimatedMarker = Animatable.createAnimatableComponent(Marker);
 const GOOGLE_MAPS_APIKEY = "AIzaSyDZnqPKvw0Me0Q8Rg_wtQ6ExIfjggD9Mdo";
 
 export default function MapScreen({ route, navigation }) {
-  const MapRef = useRef(null);
+  const mapRef = useRef(null);
   const {
     userLocation,
     region,
@@ -53,6 +53,7 @@ export default function MapScreen({ route, navigation }) {
     selectedStation,
     onRegionChangeComplete,
     setSelectedStation,
+    setMapRef,
   } = useContext(LocationContext);
 
   const [filteredStations, setFilteredStations] = useState([]);
@@ -97,7 +98,6 @@ export default function MapScreen({ route, navigation }) {
       setOrigin(0);
       setDestination(0);
     }
-    console.log(selectedStation);
   }, []);
 
   const handleBodyPress = useCallback(() => {
@@ -121,14 +121,15 @@ export default function MapScreen({ route, navigation }) {
       latitudeDelta: 0.0022,
       longitudeDelta: 0.0021,
     };
-    MapRef.current.animateToRegion(newRegion, 1000); // 1000 ms for the transition
+    mapRef.current.animateToRegion(newRegion, 1000); // 1000 ms for the transition
   };
 
+
   const moveTo = async (position) => {
-    const camera = await MapRef.current?.getCamera();
+    const camera = await mapRef.current?.getCamera();
     if (camera) {
       camera.center = position;
-      MapRef.current?.animateCamera(camera, { duration: 1000 });
+      mapRef.current?.animateCamera(camera, { duration: 1000 });
     }
   };
 
@@ -146,7 +147,7 @@ export default function MapScreen({ route, navigation }) {
           : details?.coords.longitude,
     };
     set(position);
-    // moveTo(position);
+    moveTo(position);
   };
 
   const onMarkerPress = (station) => {
@@ -165,7 +166,7 @@ export default function MapScreen({ route, navigation }) {
   const traceRoute = () => {
     if (origin && destination) {
       setShowDirections(true);
-      MapRef.current?.fitToCoordinates([origin, destination], { edgePadding });
+      mapRef.current?.fitToCoordinates([origin, destination], { edgePadding });
     }
   };
   const CustomMarker = ({ isSelected, ...props }) => {
@@ -219,21 +220,20 @@ export default function MapScreen({ route, navigation }) {
             <View style={styles.loadingBox}>
               <ActivityIndicator
                 animating={true}
-                size={50}
+                size={30}
                 color={theme.colors.bg.primary}
               />
             </View>
           </View>
         ) : (
           <MapView
-            ref={MapRef}
+            ref={mapRef}
             provider={PROVIDER_GOOGLE}
             showsUserLocation={false}
             region={region}
             onRegionChangeComplete={onRegionChangeComplete}
             style={styles.map}
             customMapStyle={MapStyle}
-            // onMapReady={handleMapReady}
           >
             {userLocation && (
               <Marker
@@ -245,7 +245,11 @@ export default function MapScreen({ route, navigation }) {
               >
                 <Image
                   source={require("../../../assets/Userpointer.png")}
-                  style={{ width: markerSize * 1.5, height: markerSize * 1.5 }}
+                  style={{
+                    width: markerSize * 2,
+                    height: markerSize * 2,
+                    // resizeMode: "cover",
+                  }}
                 />
               </Marker>
             )}

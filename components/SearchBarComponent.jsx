@@ -92,10 +92,10 @@ export default function SearchBarComponent({ expanded, dropdownVisible }) {
   });
 
   const updateSearch = (search) => {
-    setSearch(search);
-    searchFillingStations(search);
     setIsExpanded(true);
     setIsDropdownVisible(true);
+    setSearch(search);
+    searchFillingStations(search);
   };
 
   const handleBodyPress = () => {
@@ -129,7 +129,7 @@ export default function SearchBarComponent({ expanded, dropdownVisible }) {
     }, 100);
   };
 
-  const dynamicStyles = createDynamicStyles(isExpanded);
+  const dynamicStyles = createDynamicStyles(isExpanded, isDropdownVisible);
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) {
       return text;
@@ -139,106 +139,107 @@ export default function SearchBarComponent({ expanded, dropdownVisible }) {
 
   return (
     <TouchableWithoutFeedback onPress={handleBodyPress}>
-        <TouchableWithoutFeedback
-          onPress={
-            !isExpanded
-              ? () => {
-                  setIsExpanded(true);
-                }
-              : () => {}
-          }
-          style={animatedStyles}
-        >
-          <View style={searchStyles.searchContainer}>
-            <Animated.View
-              style={[
-                searchStyles.searchInputContainer,
-                animatedStyles,
-              ]}
-            >
-              <View style={styles.searchRow}>
-                <Fontisto
-                  name="search"
-                  size={18}
-                  color={theme.colors.bg.primary}
-                  style={searchStyles.searchIcon}
-                />
-                {isExpanded && (
-                  <>
-                    <TextInput
-                      ref={inputRef}
-                      style={searchStyles.searchInput}
-                      placeholder="Search for a Fuel station"
-                      placeholderTextColor={theme.colors.text.placeholder}
-                      onChangeText={updateSearch}
-                      value={search}
-                      mode="bar"
-                      onBlur={!isDropdownVisible && customOnBlur}
-                    />
-                    <Feather
-                      name="x"
-                      size={hp(2.5)}
-                      color={theme.colors.bg.primary}
-                      style={styles.equalizerIcon}
-                      onPress={customOnBlur}
-                    />
-                  </>
-                )}
-              </View>
-              {isDropdownVisible &&
-                (fillingStations.length > 0 ? (
-                  <FlatList
-                    data={fillingStations}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity onPress={() => handleSelectItem(item)}>
+      <TouchableWithoutFeedback
+        onPress={
+          !isExpanded
+            ? () => {
+                setIsExpanded(true);
+              }
+            : () => {}
+        }
+        style={animatedStyles}
+      >
+        <View style={searchStyles.searchContainer}>
+          <Animated.View
+            style={[
+              searchStyles.searchInputContainer,
+              animatedStyles,
+              dynamicStyles,
+            ]}
+          >
+            <View style={styles.searchRow}>
+              <Fontisto
+                name="search"
+                size={20}
+                color={theme.colors.bg.primary}
+                style={searchStyles.searchIcon}
+              />
+              {isExpanded && (
+                <>
+                  <TextInput
+                    ref={inputRef}
+                    style={searchStyles.searchInput}
+                    placeholder="Search for a Fuel station"
+                    placeholderTextColor={theme.colors.text.placeholder}
+                    onChangeText={updateSearch}
+                    value={search}
+                    mode="bar"
+                    onBlur={!isDropdownVisible && customOnBlur}
+                  />
+                  <Feather
+                    name="x"
+                    size={25}
+                    color={theme.colors.bg.primary}
+                    style={styles.equalizerIcon}
+                    onPress={customOnBlur}
+                  />
+                </>
+              )}
+            </View>
+            {isDropdownVisible &&
+              (fillingStations.length > 0 ? (
+                <FlatList
+                  data={fillingStations}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => handleSelectItem(item)}>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          padding: hp(1),
+                        }}
+                      >
+                        <SimpleLineIcons
+                          name={"location-pin"}
+                          size={hp(2)}
+                          color={theme.colors.bg.primary}
+                        />
                         <View
                           style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            padding: hp(1),
+                            flexDirection: "column",
+                            paddingHorizontal: hp(1),
+                            width: 300,
                           }}
                         >
-                          <SimpleLineIcons
-                            name={"location-pin"}
-                            size={hp(2)}
-                            color={theme.colors.bg.primary}
-                          />
-                          <View
-                            style={{
-                              flexDirection: "column",
-                              paddingHorizontal: hp(1),
-                              width: 300,
-                            }}
-                          >
-                            <Text style={styles.stationText}>{item.name}</Text>
-                            <Text style={styles.stationVicinity}>
-                              {truncateText(item.vicinity, 30)}
-                            </Text>
-                          </View>
+                          <Text style={styles.stationText}>{item.name}</Text>
+                          <Text style={styles.stationVicinity}>
+                            {truncateText(item.vicinity, 30)}
+                          </Text>
                         </View>
-                      </TouchableOpacity>
-                    )}
-                    style={styles.stationList}
-                  />
-                ) : (
-                  <View style={styles.unavailableView}>
-                    <Text style={styles.unavailableText}>
-                      Filling Station Unavailable
-                    </Text>
-                  </View>
-                ))}
-            </Animated.View>
-          </View>
-        </TouchableWithoutFeedback>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                  style={styles.stationList}
+                />
+              ) : (
+                <View style={styles.unavailableView}>
+                  <Text style={styles.unavailableText}>
+                    Filling Station Unavailable
+                  </Text>
+                </View>
+              ))}
+          </Animated.View>
+        </View>
+      </TouchableWithoutFeedback>
     </TouchableWithoutFeedback>
   );
 }
 
-const createDynamicStyles = (isExpanded) =>
+const createDynamicStyles = (isExpanded, isDropdownVisible) =>
   StyleSheet.create({
-    searchBar: {
-      justifyContent: !isExpanded ? "center" : "flex-start",
+    searchInputContainer: {
+      justifyContent: !isDropdownVisible ? "center" : "flex-start",
     },
   });
 
@@ -247,6 +248,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: wp(75),
+    marginTop:12.5
   },
   equalizerIcon: {
     marginLeft: "auto",

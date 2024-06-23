@@ -26,7 +26,7 @@ export const searchStyles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 7,
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
 
 
   },

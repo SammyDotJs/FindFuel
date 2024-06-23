@@ -87,9 +87,6 @@ export default function HomeScreen({ route, navigation }) {
   const {
     fillingStations,
     isLoading,
-    fetchFillingStations,
-    userLocation,
-    setLoading,
     handleStationSelect,
   } = useContext(LocationContext);
   const translateY = useSharedValue(0);
@@ -230,7 +227,7 @@ export default function HomeScreen({ route, navigation }) {
                 );
               }}
               keyExtractor={(item, index) =>
-                `${item.name}-${item.geometry.location.lat}-${index}`
+                `${item?.name}-${item?.geometry.location.lat}-${index}`
               }
               horizontal={true}
               initialNumToRender={3}
@@ -257,7 +254,7 @@ export default function HomeScreen({ route, navigation }) {
                 );
               }}
               keyExtractor={(item, index) =>
-                `${item.name}-${item.geometry.location.lat}-${index}`
+                `${item?.name}-${item?.geometry.location.lat}-${index}`
               }
               horizontal={true}
               initialNumToRender={3}

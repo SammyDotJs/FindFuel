@@ -1,4 +1,10 @@
-import React, { createContext, useState, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 import * as Location from "expo-location";
 import axios from "axios";
 
@@ -29,6 +35,12 @@ export const LocationContextProvider = ({ children }) => {
   const setMapRegion = (reg) => {
     setRegion(reg);
   };
+
+  const mapRef = useRef(null);
+
+  const setMapRef = (ref) => {
+    mapRef.current = ref;
+  };
   useEffect(() => {
     (async () => {
       try {
@@ -46,12 +58,11 @@ export const LocationContextProvider = ({ children }) => {
           longitudeDelta: 0.004,
         });
 
-        // Optionally, you can subscribe to location updates
         Location.watchPositionAsync(
           {
             accuracy: Location.Accuracy.High,
             timeInterval: 5000, // Update every 5 seconds
-            distanceInterval: 100, // Update every meter
+            distanceInterval: 1, // Update every meter
           },
           (newLocation) => {
             setUserLocation(newLocation);
@@ -72,7 +83,6 @@ export const LocationContextProvider = ({ children }) => {
 
   const fetchFillingStations = useCallback(
     debounce(async (latitude, longitude, pageToken = null) => {
-      // console.log(latitude, longitude);
       try {
         let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=gas_station&key=${API_KEY}`;
         if (pageToken) {
@@ -81,30 +91,20 @@ export const LocationContextProvider = ({ children }) => {
         const response = await axios.get(url);
         const data = response.data;
 
-        // const newStations = data.results.filter(station => (
-        //   !fillingStations.some(existingStation => existingStation.place_id === station.place_id)
-        // ));
-        // setFillingStations((prevFillingStations) => [
-        //   // ...prevFillingStations,
-        //   ...data.results,
-        // ]);
-        // setFillingStationsData((prevFillingStations) => [
-        //   // ...prevFillingStations,
-        //   ...data.results,
-        // ]);
 
         // Use a Set to keep track of unique stations
         const newStationsSet = new Set([...uniqueStations]);
-        data.results.forEach(station => {
+        data.results.forEach((station) => {
           newStationsSet.add(station.place_id);
         });
 
         // Convert Set back to array and filter unique stations
-        const uniqueStationsArray = Array.from(newStationsSet).map(id => 
-          data.results.find(station => station.place_id === id)
+        const uniqueStationsArray = Array.from(newStationsSet).map((id) =>
+          data.results.find((station) => station.place_id === id)
         );
 
         setFillingStations(uniqueStationsArray);
+        setFillingStationsData(uniqueStationsArray);
         setUniqueStations(newStationsSet);
 
         setIsLoading(false);
@@ -115,7 +115,6 @@ export const LocationContextProvider = ({ children }) => {
             fetchFillingStations(latitude, longitude, data.next_page_token);
           }, 2000);
         }
-        // console.log(fillingStations);
       } catch (error) {
         console.error(error);
         setIsLoading(false);
@@ -125,11 +124,10 @@ export const LocationContextProvider = ({ children }) => {
   );
 
   const searchFillingStations = (searchTerm) => {
-    // console.log(fillingStations.length);
     setFillingStations(
       searchTerm.length == 0
-        ? fillingStations
-        : fillingStations.filter((station) =>
+        ? fillingStationsData
+        : fillingStationsData.filter((station) =>
             station.name.toUpperCase().includes(searchTerm.toUpperCase())
           )
     );
@@ -161,7 +159,7 @@ export const LocationContextProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    onChangeLocation
+    onChangeLocation;
   }, [region]);
 
   const onRegionChangeComplete = useCallback(
@@ -174,13 +172,17 @@ export const LocationContextProvider = ({ children }) => {
 
   const handleStationSelect = (station) => {
     setSelectedStation(station);
-    setModalVisible(true);
-    setRegion({
+    const newRegion = {
       latitude: station.geometry.location.lat,
       longitude: station.geometry.location.lng,
       latitudeDelta: 0.001,
       longitudeDelta: 0.004,
-    });
+    };
+    // if (MapRef.current) {
+      //   MapRef.current.animateToRegion(newRegion, 1000); // 1000ms animation duration
+      // }
+      setModalVisible(true);
+    setRegion(newRegion);
   };
   const myLocation = () => {
     setRegion({
@@ -210,7 +212,8 @@ export const LocationContextProvider = ({ children }) => {
         setFillingStation,
         myLocation,
         onRegionChangeComplete,
-        setSelectedStation
+        setSelectedStation,
+        setMapRef,
       }}
     >
       {children}

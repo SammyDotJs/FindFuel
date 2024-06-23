@@ -9,7 +9,7 @@ export default function StationsCard({ stations, viewAll, locate }) {
         locate()
     }
     const truncateText = (text, maxLength) => {
-        if (text.length <= maxLength) {
+        if (text?.length <= maxLength) {
             return text;
         }
         return text.slice(0, maxLength) + '...';
@@ -20,7 +20,7 @@ export default function StationsCard({ stations, viewAll, locate }) {
         </ImageBackground>
         <View style={hs.fillingStationInfoAll}>
             <View>
-                <Text style={hs.fillingStationName}>{stations.name}</Text>
+                <Text style={hs.fillingStationName}>{stations?.name}</Text>
                 <Text style={hs.fillingStationPrice}>N680 per liter</Text>
             </View>
             <View style={hs.fsButtonViewAll}>
@@ -32,7 +32,7 @@ export default function StationsCard({ stations, viewAll, locate }) {
 
         </ImageBackground>
         <View style={hs.fillingStationInfo}>
-            <Text style={hs.fillingStationName}>{truncateText(stations.name, 22)}</Text>
+            <Text style={hs.fillingStationName}>{truncateText(stations?.name, 20)}</Text>
             <Text style={hs.fillingStationPrice}>N680 per liter</Text>
             <Button title="Locate" buttonStyle={hs.buttonStyle} titleStyle={hs.titleStyle} onPress={() => navLocation()} />
         </View>
