@@ -38,9 +38,18 @@ export const LocationContextProvider = ({ children }) => {
         setRegion({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
+          latitudeDelta: 0.009,
+          longitudeDelta: 0.004,
         });
+
+         // Optionally, you can subscribe to location updates
+      Location.watchPositionAsync({
+        accuracy: Location.Accuracy.High,
+        timeInterval: 5000, // Update every 5 seconds
+        distanceInterval: 1, // Update every meter
+      }, (newLocation) => {
+        setUserLocation(newLocation);
+      });
       } catch (err) {
         setError(err);
         console.error(err);

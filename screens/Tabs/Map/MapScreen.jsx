@@ -9,17 +9,13 @@ import {
   Keyboard,
   ActivityIndicator,
 } from "react-native";
-import React, {
-  useContext,
-  useMemo,
-  useState,
-  useCallback,
-} from "react";
-import MapView, { Marker } from "react-native-maps";
+import React, { useContext, useMemo, useState, useCallback, useEffect } from "react";
+import MapView, { Callout, Marker } from "react-native-maps";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import * as Animatable from "react-native-animatable";
 import SearchBarComponent from "../../../components/SearchBarComponent";
 import BackButton from "../../../components/BackButton";
 import { LocationContext } from "../../../services/LocationContext";
@@ -30,6 +26,8 @@ import { MapScreenStyles as ms } from "./MapScreenStyles";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { theme } from "../../../infrastructure/theme";
 import { MapStyle } from "./MAPSTYLE";
+
+const AnimatedMarker = Animatable.createAnimatableComponent(Marker);
 
 export default function MapScreen({ route, navigation }) {
   const {
@@ -51,9 +49,14 @@ export default function MapScreen({ route, navigation }) {
 
   const [loading, setLoading] = useState(true);
 
-  const handleMapReady = () => {
-    setLoading(false);
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, []);
+
 
   const backToHome = useCallback(() => {
     navigation.navigate("Home");
@@ -93,10 +96,13 @@ export default function MapScreen({ route, navigation }) {
     );
     setFilteredStations(filtered);
   };
+  const handleRegionChangeComplete = (newRegion) => {
+    setMapRegion(newRegion);
+  };
 
   const CustomMarker = ({ isSelected, ...props }) => {
     return (
-      <Marker {...props}>
+      <AnimatedMarker {...props} animation={isSelected ? "zoomIn" : "fadeIn"}>
         <View style={styles.markerContainer}>
           <Image
             source={
@@ -110,8 +116,13 @@ export default function MapScreen({ route, navigation }) {
               resizeMode: "contain",
             }}
           />
+          {isSelected && (
+            <Callout>
+              <Text>{props.calloutName}</Text>
+            </Callout>
+          )}
         </View>
-      </Marker>
+      </AnimatedMarker>
     );
   };
 
@@ -139,54 +150,60 @@ export default function MapScreen({ route, navigation }) {
               />
             </View>
           </View>
-        ) : null}
+        ) : (
+          <MapView
+            showsUserLocation={false}
+            showsMyLocationButton
+            region={region}
+            style={styles.map}
+            customMapStyle={MapStyle}
+            // onMapReady={handleMapReady}
+            // onRegionChangeComplete={handleRegionChangeComplete}
+          >
+            {userLocation && (
+              <Marker
+                coordinate={{
+                  latitude: userLocation.coords.latitude,
+                  longitude: userLocation.coords.longitude,
+                }}
+                title="Your Location"
+              >
+                <Image
+                  source={require("../../../assets/Userpointer.png")}
+                  style={{ width: markerSize * 2, height: markerSize * 2 }}
+                />
+              </Marker>
+            )}
 
-        <MapView
-          showsUserLocation={false}
-          region={region}
-          style={styles.map}
-          customMapStyle={MapStyle}
-          onMapReady={handleMapReady}
-        >
-          {userLocation && (
-            <Marker
-              coordinate={{
-                latitude: userLocation.coords.latitude,
-                longitude: userLocation.coords.longitude,
-              }}
-              title="Your Location"
-            >
-              <Image
-                source={require("../../../assets/Userpointer.png")}
-                style={{ width: markerSize * 2, height: markerSize * 2 }}
+            {fillingStations?.map((marker, index) => (
+              <CustomMarker
+                key={index}
+                coordinate={{
+                  latitude: marker.geometry.location.lat,
+                  longitude: marker.geometry.location.lng,
+                }}
+                tracksViewChanges={track}
+                isSelected={
+                  selectedStation &&
+                  selectedStation.place_id === marker.place_id
+                }
+                onPress={() => onMarkerPress(marker)}
+                duration={1500}
+                calloutName={marker.name}
               />
-            </Marker>
-          )}
-
-          {fillingStations?.map((marker, index) => (
-            <CustomMarker
-              key={index}
-              coordinate={{
-                latitude: marker.geometry.location.lat,
-                longitude: marker.geometry.location.lng,
-              }}
-              tracksViewChanges={track}
-              isSelected={
-                selectedStation && selectedStation.place_id === marker.place_id
-              }
-              onPress={() => onMarkerPress(marker)}
-            />
-          ))}
-        </MapView>
+            ))}
+          </MapView>
+        )}
 
         <Modal
           isVisible={modalVisible}
           onBackdropPress={toggleModal}
           style={styles.modal}
           backdropOpacity={0}
-          animationIn="slideInUp"
+          animationIn="zoomIn"
           animationOut="slideOutDown"
-          animationType="slideInDown"
+          animationType="zoomIn"
+          statusBarTranslucent
         >
           <View style={styles.modalContent}>
             {selectedStation && (

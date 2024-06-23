@@ -6,7 +6,7 @@
     <title>Voiceflow Assistant</title>
     <style>
       /* Hide minimize button */
-      .vfrc-header--button {
+      .vfrc-widget--launcher c-PJLV {
         display: none !important;
       }
 
@@ -21,13 +21,14 @@
     (function (d, t) {
       var v = d.createElement(t),
         s = d.getElementsByTagName(t)[0];
-      v.onload = function () {
+        v.onload = function () {
+        window.voiceflow.chat.open();
+        window.voiceflow.chat.show();
         window.voiceflow.chat.load({
           verify: { projectID: "6667d1f2a7b6dc228b2386a9" },
           url: "https://general-runtime.voiceflow.com",
           versionID: "production",
         });
-        window.voiceflow.chat.open();
       };
       v.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
       v.type = "text/javascript";

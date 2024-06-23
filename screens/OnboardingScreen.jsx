@@ -124,9 +124,7 @@ export default function OnboardingScreen() {
             ),
             title: "",
             subtitle: (
-              //   <Text style={styles.titleStyles}>
               "Find fuel stations nearby, anytime, anywhere."
-              //   </Text>
             ),
             subTitleStyles: {
               textAlign: "left",
@@ -144,9 +142,7 @@ export default function OnboardingScreen() {
             ),
             title: "",
             subtitle: (
-              //   <Text style={styles.titleStyles}>
               "Navigate fuel options and filter through prices effortlessly."
-              //   </Text>
             ),
             subTitleStyles: {
               textAlign: "right",
