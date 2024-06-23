@@ -3,15 +3,7 @@ export const MapStyle = [
     elementType: "labels.icon",
     stylers: [
       {
-        color: "#b0b1b6",
-      },
-    ],
-  },
-  {
-    elementType: "labels.text",
-    stylers: [
-      {
-        color: "#b0b1b6",
+        color: "#adacbe",
       },
       {
         visibility: "simplified",
@@ -19,10 +11,45 @@ export const MapStyle = [
     ],
   },
   {
-    featureType: "landscape",
+    elementType: "labels.text",
     stylers: [
       {
-        color: "#f6f8f7",
+        visibility: "simplified",
+      },
+    ],
+  },
+  {
+    elementType: "labels.text.fill",
+    stylers: [
+      {
+        color: "#605f6d",
+      },
+    ],
+  },
+  {
+    featureType: "administrative.land_parcel",
+    elementType: "geometry.fill",
+    stylers: [
+      {
+        color: "#def2d6",
+      },
+    ],
+  },
+  {
+    featureType: "road.highway",
+    elementType: "geometry.fill",
+    stylers: [
+      {
+        color: "#ffffff",
+      },
+    ],
+  },
+  {
+    featureType: "road.highway",
+    elementType: "geometry.stroke",
+    stylers: [
+      {
+        color: "#adacbe",
       },
     ],
   },
