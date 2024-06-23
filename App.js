@@ -12,6 +12,8 @@ import { theme } from "./infrastructure/theme";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 import { LocationContextProvider } from "./services/LocationContext";
 import UserContextProvider from "./services/user/UserContext";
+import WebView from "react-native-webview";
+import { useEffect, useRef } from "react";
 
 const LoadingContainer = styled(View)`
   flex: 1;
@@ -20,6 +22,12 @@ const LoadingContainer = styled(View)`
 `;
 
 export default function App() {
+  const webViewRef = useRef < WebView > null;
+
+  useEffect(() => {
+    webViewRef.current?.postMessage(JSON.stringify({ type: "open" }));
+    webViewRef.current?.postMessage(JSON.stringify({ type: "show" }));
+  }, []);
   const [poppinsLoaded] = usePoppins({
     Poppins_400Regular,
     Poppins_600SemiBold,

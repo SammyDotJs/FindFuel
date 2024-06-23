@@ -18,6 +18,7 @@
     "@react-navigation/stack": "^6.3.29",
     "@rneui/base": "github:react-native-elements/react-native-elements#base",
     "@rneui/themed": "^4.0.0-rc.8",
+    "@voiceflow/react-chat": "^1.58.2",
     "axios": "^1.7.2",
     "expo": "~51.0.13",
     "expo-app-loading": "^1.1.2",
@@ -55,7 +56,8 @@
     "react-native-skeleton-placeholder": "^5.2.4",
     "react-native-svg": "15.2.0",
     "react-native-webview": "13.8.6",
-    "styled-components": "^6.1.9"
+    "styled-components": "^6.1.9",
+    "typescript": "~5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

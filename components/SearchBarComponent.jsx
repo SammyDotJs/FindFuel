@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useContext, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useCallback,
+} from "react";
 import {
   View,
   TextInput,
@@ -7,17 +13,26 @@ import {
   TouchableWithoutFeedback,
   FlatList,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { searchStyles } from "./SearchBarStyles";
 import { theme } from "../infrastructure/theme";
 import { Fontisto, Feather, SimpleLineIcons } from "@expo/vector-icons";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import { LocationContext } from "../services/LocationContext";
 
 export default function SearchBarComponent({ expanded, dropdownVisible }) {
-  const { fillingStations, searchFillingStations, handleStationSelect } = useContext(LocationContext);
+  const { fillingStations, searchFillingStations, handleStationSelect } =
+    useContext(LocationContext);
 
   const [search, setSearch] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
@@ -31,22 +46,40 @@ export default function SearchBarComponent({ expanded, dropdownVisible }) {
 
   useEffect(() => {
     if (isExpanded) {
-      width.value = withTiming(wp(80), { duration: 300, easing: Easing.out(Easing.exp) });
-      height.value = withTiming(50, { duration: 300, easing: Easing.out(Easing.exp) });
+      width.value = withTiming(wp(75), {
+        duration: 300,
+        easing: Easing.out(Easing.exp),
+      });
+      height.value = withTiming(50, {
+        duration: 300,
+        easing: Easing.out(Easing.exp),
+      });
       inputRef.current.focus();
     } else {
-      width.value = withTiming(50, { duration: 300, easing: Easing.out(Easing.exp) });
-      height.value = withTiming(50, { duration: 300, easing: Easing.out(Easing.exp) });
+      width.value = withTiming(50, {
+        duration: 300,
+        easing: Easing.out(Easing.exp),
+      });
+      height.value = withTiming(50, {
+        duration: 300,
+        easing: Easing.out(Easing.exp),
+      });
     }
   }, [isExpanded, width, height]);
 
   useEffect(() => {
     if (search.length > 0) {
       setIsDropdownVisible(true);
-      height.value = withTiming(hp(30), { duration: 300, easing: Easing.out(Easing.exp) });
+      height.value = withTiming(hp(30), {
+        duration: 300,
+        easing: Easing.out(Easing.exp),
+      });
     } else {
       setIsDropdownVisible(false);
-      height.value = withTiming(50, { duration: 300, easing: Easing.out(Easing.exp) });
+      height.value = withTiming(50, {
+        duration: 300,
+        easing: Easing.out(Easing.exp),
+      });
     }
     searchFillingStations(search);
   }, [search]);
@@ -74,8 +107,6 @@ export default function SearchBarComponent({ expanded, dropdownVisible }) {
     }
   };
 
-
-
   const handleSelectItem = (station) => {
     console.log("handleSelectItem called with station:");
     isItemSelecting.current = true;
@@ -83,10 +114,10 @@ export default function SearchBarComponent({ expanded, dropdownVisible }) {
       isItemSelecting.current = false; // Reset after some delay
     }, 0);
     handleStationSelect(station); // Uncomment if handleStationSelect function is defined
-    setSearch("")
+    setSearch("");
     setIsExpanded(false);
     setIsDropdownVisible(false);
-  }
+  };
   const customOnBlur = () => {
     setTimeout(() => {
       if (!isItemSelecting.current) {
@@ -103,18 +134,32 @@ export default function SearchBarComponent({ expanded, dropdownVisible }) {
     if (text.length <= maxLength) {
       return text;
     }
-    return text.slice(0, maxLength) + '...';
+    return text.slice(0, maxLength) + "...";
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handleBodyPress} >
-      <View style={searchStyles.searchContainer}>
-        <TouchableWithoutFeedback onPress={!isExpanded ? () => { setIsExpanded(true) } : () => { }}>
-          <Animated.View style={[searchStyles.searchInputContainer, animatedStyles, dynamicStyles.searchBar]}>
+    <TouchableWithoutFeedback onPress={handleBodyPress}>
+      <TouchableWithoutFeedback
+        onPress={
+          !isExpanded
+            ? () => {
+                setIsExpanded(true);
+              }
+            : () => {}
+        }
+      >
+        <View style={searchStyles.searchContainer}>
+          <Animated.View
+            style={[
+              searchStyles.searchInputContainer,
+              animatedStyles,
+              // dynamicStyles.searchBar,
+            ]}
+          >
             <View style={styles.searchRow}>
               <Fontisto
                 name="search"
-                size={hp(2)}
+                size={18}
                 color={theme.colors.bg.primary}
                 style={searchStyles.searchIcon}
                 // onPress={() => setIsExpanded(true)}
@@ -141,22 +186,36 @@ export default function SearchBarComponent({ expanded, dropdownVisible }) {
                 </>
               )}
             </View>
-            {isDropdownVisible && (
-              fillingStations.length > 0 ? (
+            {isDropdownVisible &&
+              (fillingStations.length > 0 ? (
                 <FlatList
                   data={fillingStations}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => handleSelectItem(item)}>
-                      <View style={{ flexDirection: "row", alignItems: "center", padding: hp(1) }}>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          padding: hp(1),
+                        }}
+                      >
                         <SimpleLineIcons
                           name={"location-pin"}
                           size={hp(2)}
                           color={theme.colors.bg.primary}
                         />
-                        <View style={{ flexDirection: "column", paddingHorizontal: hp(1) }}>
+                        <View
+                          style={{
+                            flexDirection: "column",
+                            paddingHorizontal: hp(1),
+                            width:300
+                          }}
+                        >
                           <Text style={styles.stationText}>{item.name}</Text>
-                          <Text style={styles.stationVicinity}>{truncateText(item.vicinity, 30)}</Text>
+                          <Text style={styles.stationVicinity}>
+                            {truncateText(item.vicinity, 30)}
+                          </Text>
                         </View>
                       </View>
                     </TouchableOpacity>
@@ -169,12 +228,11 @@ export default function SearchBarComponent({ expanded, dropdownVisible }) {
                     Filling Station Unavailable
                   </Text>
                 </View>
-              )
-            )}
+              ))}
           </Animated.View>
-        </TouchableWithoutFeedback>
-      </View >
-    </TouchableWithoutFeedback >
+        </View>
+      </TouchableWithoutFeedback>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -189,17 +247,14 @@ const styles = StyleSheet.create({
   searchRow: {
     flexDirection: "row",
     alignItems: "center",
-    width: wp(80),
-    paddingVertical: hp(1),
+    width: wp(75),
   },
   equalizerIcon: {
     marginLeft: "auto",
     marginRight: wp(4),
   },
   stationList: {
-    maxHeight: hp(20),
-    borderTopWidth: 2,
-    borderTopColor: theme.colors.text.placeholder,
+    maxHeight: hp(25),
   },
   stationText: {
     color: theme.colors.text.primary,

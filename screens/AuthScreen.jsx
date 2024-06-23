@@ -18,8 +18,6 @@ import {
 } from "react-native-responsive-screen";
 import { SafeArea } from "../components/utils/Safe-area.component";
 
-const { width, height } = Dimensions.get("window");
-
 const AuthView = styled(View)`
   flex: 1;
 

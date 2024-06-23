@@ -11,7 +11,7 @@ const FloatingButton = ({ onPress }) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={onPress} style={styles.button}>
+            <TouchableOpacity activeOpacity={0.8} onPress={onPress} style={styles.button}>
                 <LottieView
                     autoPlay
                     ref={animation}

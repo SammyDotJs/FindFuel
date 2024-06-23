@@ -32,7 +32,7 @@ export default function StationsCard({ stations, viewAll, locate }) {
 
         </ImageBackground>
         <View style={hs.fillingStationInfo}>
-            <Text style={hs.fillingStationName}>{truncateText(stations.name, 30)}</Text>
+            <Text style={hs.fillingStationName}>{truncateText(stations.name, 22)}</Text>
             <Text style={hs.fillingStationPrice}>N680 per liter</Text>
             <Button title="Locate" buttonStyle={hs.buttonStyle} titleStyle={hs.titleStyle} onPress={() => navLocation()} />
         </View>
