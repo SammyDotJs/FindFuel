@@ -24,6 +24,7 @@ export const LocationContextProvider = ({ children }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedStation, setSelectedStation] = useState(null);
+  const [uniqueStations, setUniqueStations] = useState(new Set());
 
   const setMapRegion = (reg) => {
     setRegion(reg);
@@ -71,22 +72,41 @@ export const LocationContextProvider = ({ children }) => {
 
   const fetchFillingStations = useCallback(
     debounce(async (latitude, longitude, pageToken = null) => {
-      console.log(latitude, longitude);
+      // console.log(latitude, longitude);
       try {
-        let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=gas_station&key=${API_KEY}`;
+        let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=gas_station&key=${API_KEY}`;
         if (pageToken) {
           url += `&pagetoken=${pageToken}`;
         }
         const response = await axios.get(url);
         const data = response.data;
-        setFillingStations((prevFillingStations) => [
-          ...prevFillingStations,
-          ...data.results,
-        ]);
-        setFillingStationsData((prevFillingStations) => [
-          ...prevFillingStations,
-          ...data.results,
-        ]);
+
+        // const newStations = data.results.filter(station => (
+        //   !fillingStations.some(existingStation => existingStation.place_id === station.place_id)
+        // ));
+        // setFillingStations((prevFillingStations) => [
+        //   // ...prevFillingStations,
+        //   ...data.results,
+        // ]);
+        // setFillingStationsData((prevFillingStations) => [
+        //   // ...prevFillingStations,
+        //   ...data.results,
+        // ]);
+
+        // Use a Set to keep track of unique stations
+        const newStationsSet = new Set([...uniqueStations]);
+        data.results.forEach(station => {
+          newStationsSet.add(station.place_id);
+        });
+
+        // Convert Set back to array and filter unique stations
+        const uniqueStationsArray = Array.from(newStationsSet).map(id => 
+          data.results.find(station => station.place_id === id)
+        );
+
+        setFillingStations(uniqueStationsArray);
+        setUniqueStations(newStationsSet);
+
         setIsLoading(false);
         setTrack(true);
         if (data.next_page_token) {
@@ -101,14 +121,15 @@ export const LocationContextProvider = ({ children }) => {
         setIsLoading(false);
       }
     }, 500), // 500 milliseconds debounce time
-    []
+    [uniqueStations]
   );
 
   const searchFillingStations = (searchTerm) => {
+    // console.log(fillingStations.length);
     setFillingStations(
       searchTerm.length == 0
-        ? fillingStationsData
-        : fillingStationsData.filter((station) =>
+        ? fillingStations
+        : fillingStations.filter((station) =>
             station.name.toUpperCase().includes(searchTerm.toUpperCase())
           )
     );
@@ -189,6 +210,7 @@ export const LocationContextProvider = ({ children }) => {
         setFillingStation,
         myLocation,
         onRegionChangeComplete,
+        setSelectedStation
       }}
     >
       {children}

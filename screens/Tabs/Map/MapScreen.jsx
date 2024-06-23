@@ -28,14 +28,16 @@ import BackButton from "../../../components/BackButton";
 import { LocationContext } from "../../../services/LocationContext";
 import Modal from "react-native-modal";
 import { HomeScreenStyles as hs } from "../Home/HomeScreenStyles";
-import { Button } from "react-native-elements";
+import { BottomSheet, Button } from "react-native-elements";
 import { MapScreenStyles as ms } from "./MapScreenStyles";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { theme } from "../../../infrastructure/theme";
 import { MapStyle } from "./MAPSTYLE";
 import LocationIcon from "./components/LocationIcon";
+import MapViewDirections from "react-native-maps-directions";
 
 const AnimatedMarker = Animatable.createAnimatableComponent(Marker);
+const GOOGLE_MAPS_APIKEY = "AIzaSyDZnqPKvw0Me0Q8Rg_wtQ6ExIfjggD9Mdo";
 
 export default function MapScreen({ route, navigation }) {
   const MapRef = useRef(null);
@@ -50,13 +52,17 @@ export default function MapScreen({ route, navigation }) {
     setModalVisible,
     selectedStation,
     onRegionChangeComplete,
+    setSelectedStation,
   } = useContext(LocationContext);
 
   const [filteredStations, setFilteredStations] = useState([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
   const [loading, setLoading] = useState(true);
+
+  const [origin, setOrigin] = useState(null);
+  const [destination, setDestination] = useState(null);
+  const [showDirections, setShowDirections] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -85,11 +91,14 @@ export default function MapScreen({ route, navigation }) {
 
   const toggleModal = useCallback(() => {
     setModalVisible((prev) => !prev);
+    if (!modalVisible) {
+      setShowDirections(false);
+      setSelectedStation(null);
+      setOrigin(0);
+      setDestination(0);
+    }
+    console.log(selectedStation);
   }, []);
-
-  const onMarkerPress = (station) => {
-    handleStationSelect(station);
-  };
 
   const handleBodyPress = useCallback(() => {
     setIsExpanded(false);
@@ -106,7 +115,6 @@ export default function MapScreen({ route, navigation }) {
   };
 
   const animateToRegion = () => {
-    console.log(userLocation);
     const newRegion = {
       latitude: userLocation.coords.latitude,
       longitude: userLocation.coords.longitude,
@@ -116,20 +124,53 @@ export default function MapScreen({ route, navigation }) {
     MapRef.current.animateToRegion(newRegion, 1000); // 1000 ms for the transition
   };
 
-  // useEffect(() => {
-  //   // Fetch data whenever the region changes
-  //   fetchFillingStations(region.latitude, region.longitude);
-  //   console.log(region)
-  // }, [region]);
+  const moveTo = async (position) => {
+    const camera = await MapRef.current?.getCamera();
+    if (camera) {
+      camera.center = position;
+      MapRef.current?.animateCamera(camera, { duration: 1000 });
+    }
+  };
 
-  // const handleRegionChangeComplete = (newRegion) => {
-  //   setMapRegion(newRegion);
-  //   // fetchFillingStations(newRegion.longitude, newRegion.latitude);
-  // };
+  const onPLaceSelected = (details, flag) => {
+    const set = flag === "origin" ? setOrigin : setDestination;
 
+    const position = {
+      latitude:
+        flag === "destination"
+          ? details?.geometry.location.lat || 0
+          : details?.coords.latitude,
+      longitude:
+        flag === "destination"
+          ? details?.geometry.location.lng || 0
+          : details?.coords.longitude,
+    };
+    set(position);
+    // moveTo(position);
+  };
+
+  const onMarkerPress = (station) => {
+    handleStationSelect(station);
+  };
+
+  const edgePaddingValue = 70;
+
+  const edgePadding = {
+    top: edgePaddingValue,
+    bottom: edgePaddingValue,
+    right: edgePaddingValue,
+    left: edgePaddingValue,
+  };
+
+  const traceRoute = () => {
+    if (origin && destination) {
+      setShowDirections(true);
+      MapRef.current?.fitToCoordinates([origin, destination], { edgePadding });
+    }
+  };
   const CustomMarker = ({ isSelected, ...props }) => {
     return (
-      <AnimatedMarker {...props} animation={isSelected ? "zoomIn" : "fadeIn"}>
+      <AnimatedMarker {...props} animation={isSelected ? "zoomIn" : "zoomIn"}>
         <View style={styles.markerContainer}>
           <Image
             source={
@@ -148,6 +189,17 @@ export default function MapScreen({ route, navigation }) {
     );
   };
 
+  useEffect(() => {
+    const getRoutes = () => {
+      if (userLocation && selectedStation) {
+        onPLaceSelected(userLocation, "origin");
+        onPLaceSelected(selectedStation, "destination");
+      } else {
+        console.error("Didn't get origin and destination");
+      }
+    };
+    selectedStation && getRoutes();
+  }, [selectedStation]);
   return (
     <TouchableWithoutFeedback onPress={handleBodyPress}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -215,6 +267,15 @@ export default function MapScreen({ route, navigation }) {
                 calloutName={marker.name}
               />
             ))}
+            {showDirections && origin && destination && (
+              <MapViewDirections
+                origin={origin}
+                destination={destination}
+                apikey={GOOGLE_MAPS_APIKEY}
+                strokeWidth={5}
+                strokeColor="#5D43FF"
+              />
+            )}
           </MapView>
         )}
 
@@ -261,6 +322,7 @@ export default function MapScreen({ route, navigation }) {
                     }
                     buttonStyle={ms.fsButtonStyleAll}
                     titleStyle={hs.titleStyle}
+                    onPress={traceRoute}
                   />
                 </View>
               </View>
@@ -275,9 +337,9 @@ export default function MapScreen({ route, navigation }) {
 
 const styles = StyleSheet.create({
   map: {
-    flex: 1,
+    // flex: 1,
     width: wp(100),
-    height: hp(100),
+    height: hp(93),
   },
   backButtonContainer: {
     top: hp(9),

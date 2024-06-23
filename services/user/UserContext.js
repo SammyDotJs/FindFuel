@@ -14,7 +14,7 @@ export default function UserContextProvider({ children }) {
         setLoggedInDetails(data)
     }
 
-    console.log("UD", userDetails);
+    // console.log("UD", userDetails);
 
 
     return (

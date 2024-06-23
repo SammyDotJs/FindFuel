@@ -30,6 +30,18 @@ import { MotiView } from "moti";
 
 const Spacer = ({ height = hp(1) }) => <MotiView style={{ height }} />;
 
+const greeting = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour < 12) {
+    return "Good Morning";
+  } else if (currentHour < 18) {
+    return "Good Afternoon";
+  } else {
+    return "Good Evening";
+  }
+};
+
 const SkeletonLoader = () => {
   return (
     <View style={{ marginHorizontal: 10 }} colorMode="light">
@@ -166,7 +178,7 @@ export default function HomeScreen({ route, navigation }) {
               <Text style={hs.profileText}>{profileLetter}</Text>
             </View>
             <View style={hs.welcomeTexts}>
-              <Text style={hs.h6}>Good Morning,</Text>
+              <Text style={hs.h6}>{greeting()},</Text>
               <Text style={hs.h2}>{userName}</Text>
             </View>
           </View>
