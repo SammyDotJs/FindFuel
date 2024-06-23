@@ -116,11 +116,6 @@ export default function MapScreen({ route, navigation }) {
               resizeMode: "contain",
             }}
           />
-          {isSelected && (
-            <Callout>
-              <Text>{props.calloutName}</Text>
-            </Callout>
-          )}
         </View>
       </AnimatedMarker>
     );
@@ -170,12 +165,12 @@ export default function MapScreen({ route, navigation }) {
               >
                 <Image
                   source={require("../../../assets/Userpointer.png")}
-                  style={{ width: markerSize * 2, height: markerSize * 2 }}
+                  style={{ width: markerSize * 1.5, height: markerSize * 1.5 }}
                 />
               </Marker>
             )}
 
-            {fillingStations?.map((marker, index) => (
+            {fillingStations.map((marker, index) => (
               <CustomMarker
                 key={index}
                 coordinate={{
