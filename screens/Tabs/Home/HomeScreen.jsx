@@ -217,8 +217,8 @@ export default function HomeScreen({ route, navigation }) {
                   </TouchableWithoutFeedback>
                 );
               }}
-              keyExtractor={(item) =>
-                `${item.name}-${item.geometry.location.lat}-${item.geometry.location.lat}`
+              keyExtractor={(item, index) =>
+                `${item.name}-${item.geometry.location.lat}-${index}`
               }
               horizontal={true}
               initialNumToRender={3}
@@ -244,8 +244,8 @@ export default function HomeScreen({ route, navigation }) {
                   </TouchableWithoutFeedback>
                 );
               }}
-              keyExtractor={(item) =>
-                `${item.name}-${item.geometry.location.lat}-${item.geometry.location.lon}`
+              keyExtractor={(item, index) =>
+                `${item.name}-${item.geometry.location.lat}-${index}`
               }
               horizontal={true}
               initialNumToRender={3}

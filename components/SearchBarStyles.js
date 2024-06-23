@@ -12,8 +12,6 @@ export const searchStyles = StyleSheet.create({
     position: "absolute",
     zIndex: 999,
     top: hp(9),
-    width: "80%",
-
   },
   searchInputContainer: {
     borderRadius: 25,

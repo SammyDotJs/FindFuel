@@ -19,12 +19,15 @@ export const LocationContextProvider = ({ children }) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [region, setRegion] = useState(null);
+  const [region, setRegion] = useState({});
   const [track, setTrack] = useState(true);
   const [userLocation, setUserLocation] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedStation, setSelectedStation] = useState(null);
 
+  const setMapRegion = (reg) => {
+    setRegion(reg);
+  };
   useEffect(() => {
     (async () => {
       try {
@@ -42,14 +45,23 @@ export const LocationContextProvider = ({ children }) => {
           longitudeDelta: 0.004,
         });
 
-         // Optionally, you can subscribe to location updates
-      Location.watchPositionAsync({
-        accuracy: Location.Accuracy.High,
-        timeInterval: 5000, // Update every 5 seconds
-        distanceInterval: 1, // Update every meter
-      }, (newLocation) => {
-        setUserLocation(newLocation);
-      });
+        // Optionally, you can subscribe to location updates
+        Location.watchPositionAsync(
+          {
+            accuracy: Location.Accuracy.High,
+            timeInterval: 5000, // Update every 5 seconds
+            distanceInterval: 100, // Update every meter
+          },
+          (newLocation) => {
+            setUserLocation(newLocation);
+            setRegion({
+              latitude: newLocation.coords.latitude,
+              longitude: newLocation.coords.longitude,
+              latitudeDelta: 0.009,
+              longitudeDelta: 0.004,
+            });
+          }
+        );
       } catch (err) {
         setError(err);
         console.error(err);
@@ -59,8 +71,9 @@ export const LocationContextProvider = ({ children }) => {
 
   const fetchFillingStations = useCallback(
     debounce(async (latitude, longitude, pageToken = null) => {
+      console.log(latitude, longitude);
       try {
-        let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5700&type=gas_station&key=${API_KEY}`;
+        let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=gas_station&key=${API_KEY}`;
         if (pageToken) {
           url += `&pagetoken=${pageToken}`;
         }
@@ -82,6 +95,7 @@ export const LocationContextProvider = ({ children }) => {
             fetchFillingStations(latitude, longitude, data.next_page_token);
           }, 2000);
         }
+        // console.log(fillingStations);
       } catch (error) {
         console.error(error);
         setIsLoading(false);
@@ -108,13 +122,34 @@ export const LocationContextProvider = ({ children }) => {
   }, [modalVisible]);
 
   useEffect(() => {
-    if (userLocation) {
+    userLocation &&
       fetchFillingStations(
         userLocation.coords.latitude,
         userLocation.coords.longitude
       );
-    }
-  }, [userLocation, fetchFillingStations]);
+  }, [userLocation]);
+
+  const onChangeLocation = useCallback(
+    debounce(
+      () => {
+        fetchFillingStations(region.latitude, region.longitude);
+      },
+      1000,
+      { trailing: true, leading: false }
+    )
+  );
+
+  useEffect(() => {
+    onChangeLocation
+  }, [region]);
+
+  const onRegionChangeComplete = useCallback(
+    debounce((newRegion) => {
+      // setRegion(newRegion);
+      fetchFillingStations(newRegion.latitude, newRegion.longitude);
+    }, 1000), // Adjust debounce delay as needed
+    []
+  );
 
   const handleStationSelect = (station) => {
     setSelectedStation(station);
@@ -122,13 +157,17 @@ export const LocationContextProvider = ({ children }) => {
     setRegion({
       latitude: station.geometry.location.lat,
       longitude: station.geometry.location.lng,
-      latitudeDelta: 0.02,
-      longitudeDelta: 0.02,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.004,
     });
   };
-
-  const setMapRegion = (reg) => {
-    setRegion(reg);
+  const myLocation = () => {
+    setRegion({
+      latitude: userLocation.coords.latitude,
+      longitude: userLocation.coords.longitude,
+      latitudeDelta: 0.001,
+      longitudeDelta: 0.004,
+    });
   };
 
   return (
@@ -148,6 +187,8 @@ export const LocationContextProvider = ({ children }) => {
         setMapRegion,
         fetchFillingStations,
         setFillingStation,
+        myLocation,
+        onRegionChangeComplete,
       }}
     >
       {children}

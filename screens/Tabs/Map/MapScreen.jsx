@@ -9,8 +9,15 @@ import {
   Keyboard,
   ActivityIndicator,
 } from "react-native";
-import React, { useContext, useMemo, useState, useCallback, useEffect } from "react";
-import MapView, { Callout, Marker } from "react-native-maps";
+import React, {
+  useContext,
+  useMemo,
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -26,21 +33,23 @@ import { MapScreenStyles as ms } from "./MapScreenStyles";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { theme } from "../../../infrastructure/theme";
 import { MapStyle } from "./MAPSTYLE";
+import LocationIcon from "./components/LocationIcon";
 
 const AnimatedMarker = Animatable.createAnimatableComponent(Marker);
 
 export default function MapScreen({ route, navigation }) {
+  const MapRef = useRef(null);
   const {
     userLocation,
     region,
     fillingStations,
-    track,
     searchFillingStations,
-    setMapRegion,
+    track,
     handleStationSelect,
     modalVisible,
     setModalVisible,
     selectedStation,
+    onRegionChangeComplete,
   } = useContext(LocationContext);
 
   const [filteredStations, setFilteredStations] = useState([]);
@@ -52,11 +61,10 @@ export default function MapScreen({ route, navigation }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000); 
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
-
 
   const backToHome = useCallback(() => {
     navigation.navigate("Home");
@@ -96,9 +104,28 @@ export default function MapScreen({ route, navigation }) {
     );
     setFilteredStations(filtered);
   };
-  const handleRegionChangeComplete = (newRegion) => {
-    setMapRegion(newRegion);
+
+  const animateToRegion = () => {
+    console.log(userLocation);
+    const newRegion = {
+      latitude: userLocation.coords.latitude,
+      longitude: userLocation.coords.longitude,
+      latitudeDelta: 0.0022,
+      longitudeDelta: 0.0021,
+    };
+    MapRef.current.animateToRegion(newRegion, 1000); // 1000 ms for the transition
   };
+
+  // useEffect(() => {
+  //   // Fetch data whenever the region changes
+  //   fetchFillingStations(region.latitude, region.longitude);
+  //   console.log(region)
+  // }, [region]);
+
+  // const handleRegionChangeComplete = (newRegion) => {
+  //   setMapRegion(newRegion);
+  //   // fetchFillingStations(newRegion.longitude, newRegion.latitude);
+  // };
 
   const CustomMarker = ({ isSelected, ...props }) => {
     return (
@@ -147,13 +174,14 @@ export default function MapScreen({ route, navigation }) {
           </View>
         ) : (
           <MapView
+            ref={MapRef}
+            provider={PROVIDER_GOOGLE}
             showsUserLocation={false}
-            showsMyLocationButton
             region={region}
+            onRegionChangeComplete={onRegionChangeComplete}
             style={styles.map}
             customMapStyle={MapStyle}
             // onMapReady={handleMapReady}
-            // onRegionChangeComplete={handleRegionChangeComplete}
           >
             {userLocation && (
               <Marker
@@ -177,7 +205,7 @@ export default function MapScreen({ route, navigation }) {
                   latitude: marker.geometry.location.lat,
                   longitude: marker.geometry.location.lng,
                 }}
-                tracksViewChanges={track}
+                tracksViewChanges={false}
                 isSelected={
                   selectedStation &&
                   selectedStation.place_id === marker.place_id
@@ -239,6 +267,7 @@ export default function MapScreen({ route, navigation }) {
             )}
           </View>
         </Modal>
+        <LocationIcon goTo={animateToRegion} />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

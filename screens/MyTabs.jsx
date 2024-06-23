@@ -27,7 +27,7 @@ export default function MyTabs({ navigation }) {
         <Tab.Screen name="History" component={HistoryScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
-      <FloatingButton onPress={openBot} />
+      {/* <FloatingButton onPress={openBot} /> */}
       <ExpoStatusBar style="auto" />
     </KeyboardAvoidingView>
   );
