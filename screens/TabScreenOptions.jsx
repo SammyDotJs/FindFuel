@@ -38,7 +38,7 @@ export const ScreenOptions = ({ route }) => ({
   tabBarHideOnKeyboard: true,
   tabBarButton: (props) => {
     const selected = props.accessibilityState.selected;
-    const scale = useSharedValue(0.9);
+    const scale = useSharedValue(0.8);
     const opacity = useSharedValue(1);
 
     const animatedStyle = useAnimatedStyle(() => {

@@ -1,19 +1,20 @@
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { OtpInput } from "react-native-otp-entry";
-import { SafeArea } from "../../components/utils/Safe-area.component";
-import { theme } from "../../infrastructure/theme";
+import { SafeArea } from "../../../components/utils/Safe-area.component";
+import { theme } from "../../../infrastructure/theme";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import AuthButton from "../../components/AuthButton";
+import AuthButton from "../../../components/AuthButton";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native-elements";
 import styled from "styled-components";
-import { fontWeights } from "../../infrastructure/theme/fonts";
+import { fontWeights } from "../../../infrastructure/theme/fonts";
 import { color } from "@rneui/base";
 import { processFontFamily } from "expo-font";
+import { styles } from "./Styles/otpScreen.styles";
 
 const OtpContainer = styled(View)`
   justify-content: center;
@@ -118,38 +119,3 @@ export default function OtpScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  intro: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: hp(5),
-  },
-  welcome: {
-    color: theme.colors.text.primary,
-    fontSize: hp(3.2),
-    fontFamily: theme.fonts.bold,
-  },
-  subWelcome: {
-    color: theme.colors.text.foundation,
-    fontSize: hp(2),
-    fontFamily: theme.fonts.body,
-    marginTop: 10,
-  },
-  forgotPassword: {
-    justifyContent: "center",
-    alignItems: "center",
-    color: theme.colors.text.secondary,
-    fontSize: hp(1.6),
-  },
-  signup: {
-    marginTop: hp(3),
-    color: theme.colors.text.foundation,
-    fontSize: hp(1.7),
-    fontFamily: theme.fonts.body,
-  },
-  signupLink: {
-    color: theme.colors.text.secondary,
-    fontWeight: "600",
-  },
-});

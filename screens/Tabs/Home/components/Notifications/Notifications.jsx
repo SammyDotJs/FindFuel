@@ -1,8 +1,8 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { SafeArea } from '../../../../components/utils/Safe-area.component'
-import { theme } from '../../../../infrastructure/theme'
-import BackButton from '../../../../components/BackButton'
+import { SafeArea } from '../../../../../components/utils/Safe-area.component'
+import { theme } from '../../../../../infrastructure/theme'
+import BackButton from '../../../../../components/BackButton'
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,

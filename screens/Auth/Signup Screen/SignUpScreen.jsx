@@ -2,7 +2,6 @@ import {
   View,
   Text,
   Image,
-  signupStylesheet,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
@@ -12,8 +11,8 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import AuthButton from "../../components/AuthButton";
-import { theme } from "../../infrastructure/theme";
+import AuthButton from "../../../components/AuthButton";
+import { theme } from "../../../infrastructure/theme";
 import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
@@ -24,10 +23,10 @@ import {
   numberRegex,
   symbolRegex,
   uppercaseRegex,
-} from "../../components/InputAuthentications";
+} from "../../../components/InputAuthentications";
 import PhoneInput from "react-native-phone-input";
-import { signupStyles } from "./SignUpScreenStyles";
-import { UserContext } from "../../services/user/UserContext";
+import { signupStyles } from "./Styles/signupScreen.styles.js";
+import { UserContext } from "../../../services/user/UserContext";
 import axios from "axios";
 
 const googleIconJsx = () => {
@@ -42,7 +41,7 @@ const googleIconJsx = () => {
         alignItems: "center",
       }}
     >
-      <Image source={require("../../assets/devicon_google.png")} />
+      <Image source={require("../../../assets/devicon_google.png")} />
       Sign up with Google
     </Text>
   );
@@ -102,7 +101,7 @@ export default function SignUpScreen() {
   const [showPassword, setShowPassword] = useState(true);
   const [showCpassword, setShowCpassword] = useState(true);
 
-  const { userDetails, setDetails } = useContext(UserContext)
+  const { userDetails, setDetails } = useContext(UserContext);
 
   const handleSignup = () => {
     //backend config
@@ -118,18 +117,17 @@ export default function SignUpScreen() {
       last_name: lastName,
       email: email,
       password: password,
-      phone_no: phoneNo
+      phone_no: phoneNo,
     };
-    setDetails(updatedUserDetails)
-  }, [password, email, firstName, lastName, phoneNo])
+    setDetails(updatedUserDetails);
+  }, [password, email, firstName, lastName, phoneNo]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    const fullname = name.split(" ")
-    setFirstName(fullname[0])
-    setLastName(fullname[1] || "")
-  }, [name])
-
+    const fullname = name.split(" ");
+    setFirstName(fullname[0]);
+    setLastName(fullname[1] || "");
+  }, [name]);
 
   const fullNameHandler = (fname) => {
     setName(fname);
@@ -182,27 +180,31 @@ export default function SignUpScreen() {
     // Update conditionsMet based on errors
     setConditionsMet(
       emailIsValid &&
-      !lengthValid &&
-      hasUpper &&
-      hasLowercase &&
-      hasNumber &&
-      hasSymbol
+        !lengthValid &&
+        hasUpper &&
+        hasLowercase &&
+        hasNumber &&
+        hasSymbol
     );
   }, [password, email, cpassword]);
 
   const handleOtp = async () => {
     !conditionsMet && Alert.alert("Please fill in your details");
 
-    const url = 'http://8569-105-112-113-222.ngrok-free.app/api/auth/register/';
+    const url = "http://8569-105-112-113-222.ngrok-free.app/api/auth/register/";
     try {
-      const response = await axios.post(url,  {...userDetails}, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log('Data sent successfully! Response:', response);
+      const response = await axios.post(
+        url,
+        { ...userDetails },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Data sent successfully! Response:", response);
     } catch (error) {
-      console.error('Error sending data:', error);
+      console.error("Error sending data:", error);
     }
 
     // conditionsMet && navigation.navigate("otp");
@@ -337,12 +339,12 @@ export default function SignUpScreen() {
           <View style={signupStyles.or}>
             <Image
               style={signupStyles.dashLine}
-              source={require("../../assets/dashedLine.png")}
+              source={require("../../../assets/dashedLine.png")}
             />
             <Text style={signupStyles.ortext}>OR</Text>
             <Image
               style={signupStyles.dashLine}
-              source={require("../../assets/dashedLine.png")}
+              source={require("../../../assets/dashedLine.png")}
             />
           </View>
           {/* Sign Up with google handler */}
@@ -369,4 +371,3 @@ export default function SignUpScreen() {
     </KeyboardAvoidingView>
   );
 }
-

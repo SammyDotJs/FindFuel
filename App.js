@@ -11,8 +11,39 @@ import { theme } from "./infrastructure/theme";
 import { LocationContextProvider } from "./services/LocationContext";
 import UserContextProvider from "./services/user/UserContext";
 import { ExpoStatusBar } from "./navigation";
+import * as Location from "expo-location";
+import { useEffect, useRef, useState } from "react";
+import { UserLocationContext } from "./services/user/UserLocationContext";
+import { SelectMarkerContext } from "./services/SelectMarkerContext";
+import { BottomSheetProvider } from "./services/BottomSheetContext";
+import { PortalProvider } from "@gorhom/portal";
 
 export default function App() {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [isFetching, setIsFetching] = useState(true);
+  const [placeListData, setPlaceListData] = useState([]);
+  const [selectedMarker, setSelectedMarker] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location.coords);
+    })();
+  }, []);
+
+  let text = "Waiting..";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
 
   const [poppinsLoaded] = usePoppins({
     Poppins_400Regular,
@@ -20,7 +51,6 @@ export default function App() {
     Poppins_700Bold,
     Poppins_500Medium,
   });
-
 
   if (!poppinsLoaded) {
     return (
@@ -36,12 +66,31 @@ export default function App() {
     );
   }
   return (
-    <UserContextProvider>
-      <LocationContextProvider>
-        <AppNavigation />
-      </LocationContextProvider>
-      <ExpoStatusBar style="auto"/>
-    </UserContextProvider>
+    <PortalProvider>
+      <BottomSheetProvider>
+        <SelectMarkerContext.Provider
+          value={{ selectedMarker, setSelectedMarker }}
+        >
+          <UserLocationContext.Provider
+            value={{
+              location,
+              setLocation,
+              isFetching,
+              setIsFetching,
+              placeListData,
+              setPlaceListData,
+            }}
+          >
+            <UserContextProvider>
+              <LocationContextProvider>
+                <AppNavigation />
+              </LocationContextProvider>
+              <ExpoStatusBar style="auto" />
+            </UserContextProvider>
+          </UserLocationContext.Provider>
+        </SelectMarkerContext.Provider>
+      </BottomSheetProvider>
+    </PortalProvider>
   );
 }
 

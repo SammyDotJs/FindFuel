@@ -7,24 +7,23 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
-  Alert,
 } from "react-native";
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { theme } from "../../infrastructure/theme";
-import AuthButton from "../../components/AuthButton";
+import { theme } from "../../../infrastructure/theme";
+import AuthButton from "../../../components/AuthButton";
 import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { loginStyles } from "./LoginScreenStyles";
+import { loginStyles } from "./Styles/loginScreen.styles.js";
 import axios from "axios";
-import { UserContext } from "../../services/user/UserContext";
-import Loader from "../../components/Loader";
-import LoginSuccessModal from "../../components/Modals/LoginSuccessModal";
-import LoginFailedModal from "../../components/Modals/LoginFailedModal";
+import { UserContext } from "../../../services/user/UserContext";
+import Loader from "../../../components/Loader";
+import LoginSuccessModal from "../../../components/Modals/LoginSuccessModal";
+import LoginFailedModal from "../../../components/Modals/LoginFailedModal";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 
 const AuthInput = styled(View)`
@@ -51,7 +50,7 @@ const googleIconJsx = () => {
         fontWeight: "600",
       }}
     >
-      <Image source={require("../../assets/devicon_google.png")} />
+      <Image source={require("../../../assets/devicon_google.png")} />
       Continue with Google
     </Text>
   );
@@ -64,50 +63,50 @@ export default function LoginScreen(props) {
   const [showPassword, setShowPassword] = useState(true);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [isLoading, setIsLoading] = useState(false)
-  const [loginSuccessModalVisible, setLoginSuccessModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginSuccessModalVisible, setLoginSuccessModalVisible] =
+    useState(false);
   const [loginFailedModalVisible, setLoginFailedModalVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
 
-
-  const { setLoggedDetails } = useContext(UserContext)
-
+  const { setLoggedDetails } = useContext(UserContext);
 
   const handleLogin = async () => {
-    setIsLoading(true)
-    const url = 'http://8569-105-112-113-222.ngrok-free.app/api/auth/login/';
+    setIsLoading(true);
+    const url = "http://8569-105-112-113-222.ngrok-free.app/api/auth/login/";
     try {
-      const response = await axios.post(url,
+      const response = await axios.post(
+        url,
         {
           email: email,
           password: password,
-        }, {
-        headers: {
-          "Content-Type": "application/json",
         },
-      });
-      console.log('Data sent successfully! Response:', response.data);
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Data sent successfully! Response:", response.data);
       response.data.user && setLoginSuccessModalVisible(true);
-      setLoggedDetails(response.data)
+      setLoggedDetails(response.data);
       response.data.user ? navigation.navigate("Tabs") : console.log("null");
     } catch (error) {
-      console.error('Error sending data:', error);
+      console.error("Error sending data:", error);
       setLoginFailedModalVisible(true);
     } finally {
-      setIsLoading(false)
-
+      setIsLoading(false);
     }
   };
 
-
   const handleCloseSuccessModal = () => {
     setLoginSuccessModalVisible(false);
-    setModalVisible(false)
+    setModalVisible(false);
   };
 
   const handleCloseFailedModal = () => {
     setLoginFailedModalVisible(false);
-    setModalVisible(false)
+    setModalVisible(false);
   };
   const handleSignup = () => {
     navigation.navigate("SignUp");
@@ -126,11 +125,13 @@ export default function LoginScreen(props) {
   };
   const passwordChangeHandler = (pass) => {
     setPassword(pass);
-  }
+  };
 
-  return isLoading ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-    <Loader />
-  </View> :
+  return isLoading ? (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Loader />
+    </View>
+  ) : (
     <KeyboardAvoidingView
       enabled
       behavior={Platform.OS === "ios" ? "padding" : ""}
@@ -138,8 +139,14 @@ export default function LoginScreen(props) {
     >
       <ScrollView>
         <LoginStyle>
-          <LoginSuccessModal isVisible={loginSuccessModalVisible} onClose={handleCloseSuccessModal} />
-          <LoginFailedModal isVisible={loginFailedModalVisible} onClose={handleCloseFailedModal} />
+          <LoginSuccessModal
+            isVisible={loginSuccessModalVisible}
+            onClose={handleCloseSuccessModal}
+          />
+          <LoginFailedModal
+            isVisible={loginFailedModalVisible}
+            onClose={handleCloseFailedModal}
+          />
           <View style={loginStyles.intro}>
             <Text style={loginStyles.welcome}>Welcome!</Text>
             <Text style={loginStyles.subWelcome}>Log In to continue</Text>
@@ -147,7 +154,7 @@ export default function LoginScreen(props) {
           <View style={loginStyles.onboardContainer}>
             <Image
               style={loginStyles.onboradImage}
-              source={require("../../assets/onboard-5.png")}
+              source={require("../../../assets/onboard-5.png")}
             />
           </View>
           <View style={loginStyles.form}>
@@ -234,12 +241,12 @@ export default function LoginScreen(props) {
             <View style={loginStyles.or}>
               <Image
                 style={loginStyles.dashLine}
-                source={require("../../assets/dashedLine.png")}
+                source={require("../../../assets/dashedLine.png")}
               />
               <Text style={loginStyles.ortext}>OR</Text>
               <Image
                 style={loginStyles.dashLine}
-                source={require("../../assets/dashedLine.png")}
+                source={require("../../../assets/dashedLine.png")}
               />
             </View>
             {/* login with google handler */}
@@ -266,4 +273,5 @@ export default function LoginScreen(props) {
       </ScrollView>
       <ExpoStatusBar style="auto" />
     </KeyboardAvoidingView>
+  );
 }

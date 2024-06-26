@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useRef,
   useContext,
-  useCallback,
 } from "react";
 import {
   View,
@@ -15,7 +14,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { searchStyles } from "./SearchBarStyles";
+import { searchStyles } from "./Styles/SearchBarStyles";
 import { theme } from "../infrastructure/theme";
 import { Fontisto, Feather, SimpleLineIcons } from "@expo/vector-icons";
 import Animated, {
@@ -248,7 +247,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: wp(75),
-    marginTop:12.5
+    marginTop: 12.5,
   },
   equalizerIcon: {
     marginLeft: "auto",

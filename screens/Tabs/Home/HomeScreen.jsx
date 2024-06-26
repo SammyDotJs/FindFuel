@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { theme } from "../../../infrastructure/theme";
 import { Button } from "@rneui/themed";
 import { UserContext } from "../../../services/user/UserContext";
-import { HomeScreenStyles as hs } from "./HomeScreenStyles";
+import { HomeScreenStyles as hs } from "./Styles/homeScreen.styles";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -27,6 +27,10 @@ import Animated, {
 } from "react-native-reanimated";
 import { Skeleton } from "moti/skeleton";
 import { MotiView } from "moti";
+import { UserLocationContext } from "../../../services/user/UserLocationContext";
+import GlobalApi from "../../../utils/GlobalApi";
+import { SelectMarkerContext } from "../../../services/SelectMarkerContext";
+import { useBottomSheet } from "../../../services/BottomSheetContext";
 
 const Spacer = ({ height = hp(1) }) => <MotiView style={{ height }} />;
 
@@ -84,17 +88,47 @@ const SkeletonLoader = () => {
 };
 
 export default function HomeScreen({ route, navigation }) {
-  const {
-    fillingStations,
-    isLoading,
-    handleStationSelect,
-  } = useContext(LocationContext);
+  const { location, setLocation, isFetching, setIsFetching, setPlaceListData } =
+    useContext(UserLocationContext);
+
+  const { handleStationSelect } = useContext(LocationContext);
   const translateY = useSharedValue(0);
   const { loggedInDetails } = useContext(UserContext);
   const [userName, setUserName] = useState("");
   const [profileLetter, setProfileLetter] = useState("");
 
-  const data = fillingStations.slice(0, 3);
+  const { setSelectedMarker } = useContext(SelectMarkerContext);
+
+  const flatListRef = useRef(null);
+  const sheetRef = useBottomSheet();
+  const [placeList, setPlaceList] = useState([]);
+
+  useEffect(() => {
+    location && GetNearByPLace();
+  }, [location]);
+
+  const GetNearByPLace = () => {
+    const data = {
+      includedTypes: ["gas_station"],
+      maxResultCount: 10,
+      locationRestriction: {
+        circle: {
+          center: {
+            latitude: location?.latitude,
+            longitude: location?.longitude,
+          },
+          radius: 5000.0,
+        },
+      },
+    };
+    GlobalApi.NewNearbyPlace(data).then((res) => {
+      setPlaceList(res.data?.places);
+      setPlaceListData(res.data?.places);
+      setIsFetching(false);
+    });
+  };
+
+  const slicedData = placeList.slice(0, 3);
 
   const readMore = () => {
     navigation.navigate("DashboardInfo");
@@ -108,8 +142,9 @@ export default function HomeScreen({ route, navigation }) {
     },
   });
 
-  const viewAll = async () => {
-    await navigation.navigate("AllStations", fillingStations);
+  const viewAll = () => {
+    console.log(placeList);
+    placeList && navigation.navigate("AllStations", placeList);
   };
 
   useEffect(() => {
@@ -153,9 +188,10 @@ export default function HomeScreen({ route, navigation }) {
     </View>
   );
 
-  const locate = (item) => {
-    navigation.navigate("Map");
-    handleStationSelect(item);
+  const locate = async (item) => {
+    await setSelectedMarker(item);
+    await sheetRef.current?.expand();
+    await navigation.navigate("Map");
   };
   return (
     <SafeArea>
@@ -214,11 +250,12 @@ export default function HomeScreen({ route, navigation }) {
               <Text style={hs.viewAll}>View All</Text>
             </TouchableOpacity>
           </View>
-          {isLoading ? (
+          {isFetching ? (
             renderSkeletonLoader()
           ) : (
             <FlatList
-              data={data}
+              data={slicedData}
+              ref={flatListRef}
               renderItem={({ item }) => {
                 return (
                   <TouchableWithoutFeedback>
@@ -227,7 +264,7 @@ export default function HomeScreen({ route, navigation }) {
                 );
               }}
               keyExtractor={(item, index) =>
-                `${item?.name}-${item?.geometry.location.lat}-${index}`
+                `${item?.name}-${item?.location.latitude}-${index}`
               }
               horizontal={true}
               initialNumToRender={3}
@@ -241,11 +278,11 @@ export default function HomeScreen({ route, navigation }) {
           <View style={hs.listTextContainer}>
             <Text style={hs.listHeader}>Recently Visited</Text>
           </View>
-          {isLoading ? (
+          {isFetching ? (
             renderSkeletonLoader()
           ) : (
             <FlatList
-              data={data}
+              data={slicedData}
               renderItem={({ item }) => {
                 return (
                   <TouchableWithoutFeedback>
@@ -254,7 +291,7 @@ export default function HomeScreen({ route, navigation }) {
                 );
               }}
               keyExtractor={(item, index) =>
-                `${item?.name}-${item?.geometry.location.lat}-${index}`
+                `${item?.name}-${item?.location.latitude}-${index}`
               }
               horizontal={true}
               initialNumToRender={3}

@@ -1,12 +1,15 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
-import { theme } from "../infrastructure/theme";
+import { theme } from "../../infrastructure/theme";
 import Onboarding from "react-native-onboarding-swiper";
 import { Button } from "react-native-elements";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { styles } from "./Styles/onboarding.styles";
 
 const Square = ({ isLight, selected }) => {
   let backgroundColor;
@@ -58,7 +61,9 @@ const Done = ({ isLight, ...props }) => (
 );
 
 const Skip = ({ isLight, skipLabel, ...props }) => (
-  <Text style={styles.skipStyle} {...props}>Skip</Text>
+  <Text style={styles.skipStyle} {...props}>
+    Skip
+  </Text>
 );
 
 const Next = ({ isLight, ...props }) => (
@@ -79,10 +84,10 @@ const Next = ({ isLight, ...props }) => (
 );
 
 export default function OnboardingScreen() {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const handleDone = () => {
-    navigation.navigate("Auth")
-  }
+    navigation.navigate("Auth");
+  };
   return (
     <View style={styles.container}>
       <Onboarding
@@ -118,17 +123,15 @@ export default function OnboardingScreen() {
               <View style={styles.onboardContainer}>
                 <Image
                   style={styles.onboradImage}
-                  source={require("../assets/onboard-1.png")}
+                  source={require("../../assets/onboard-1.png")}
                 />
               </View>
             ),
             title: "",
-            subtitle: (
-              "Find fuel stations nearby, anytime, anywhere."
-            ),
+            subtitle: "Find fuel stations nearby, anytime, anywhere.",
             subTitleStyles: {
               textAlign: "left",
-            }
+            },
           },
           {
             backgroundColor: "#fff",
@@ -136,14 +139,13 @@ export default function OnboardingScreen() {
               <View style={styles.onboardContainer}>
                 <Image
                   style={styles.onboradImage}
-                  source={require("../assets/onboard-2.png")}
+                  source={require("../../assets/onboard-2.png")}
                 />
               </View>
             ),
             title: "",
-            subtitle: (
-              "Navigate fuel options and filter through prices effortlessly."
-            ),
+            subtitle:
+              "Navigate fuel options and filter through prices effortlessly.",
             subTitleStyles: {
               textAlign: "right",
             },
@@ -154,16 +156,15 @@ export default function OnboardingScreen() {
               <View style={styles.onboardContainer}>
                 <Image
                   style={styles.onboradImage}
-                  source={require("../assets/onboard-3.png")}
+                  source={require("../../assets/onboard-3.png")}
                 />
               </View>
             ),
             title: "",
-            subtitle: (
+            subtitle:
               //   <Text style={styles.titleStyles}>
-              "Receive instant alerts on fuel availability and price fluctuations."
+              "Receive instant alerts on fuel availability and price fluctuations.",
               //   </Text>
-            ),
             subTitleStyles: {
               textAlign: "left",
             },
@@ -173,43 +174,3 @@ export default function OnboardingScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.bg.white,
-  },
-  skipStyle: {
-    color: theme.colors.text.primary,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.text.primary,
-    fontSize: hp(2),
-    marginLeft: wp(3),
-    marginBottom: hp(2),
-  },
-  nextStyle: {},
-  titleStyles: {
-    color: theme.colors.text.primary,
-    fontSize: hp(3),
-    fontWeight: "600",
-    lineHeight: hp(60),
-    paddingLeft: 20,
-    marginLeft: 0,
-    width: wp(100),
-    marginTop: 20,
-  },
-  onboardContainer: {
-    justifyContent: "center",
-    alignItems: "flex-end",
-    width: wp(90),
-    height: hp(50),
-    marginLeft: "auto",
-    marginTop: 10,
-    paddingBottom: 0,
-  },
-  onboradImage: {
-    width: wp(80),
-    resizeMode: "contain",
-    padding: 0,
-  },
-});

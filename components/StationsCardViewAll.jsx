@@ -1,11 +1,10 @@
 import { View, Text, ImageBackground } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "@rneui/themed";
 import { HomeScreenStyles as hs } from "../screens/Tabs/Home/Styles/homeScreen.styles";
 import GlobalApi from "../utils/GlobalApi";
 
 export default function StationsCard({ stations, locate }) {
-  // console.log(stations,"]]]]]]]]]]]]]]]]]]]]]]]")
   const PLACE_PHOTO_BASE_URL = "https://places.googleapis.com/v1/";
   const navLocation = () => {
     locate();
@@ -17,15 +16,14 @@ export default function StationsCard({ stations, locate }) {
     return text?.slice(0, maxLength) + "...";
   };
 
-  const stationImage = `${PLACE_PHOTO_BASE_URL}${stations?.photos[0]?.name}/media?key=${GlobalApi?.API_KEY}&maxHeightPx=800&maxWidthPx=1200`;
   return (
-    <View style={hs.fillingStation}>
+    <View style={hs.fillingStationAll}>
       <ImageBackground
         style={hs.fillingStationImage}
         source={
           stations?.photos
             ? {
-                uri: stationImage,
+                uri: `${PLACE_PHOTO_BASE_URL}${stations?.photos[0]?.name}/media?key=${GlobalApi?.API_KEY}&maxHeightPx=800&maxWidthPx=1200`,
               }
             : {
                 uri: "https://nairametrics.com/wp-content/uploads/2023/07/NNPC.jpg",
@@ -33,17 +31,21 @@ export default function StationsCard({ stations, locate }) {
         }
         imageStyle={hs.imageStyle}
       ></ImageBackground>
-      <View style={hs.fillingStationInfo}>
-        <Text style={hs.fillingStationName}>
-          {truncateText(stations?.displayName.text, 20)}
-        </Text>
-        <Text style={hs.fillingStationPrice}>N680 per liter</Text>
-        <Button
-          title="Locate"
-          buttonStyle={hs.buttonStyle}
-          titleStyle={hs.titleStyle}
-          onPress={() => navLocation()}
-        />
+      <View style={hs.fillingStationInfoAll}>
+        <View>
+          <Text style={hs.fillingStationName}>
+            {stations?.displayName.text}
+          </Text>
+          <Text style={hs.fillingStationPrice}>N680 per liter</Text>
+        </View>
+        <View style={hs.fsButtonViewAll}>
+          <Button
+            title="Locate"
+            buttonStyle={hs.fsButtonStyleAll}
+            titleStyle={hs.titleStyle}
+            onPress={() => navLocation()}
+          />
+        </View>
       </View>
     </View>
   );

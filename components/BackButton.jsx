@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
     width: 50,
     marginLeft: wp(3.5),
     opacity: 0.9,
-    shadowColor: "#C2C2C2",
+    shadowColor: "#00000089",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 5,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.35,
+    shadowRadius: 5.84,
     elevation: 7,
   },
   buttonContainer: {

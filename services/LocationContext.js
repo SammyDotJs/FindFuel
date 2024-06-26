@@ -22,7 +22,6 @@ const debounce = (func, wait) => {
 export const LocationContextProvider = ({ children }) => {
   const [fillingStations, setFillingStations] = useState([]);
   const [fillingStationsData, setFillingStationsData] = useState([]);
-
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [region, setRegion] = useState({});
@@ -30,17 +29,15 @@ export const LocationContextProvider = ({ children }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedStation, setSelectedStation] = useState(null);
+  const [isUserInteracting, setIsUserInteracting] = useState(false);
   const [uniqueStations, setUniqueStations] = useState(new Set());
-
-  const setMapRegion = (reg) => {
-    setRegion(reg);
-  };
 
   const mapRef = useRef(null);
 
   const setMapRef = (ref) => {
     mapRef.current = ref;
   };
+
   useEffect(() => {
     (async () => {
       try {
@@ -61,17 +58,11 @@ export const LocationContextProvider = ({ children }) => {
         Location.watchPositionAsync(
           {
             accuracy: Location.Accuracy.High,
-            timeInterval: 5000, // Update every 5 seconds
+            timeInterval: 2000, // Update every 2 seconds
             distanceInterval: 1, // Update every meter
           },
           (newLocation) => {
             setUserLocation(newLocation);
-            setRegion({
-              latitude: newLocation.coords.latitude,
-              longitude: newLocation.coords.longitude,
-              latitudeDelta: 0.009,
-              longitudeDelta: 0.004,
-            });
           }
         );
       } catch (err) {
@@ -82,7 +73,7 @@ export const LocationContextProvider = ({ children }) => {
   }, []);
 
   const fetchFillingStations = useCallback(
-    debounce(async (latitude, longitude, pageToken = null) => {
+    async (latitude, longitude, pageToken = null) => {
       try {
         let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=gas_station&key=${API_KEY}`;
         if (pageToken) {
@@ -91,27 +82,50 @@ export const LocationContextProvider = ({ children }) => {
         const response = await axios.get(url);
         const data = response.data;
 
+        if (!Array.isArray(data.results)) {
+          console.error("Invalid response format", data);
+          return;
+        }
 
-        // Use a Set to keep track of unique stations
-        const newStationsSet = new Set([...uniqueStations]);
-        data.results.forEach((station) => {
-          newStationsSet.add(station.place_id);
+        setFillingStations((previousStations) => {
+          const newStationsMap = new Map(
+            previousStations.map((station) => [station.place_id, station])
+          );
+          data.results.forEach((station) => {
+            newStationsMap.set(station.place_id, station);
+          });
+          return Array.from(newStationsMap.values());
         });
 
-        // Convert Set back to array and filter unique stations
-        const uniqueStationsArray = Array.from(newStationsSet).map((id) =>
-          data.results.find((station) => station.place_id === id)
-        );
+        setFillingStationsData((previousStations) => {
+          const newStationsMap = new Map(
+            previousStations.map((station) => [station.place_id, station])
+          );
+          data.results.forEach((station) => {
+            newStationsMap.set(station.place_id, station);
+          });
+          return Array.from(newStationsMap.values());
+        });
+        // Use a Set to keep track of unique stations
+        // const newStationsSet = new Set([...uniqueStations]);
+        // data.results.forEach((station) => {
+        //   newStationsSet.add(station.place_id);
+        // });
 
-        setFillingStations(uniqueStationsArray);
-        setFillingStationsData(uniqueStationsArray);
-        setUniqueStations(newStationsSet);
+        // // Convert Set back to array and filter unique stations
+        // const uniqueStationsArray = Array.from(newStationsSet).map((id) =>
+        //   data.results.find((station) => station.place_id === id)
+        // );
+
+        // setFillingStations(uniqueStationsArray);
+        // setUniqueStations(newStationsSet);
+        // setFillingStationsData(uniqueStationsArray);
+
 
         setIsLoading(false);
-        setTrack(true);
+
         if (data.next_page_token) {
           setTimeout(() => {
-            setTrack(false);
             fetchFillingStations(latitude, longitude, data.next_page_token);
           }, 2000);
         }
@@ -119,79 +133,84 @@ export const LocationContextProvider = ({ children }) => {
         console.error(error);
         setIsLoading(false);
       }
-    }, 500), // 500 milliseconds debounce time
+    },
     [uniqueStations]
   );
-
-  const searchFillingStations = (searchTerm) => {
-    setFillingStations(
-      searchTerm.length == 0
-        ? fillingStationsData
-        : fillingStationsData.filter((station) =>
-            station.name.toUpperCase().includes(searchTerm.toUpperCase())
-          )
-    );
-  };
-  const setFillingStation = (marker) => {
-    setFillingStations(marker);
-  };
-
-  useEffect(() => {
-    !modalVisible && setSelectedStation(null);
-  }, [modalVisible]);
+  const searchFillingStations = useCallback(
+    (searchTerm) => {
+      setFillingStations(
+        searchTerm.length === 0
+          ? fillingStationsData
+          : fillingStationsData.filter((station) =>
+              station.name.toUpperCase().includes(searchTerm.toUpperCase())
+            )
+      );
+    },
+    [fillingStationsData]
+  );
 
   useEffect(() => {
-    userLocation &&
+    if (userLocation) {
       fetchFillingStations(
         userLocation.coords.latitude,
         userLocation.coords.longitude
       );
+    }
   }, [userLocation]);
 
-  const onChangeLocation = useCallback(
-    debounce(
-      () => {
-        fetchFillingStations(region.latitude, region.longitude);
-      },
-      1000,
-      { trailing: true, leading: false }
-    )
-  );
-
   useEffect(() => {
-    onChangeLocation;
-  }, [region]);
-
-  const onRegionChangeComplete = useCallback(
-    debounce((newRegion) => {
-      // setRegion(newRegion);
-      fetchFillingStations(newRegion.latitude, newRegion.longitude);
-    }, 1000), // Adjust debounce delay as needed
-    []
-  );
+    if (!modalVisible) {
+      setSelectedStation(null);
+    }
+  }, [modalVisible]);
 
   const handleStationSelect = (station) => {
     setSelectedStation(station);
-    const newRegion = {
-      latitude: station.geometry.location.lat,
-      longitude: station.geometry.location.lng,
-      latitudeDelta: 0.001,
-      longitudeDelta: 0.004,
-    };
-    // if (MapRef.current) {
-      //   MapRef.current.animateToRegion(newRegion, 1000); // 1000ms animation duration
-      // }
-      setModalVisible(true);
-    setRegion(newRegion);
+    if (station && station.geometry && station.geometry.location) {
+      const newRegion = {
+        latitude: station.geometry.location.lat,
+        longitude: station.geometry.location.lng,
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.004,
+      };
+      setRegion(newRegion);
+    }
+    setModalVisible(true);
   };
+
   const myLocation = () => {
-    setRegion({
-      latitude: userLocation.coords.latitude,
-      longitude: userLocation.coords.longitude,
-      latitudeDelta: 0.001,
-      longitudeDelta: 0.004,
-    });
+    if (userLocation) {
+      setRegion({
+        latitude: userLocation.coords.latitude,
+        longitude: userLocation.coords.longitude,
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.004,
+      });
+    }
   };
+
+  // const onChangeLocation = useCallback(
+  //   debounce(
+  //     (newLocation) => {
+  //       // setFillingStations([]);
+  //       if (newLocation) {
+  //         fetchFillingStations(
+  //           newLocation.coords.latitude,
+  //           newLocation.coords.longitude
+  //         );
+  //       }
+  //     },
+  //     1000,
+  //     { trailing: true, leading: false }
+  //   ),
+  //   [fetchFillingStations]
+  // );
+
+  // useEffect(() => {
+  //   if (userLocation) {
+  //     onChangeLocation(userLocation);
+  //   }
+  // }, [userLocation, onChangeLocation]);
 
   return (
     <LocationContext.Provider
@@ -207,13 +226,11 @@ export const LocationContextProvider = ({ children }) => {
         modalVisible,
         setModalVisible,
         selectedStation,
-        setMapRegion,
         fetchFillingStations,
-        setFillingStation,
         myLocation,
-        onRegionChangeComplete,
         setSelectedStation,
         setMapRef,
+        setIsUserInteracting,
       }}
     >
       {children}

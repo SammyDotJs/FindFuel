@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { SafeArea } from "../../../../components/utils/Safe-area.component";
-import BackButton from "../../../../components/BackButton";
+import { SafeArea } from "../../../../../components/utils/Safe-area.component";
+import BackButton from "../../../../../components/BackButton";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { theme } from "../../../../infrastructure/theme";
+import { theme } from "../../../../../infrastructure/theme";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function DashboardInfo({ navigation }) {

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { theme } from "../infrastructure/theme";
+import { theme } from "../../infrastructure/theme";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -27,8 +27,6 @@ export const searchStyles = StyleSheet.create({
     elevation: 7,
     alignItems: "center",
     // justifyContent: "center",
-
-
   },
   searchInput: {
     fontFamily: theme.fonts.medium,

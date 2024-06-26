@@ -27,7 +27,7 @@ import SearchBarComponent from "../../../components/SearchBarComponent";
 import BackButton from "../../../components/BackButton";
 import { LocationContext } from "../../../services/LocationContext";
 import Modal from "react-native-modal";
-import { HomeScreenStyles as hs } from "../Home/HomeScreenStyles";
+import { HomeScreenStyles as hs } from "../Home/Styles/homeScreen.styles";
 import { BottomSheet, Button } from "react-native-elements";
 import { MapScreenStyles as ms } from "./MapScreenStyles";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -53,7 +53,7 @@ export default function MapScreen({ route, navigation }) {
     selectedStation,
     onRegionChangeComplete,
     setSelectedStation,
-    setMapRef,
+    handleRegionChange,
   } = useContext(LocationContext);
 
   const [filteredStations, setFilteredStations] = useState([]);
@@ -124,7 +124,6 @@ export default function MapScreen({ route, navigation }) {
     mapRef.current.animateToRegion(newRegion, 1000); // 1000 ms for the transition
   };
 
-
   const moveTo = async (position) => {
     const camera = await mapRef.current?.getCamera();
     if (camera) {
@@ -180,8 +179,8 @@ export default function MapScreen({ route, navigation }) {
                 : require("../../../assets/FuelMapMarkers.png")
             }
             style={{
-              width: isSelected ? markerSize * 3 : markerSize * 2,
-              height: isSelected ? markerSize * 3 : markerSize * 2,
+              width: isSelected ? markerSize * 3 : markerSize * 1.5,
+              height: isSelected ? markerSize * 3 : markerSize * 1.5,
               resizeMode: "contain",
             }}
           />
@@ -201,6 +200,10 @@ export default function MapScreen({ route, navigation }) {
     };
     selectedStation && getRoutes();
   }, [selectedStation]);
+
+  const regionChange = () => {
+    // handleRegionChange()
+  };
   return (
     <TouchableWithoutFeedback onPress={handleBodyPress}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -231,9 +234,10 @@ export default function MapScreen({ route, navigation }) {
             provider={PROVIDER_GOOGLE}
             showsUserLocation={false}
             region={region}
-            onRegionChangeComplete={onRegionChangeComplete}
+            // onRegionChangeComplete={onRegionChangeComplete}
             style={styles.map}
             customMapStyle={MapStyle}
+            // onRegionChange={regionChange}
           >
             {userLocation && (
               <Marker
@@ -246,8 +250,8 @@ export default function MapScreen({ route, navigation }) {
                 <Image
                   source={require("../../../assets/Userpointer.png")}
                   style={{
-                    width: markerSize * 2,
-                    height: markerSize * 2,
+                    width: markerSize,
+                    height: markerSize,
                     // resizeMode: "cover",
                   }}
                 />
