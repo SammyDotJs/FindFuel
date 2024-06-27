@@ -10,16 +10,15 @@ import {
 } from "react-native-responsive-screen";
 import { UserLocationContext } from "../services/user/UserLocationContext";
 
-const GoogleSearchBar = ({ searchedLocation, placeList }) => {
+const GoogleSearchBar = ({ searchedLocation, placeList, selectMarker }) => {
   const [isFocused, setIsFocused] = useState(false);
   const inputWidth = useRef(new Animated.Value(40)).current; // Initial width
   const searchRef = useRef(null);
   const { location } = useContext(UserLocationContext);
-  console.log(location);
 
   const searchLocation = {
-    lat: location.latitude,
-    lng: location.longitude,
+    lat: location?.coords.latitude,
+    lng: location?.coords.longitude,
   };
 
   useEffect(() => {
@@ -43,16 +42,35 @@ const GoogleSearchBar = ({ searchedLocation, placeList }) => {
   };
 
   const handleBlur = () => {
-    setIsFocused(false);
     if (searchRef.current) {
       searchRef.current.setAddressText("");
     }
     Keyboard.dismiss();
+    setIsFocused(false);
+  };
+
+  const handlePlaceSelect = (rowData) => {
+    if (!rowData) return;
+    console.log(rowData);
+
+    // Set searched location based on selected place
+    searchedLocation(rowData.geometry.location);
+
+    // Find the matching place from placeList
+    const selectedPlace = placeList.find((place) => place.place_id === rowData.place_id);
+
+    if (selectedPlace) {
+      // Set the selected marker
+      selectMarker(selectedPlace);
+    }
+
+    // Collapse the search bar after selection
+    handleBlur();
   };
 
   const renderRow = (rowData) => {
     return (
-      <TouchableOpacity onPress={() => console.log(rowData)}>
+      <TouchableOpacity>
         <View style={styles.row}>
           <Feather name="map-pin" size={20} color={theme.colors.bg.primary} />
           <Text style={styles.placeName}>{rowData.description}</Text>
@@ -87,9 +105,14 @@ const GoogleSearchBar = ({ searchedLocation, placeList }) => {
               placeholderTextColor={theme.colors.text.placeholder}
               fetchDetails={true}
               onPress={(data, details = null) => {
-                // console.log(data, details);
+                console.log(details?.place_id, "DETAILS");
                 searchedLocation(details?.geometry.location);
-                handleBlur(); // Collapse the search bar after selection
+                setTimeout(() => {
+                  handlePlaceSelect(details)
+                }, 2000);
+                setTimeout(() => {
+                  handleBlur(); // Collapse the search bar after selection
+                }, 500);
               }}
               query={{
                 key: "AIzaSyBvIMi_8BTDRiLwAFj6ZlRqe17M9c3r-es",
@@ -99,14 +122,12 @@ const GoogleSearchBar = ({ searchedLocation, placeList }) => {
                 radius: 5000,
               }}
               enablePoweredByContainer={false}
-              // predefinedPlaces={searchResults.map((address) => ({
-              //   description: address.label,
-              //   place_id: address.id, // Replace with your API's ID or key
-              // }))}
+              isRowScrollable={true}
+              disableScroll={false}
               onFocus={handleFocus}
               onBlur={handleBlur}
               textInputProps={{
-                placeholderTextColor: theme.colors.text.primary, // Change the placeholder text color here
+                placeholderTextColor: theme.colors.text.primary,
               }}
               styles={{
                 textInputContainer: {
@@ -125,6 +146,7 @@ const GoogleSearchBar = ({ searchedLocation, placeList }) => {
                 listView: {
                   width: "120%",
                   zIndex: 10000,
+                  // height: 200,
                 },
                 predefinedPlacesDescription: {
                   color: "#1faadb",
@@ -134,8 +156,8 @@ const GoogleSearchBar = ({ searchedLocation, placeList }) => {
                   alignItems: "center",
                 },
               }}
-              renderRow={renderRow} // Custom render for each row
-              renderDescription={renderDescription} // Custom render for description
+              // renderRow={renderRow} // Custom render for each row
+              // renderDescription={renderDescription} // Custom render for description
             />
             <TouchableOpacity onPress={handleBlur} style={{ marginTop: 10 }}>
               <Feather
@@ -167,7 +189,7 @@ const styles = StyleSheet.create({
   container: {
     position: "relative",
     alignItems: "center",
-    zIndex: 10,
+    zIndex: 9999,
   },
   searchContainer: {
     flexDirection: "row",

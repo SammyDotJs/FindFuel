@@ -88,10 +88,15 @@ const SkeletonLoader = () => {
 };
 
 export default function HomeScreen({ route, navigation }) {
-  const { location, setLocation, isFetching, setIsFetching, setPlaceListData } =
-    useContext(UserLocationContext);
+  const {
+    location,
+    setLocation,
+    isFetching,
+    setIsFetching,
+    setPlaceListData,
+    stationLocation,
+  } = useContext(UserLocationContext);
 
-  const { handleStationSelect } = useContext(LocationContext);
   const translateY = useSharedValue(0);
   const { loggedInDetails } = useContext(UserContext);
   const [userName, setUserName] = useState("");
@@ -104,31 +109,28 @@ export default function HomeScreen({ route, navigation }) {
   const [placeList, setPlaceList] = useState([]);
 
   useEffect(() => {
-    location && GetNearByPLace();
-  }, [location]);
+    stationLocation && GetNearByPLace();
+  }, [stationLocation]);
 
-  const GetNearByPLace = () => {
-    const data = {
-      includedTypes: ["gas_station"],
-      maxResultCount: 10,
-      locationRestriction: {
-        circle: {
-          center: {
-            latitude: location?.latitude,
-            longitude: location?.longitude,
-          },
-          radius: 5000.0,
-        },
-      },
-    };
-    GlobalApi.NewNearbyPlace(data).then((res) => {
-      setPlaceList(res.data?.places);
-      setPlaceListData(res.data?.places);
+  const GetNearByPLace = async () => {
+    try {
+      const data = {
+        latitude: stationLocation.coords.latitude,
+        longitude: stationLocation.coords.longitude,
+        radius: 5000, 
+      };
+      const response = await GlobalApi.NewNearbyPlace(data);
+      setPlaceList(response?.results.slice(0, 10));
+      setPlaceListData(response?.results.slice(0, 10));
       setIsFetching(false);
-    });
+    } catch (error) {
+      console.error("Error fetching nearby places:", error);
+    } finally {
+      setIsFetching(false);
+    }
   };
 
-  const slicedData = placeList.slice(0, 3);
+  const slicedData = placeList && placeList.slice(0, 3);
 
   const readMore = () => {
     navigation.navigate("DashboardInfo");
@@ -143,7 +145,6 @@ export default function HomeScreen({ route, navigation }) {
   });
 
   const viewAll = () => {
-    console.log(placeList);
     placeList && navigation.navigate("AllStations", placeList);
   };
 
@@ -151,8 +152,8 @@ export default function HomeScreen({ route, navigation }) {
     // setUserName(loggedInDetails?.user.first_name)
     // setProfileLetter(loggedInDetails?.user.first_name?.charAt(0).toUpperCase())
 
-    setUserName("John Doe");
-    setProfileLetter("J");
+    setUserName("Guest");
+    setProfileLetter("G");
   }, [loggedInDetails]);
   // console.log(loggedInDetails);
   useEffect(() => {
@@ -188,10 +189,14 @@ export default function HomeScreen({ route, navigation }) {
     </View>
   );
 
-  const locate = async (item) => {
-    await setSelectedMarker(item);
-    await sheetRef.current?.expand();
-    await navigation.navigate("Map");
+  const locate = (item) => {
+    setSelectedMarker(item);
+    navigation.navigate("Map");
+    sheetRef.current !== null && sheetRef.current?.present();
+    sheetRef.current === null &&
+      setTimeout(() => {
+        sheetRef.current?.present();
+      }, 1500); // Open the bottom sheet
   };
   return (
     <SafeArea>
@@ -264,7 +269,7 @@ export default function HomeScreen({ route, navigation }) {
                 );
               }}
               keyExtractor={(item, index) =>
-                `${item?.name}-${item?.location.latitude}-${index}`
+                `${item?.name}-${item?.geometry.location.lat}-${index}`
               }
               horizontal={true}
               initialNumToRender={3}
@@ -291,7 +296,7 @@ export default function HomeScreen({ route, navigation }) {
                 );
               }}
               keyExtractor={(item, index) =>
-                `${item?.name}-${item?.location.latitude}-${index}`
+                `${item?.name}-${item?.geometry.location.lat}-${index}`
               }
               horizontal={true}
               initialNumToRender={3}

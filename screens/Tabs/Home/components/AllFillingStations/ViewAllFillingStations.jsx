@@ -63,7 +63,6 @@ export default function ViewAllFillingStations({ route, navigation }) {
   const stations = route.params;
   const { isFetching } = useContext(UserLocationContext);
   const { setSelectedMarker } = useContext(SelectMarkerContext);
-  const { handleStationSelect } = useContext(LocationContext);
 
   const sheetRef = useBottomSheet();
 
@@ -86,8 +85,12 @@ export default function ViewAllFillingStations({ route, navigation }) {
 
   const locate = (item) => {
     setSelectedMarker(item);
-    sheetRef.current?.expand();
     navigation.navigate("Map");
+    sheetRef.current !== null && sheetRef.current?.present();
+    sheetRef.current === null &&
+      setTimeout(() => {
+        sheetRef.current?.present();
+      }, 2000); // Open the bottom sheet
   };
   return (
     <SafeArea>

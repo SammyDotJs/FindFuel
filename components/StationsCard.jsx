@@ -5,8 +5,9 @@ import { HomeScreenStyles as hs } from "../screens/Tabs/Home/Styles/homeScreen.s
 import GlobalApi from "../utils/GlobalApi";
 
 export default function StationsCard({ stations, locate }) {
-  // console.log(stations,"]]]]]]]]]]]]]]]]]]]]]]]")
-  const PLACE_PHOTO_BASE_URL = "https://places.googleapis.com/v1/";
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
+  const PLACE_PHOTO_BASE_URL = "https://maps.googleapis.com/maps/api/place/photo?";
   const navLocation = () => {
     locate();
   };
@@ -17,25 +18,31 @@ export default function StationsCard({ stations, locate }) {
     return text?.slice(0, maxLength) + "...";
   };
 
-  const stationImage = `${PLACE_PHOTO_BASE_URL}${stations?.photos[0]?.name}/media?key=${GlobalApi?.API_KEY}&maxHeightPx=800&maxWidthPx=1200`;
   return (
     <View style={hs.fillingStation}>
+      {isImageLoading && (
+        <ImageBackground
+          style={hs.loadingImage}
+          imageStyle={hs.imageStyle}
+          source={require("../assets/ImageLoading.png")}
+        />
+      )}
       <ImageBackground
         style={hs.fillingStationImage}
         source={
           stations?.photos
             ? {
-                uri: stationImage,
+                uri: `${PLACE_PHOTO_BASE_URL}maxwidth=1200&photo_reference=${stations?.photos[0].photo_reference}&key=${GlobalApi.API_KEY}`,
               }
-            : {
-                uri: "https://nairametrics.com/wp-content/uploads/2023/07/NNPC.jpg",
-              }
+            : require("../assets/ImageLoading.png")
         }
         imageStyle={hs.imageStyle}
+        onLoadStart={() => setIsImageLoading(true)}
+        onLoadEnd={() => setIsImageLoading(false)}
       ></ImageBackground>
       <View style={hs.fillingStationInfo}>
         <Text style={hs.fillingStationName}>
-          {truncateText(stations?.displayName.text, 20)}
+          {truncateText(stations?.name, 20)}
         </Text>
         <Text style={hs.fillingStationPrice}>N680 per liter</Text>
         <Button

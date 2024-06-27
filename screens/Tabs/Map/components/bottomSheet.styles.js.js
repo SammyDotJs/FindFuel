@@ -37,6 +37,11 @@ export const styles = StyleSheet.create({
     fontFamily: theme.fonts.body,
     fontSize: hp(1.5),
   },
+  availabilityClosed: {
+    color: theme.colors.text.error,
+    fontFamily: theme.fonts.body,
+    fontSize: hp(1.5),
+  },
   location: {
     color: theme.colors.text.primary,
     fontFamily: theme.fonts.body,
@@ -97,4 +102,19 @@ export const styles = StyleSheet.create({
   buttonContainerStyle: {
     marginTop: hp(1),
   },
+  loadingImage: {
+    position:"absolute",
+    marginHorizontal: wp(3),
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+    width: wp(35),
+    height: hp(11),
+    padding: wp(3),
+    borderRadius: 20,
+    marginVertical:hp(2.5)
+  },
 });
+
+
+

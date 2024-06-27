@@ -16,14 +16,20 @@ import { useEffect, useRef, useState } from "react";
 import { UserLocationContext } from "./services/user/UserLocationContext";
 import { SelectMarkerContext } from "./services/SelectMarkerContext";
 import { BottomSheetProvider } from "./services/BottomSheetContext";
-import { PortalProvider } from "@gorhom/portal";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import {
+  GestureHandlerRootView,
+  PanGestureHandler,
+} from "react-native-gesture-handler";
+import { MapViewProvider } from "./services/MapViewContext";
 
 export default function App() {
   const [location, setLocation] = useState(null);
+  const [stationLocation, setStationLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
   const [placeListData, setPlaceListData] = useState([]);
-  const [selectedMarker, setSelectedMarker] = useState([]);
+  const [selectedMarker, setSelectedMarker] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -34,7 +40,19 @@ export default function App() {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      setLocation(location.coords);
+      setLocation(location);
+      setStationLocation(location);
+
+      // Location.watchPositionAsync(
+      //   {
+      //     accuracy: Location.Accuracy.High,
+      //     timeInterval: 2000, // Update every 2 seconds
+      //     distanceInterval: 1, // Update every meter
+      //   },
+      //   (newLocation) => {
+      //     setLocation(newLocation);
+      //   }
+      // );
     })();
   }, []);
 
@@ -59,38 +77,46 @@ export default function App() {
           <ActivityIndicator
             animating={true}
             size={50}
-            color={theme.colors.bg.primary}
+            color={theme.colors.bg.white}
           />
         </View>
       </View>
     );
   }
   return (
-    <PortalProvider>
-      <BottomSheetProvider>
-        <SelectMarkerContext.Provider
-          value={{ selectedMarker, setSelectedMarker }}
-        >
-          <UserLocationContext.Provider
-            value={{
-              location,
-              setLocation,
-              isFetching,
-              setIsFetching,
-              placeListData,
-              setPlaceListData,
-            }}
-          >
-            <UserContextProvider>
-              <LocationContextProvider>
-                <AppNavigation />
-              </LocationContextProvider>
-              <ExpoStatusBar style="auto" />
-            </UserContextProvider>
-          </UserLocationContext.Provider>
-        </SelectMarkerContext.Provider>
-      </BottomSheetProvider>
-    </PortalProvider>
+    <GestureHandlerRootView>
+      <MapViewProvider>
+        <BottomSheetProvider>
+          <BottomSheetModalProvider>
+            {/* <PanGestureHandler> */}
+            <SelectMarkerContext.Provider
+              value={{ selectedMarker, setSelectedMarker }}
+            >
+              <UserLocationContext.Provider
+                value={{
+                  location,
+                  setLocation,
+                  isFetching,
+                  setIsFetching,
+                  placeListData,
+                  setPlaceListData,
+                  stationLocation,
+                  setStationLocation,
+                }}
+              >
+                <UserContextProvider>
+                  <LocationContextProvider>
+                    <AppNavigation />
+                  </LocationContextProvider>
+                  <ExpoStatusBar style="auto" />
+                </UserContextProvider>
+              </UserLocationContext.Provider>
+            </SelectMarkerContext.Provider>
+            {/* </PanGestureHandler> */}
+          </BottomSheetModalProvider>
+        </BottomSheetProvider>
+      </MapViewProvider>
+    </GestureHandlerRootView>
   );
 }
 
@@ -102,10 +128,10 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   loadingBox: {
-    width: 80,
-    height: 80,
-    borderRadius: 25,
-    backgroundColor: theme.colors.bg.tertiary,
+    width: 70,
+    height: 70,
+    borderRadius: 50,
+    backgroundColor: theme.colors.bg.primary,
     justifyContent: "center",
     alignItems: "center",
   },

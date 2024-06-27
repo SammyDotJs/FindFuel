@@ -103,6 +103,7 @@ export const HomeScreenStyles = StyleSheet.create({
   fillingStation: {
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
   },
   fillingStationAll: {
     justifyContent: "start",
@@ -154,5 +155,29 @@ export const HomeScreenStyles = StyleSheet.create({
     paddingVertical: hp(0.5),
     paddingHorizontal: 40,
     marginLeft: "auto",
+  },
+  loadingImage: {
+    position: "absolute",
+    marginHorizontal: wp(3),
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+    width: wp(35),
+    height: hp(11),
+    padding: wp(3),
+    borderRadius: 20,
+    // marginVertical:hp(2.5)
+    bottom: hp(10),
+  },
+  loadingImageAll: {
+    position: "absolute",
+    marginHorizontal: wp(3),
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+    width: wp(35),
+    height: hp(11),
+    padding: wp(3),
+    borderRadius: 20,
   },
 });

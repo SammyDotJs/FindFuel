@@ -237,6 +237,9 @@ export default function MapScreen({ route, navigation }) {
             // onRegionChangeComplete={onRegionChangeComplete}
             style={styles.map}
             customMapStyle={MapStyle}
+            zoomEnabled={true}
+            zoomControlEnabled={true}
+            scrollEnabled={true}
             // onRegionChange={regionChange}
           >
             {userLocation && (

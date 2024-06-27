@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.bg.white,
     borderRadius: 10,
     position: "absolute",
-    bottom: hp(2),
+    bottom: hp(12),
     right: 20,
     justifyContent: "center",
     alignItems: "center",
