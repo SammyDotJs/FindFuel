@@ -21,29 +21,33 @@ export default function StationsCard({ stations, locate }) {
 
   return (
     <View style={hs.fillingStationAll}>
-      {isImageLoading && (
+      <View style={hs.imageStyleContainer}>
+        {isImageLoading && (
+          <ImageBackground
+            style={hs.loadingImageAll}
+            imageStyle={hs.imageStyle}
+            source={require("../assets/ImageLoading.png")}
+          />
+        )}
         <ImageBackground
-          style={hs.loadingImageAll}
+          style={hs.fillingStationImageViewAll}
+          source={
+            stations?.photos
+              ? {
+                  uri: `${PLACE_PHOTO_BASE_URL}maxwidth=1200&photo_reference=${stations?.photos[0].photo_reference}&key=${GlobalApi.API_KEY}`,
+                }
+              : require("../assets/ImageLoading.png")
+          }
           imageStyle={hs.imageStyle}
-          source={require("../assets/ImageLoading.png")}
-        />
-      )}
-      <ImageBackground
-        style={hs.fillingStationImage}
-        source={
-          stations?.photos
-            ? {
-                uri: `${PLACE_PHOTO_BASE_URL}maxwidth=1200&photo_reference=${stations?.photos[0].photo_reference}&key=${GlobalApi.API_KEY}`,
-              }
-            : require("../assets/ImageLoading.png")
-        }
-        imageStyle={hs.imageStyle}
-        onLoadStart={() => setIsImageLoading(true)}
-        onLoadEnd={() => setIsImageLoading(false)}
-      ></ImageBackground>
+          onLoadStart={() => setIsImageLoading(true)}
+          onLoadEnd={() => setIsImageLoading(false)}
+        ></ImageBackground>
+      </View>
       <View style={hs.fillingStationInfoAll}>
         <View>
-          <Text style={hs.fillingStationName}>{stations?.name}</Text>
+          <View style={hs.fillingStationNameAllContainer}>
+            <Text style={hs.fillingStationNameAll}>{stations?.name}</Text>
+          </View>
           <Text style={hs.fillingStationPrice}>N680 per liter</Text>
         </View>
         <View style={hs.fsButtonViewAll}>

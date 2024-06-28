@@ -7,7 +7,8 @@ import GlobalApi from "../utils/GlobalApi";
 export default function StationsCard({ stations, locate }) {
   const [isImageLoading, setIsImageLoading] = useState(true);
 
-  const PLACE_PHOTO_BASE_URL = "https://maps.googleapis.com/maps/api/place/photo?";
+  const PLACE_PHOTO_BASE_URL =
+    "https://maps.googleapis.com/maps/api/place/photo?";
   const navLocation = () => {
     locate();
   };
@@ -20,30 +21,32 @@ export default function StationsCard({ stations, locate }) {
 
   return (
     <View style={hs.fillingStation}>
-      {isImageLoading && (
+      <View style={hs.imageStyleContainer}>
+        {isImageLoading && (
         <ImageBackground
           style={hs.loadingImage}
           imageStyle={hs.imageStyle}
           source={require("../assets/ImageLoading.png")}
         />
       )}
-      <ImageBackground
-        style={hs.fillingStationImage}
-        source={
-          stations?.photos
-            ? {
-                uri: `${PLACE_PHOTO_BASE_URL}maxwidth=1200&photo_reference=${stations?.photos[0].photo_reference}&key=${GlobalApi.API_KEY}`,
-              }
-            : require("../assets/ImageLoading.png")
-        }
-        imageStyle={hs.imageStyle}
-        onLoadStart={() => setIsImageLoading(true)}
-        onLoadEnd={() => setIsImageLoading(false)}
-      ></ImageBackground>
+        <ImageBackground
+          style={hs.fillingStationImage}
+          imageStyle={hs.imageStyle}
+          source={
+            stations?.photos
+              ? {
+                  uri: `${PLACE_PHOTO_BASE_URL}maxwidth=1200&maxheight=800&photo_reference=${stations?.photos[0].photo_reference}&key=${GlobalApi.API_KEY}`,
+                }
+              : require("../assets/ImageLoading.png")
+          }
+          onLoadStart={() => setIsImageLoading(true)}
+          onLoadEnd={() => setIsImageLoading(false)}
+        />
+      </View>
       <View style={hs.fillingStationInfo}>
-        <Text style={hs.fillingStationName}>
-          {truncateText(stations?.name, 20)}
-        </Text>
+        <View style={hs.fillingStationNameContainer}>
+          <Text style={hs.fillingStationName}>{stations?.name}</Text>
+        </View>
         <Text style={hs.fillingStationPrice}>N680 per liter</Text>
         <Button
           title="Locate"

@@ -1,4 +1,4 @@
-import React, { createContext, useRef, useContext } from "react";
+import React, { createContext, useRef, useContext, useState } from "react";
 
 const MapViewContext = createContext();
 
@@ -6,9 +6,7 @@ export const MapViewProvider = ({ children }) => {
   const mapRef = useRef(null);
 
   return (
-    <MapViewContext.Provider value={mapRef}>
-      {children}
-    </MapViewContext.Provider>
+    <MapViewContext.Provider value={mapRef}>{children}</MapViewContext.Provider>
   );
 };
 

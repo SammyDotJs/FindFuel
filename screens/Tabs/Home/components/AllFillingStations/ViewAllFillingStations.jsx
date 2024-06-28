@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, TouchableWithoutFeedback } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeArea } from "../../../../../components/utils/Safe-area.component";
 import BackButton from "../../../../../components/BackButton";
@@ -61,7 +61,7 @@ const SkeletonLoader = () => {
 
 export default function ViewAllFillingStations({ route, navigation }) {
   const stations = route.params;
-  const { isFetching } = useContext(UserLocationContext);
+  const { isFetching, setShowDirections } = useContext(UserLocationContext);
   const { setSelectedMarker } = useContext(SelectMarkerContext);
 
   const sheetRef = useBottomSheet();
@@ -84,6 +84,7 @@ export default function ViewAllFillingStations({ route, navigation }) {
   );
 
   const locate = (item) => {
+    setShowDirections(false);
     setSelectedMarker(item);
     navigation.navigate("Map");
     sheetRef.current !== null && sheetRef.current?.present();
@@ -117,15 +118,15 @@ export default function ViewAllFillingStations({ route, navigation }) {
           style={{ marginTop: hp(5), marginHorizontal: wp(3) }}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 // onPress={(e) => navigation.navigate("RestaurantDetail", { item })}
-                activeOpacity={0.5}
+                activeOpacity={0.4}
               >
                 <StationsCardViewAll
                   stations={item}
                   locate={() => locate(item)}
                 />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             );
           }}
           keyExtractor={(item, index) => `${index}`}

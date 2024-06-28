@@ -70,11 +70,14 @@ export const HomeScreenStyles = StyleSheet.create({
   imageStyle: {
     borderRadius: 15,
   },
+  imageStyleContainer: {
+    position: "relative",
+  },
   buttonStyle: {
     backgroundColor: theme.colors.bg.primary,
     borderRadius: 50,
     paddingVertical: hp(0.6),
-    paddingHorizontal: 40,
+    paddingHorizontal: 30,
   },
   titleStyle: {
     fontFamily: theme.fonts.medium,
@@ -103,7 +106,7 @@ export const HomeScreenStyles = StyleSheet.create({
   fillingStation: {
     justifyContent: "center",
     alignItems: "center",
-    position: "relative",
+    marginHorizontal: wp(3),
   },
   fillingStationAll: {
     justifyContent: "start",
@@ -112,6 +115,14 @@ export const HomeScreenStyles = StyleSheet.create({
     marginBottom: hp(3),
   },
   fillingStationImage: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
+    width: wp(35),
+    height: hp(11),
+    padding: wp(3),
+  },
+  fillingStationImageViewAll: {
     marginHorizontal: wp(3),
     justifyContent: "space-between",
     flexDirection: "row",
@@ -123,18 +134,36 @@ export const HomeScreenStyles = StyleSheet.create({
   fillingStationInfo: {
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: hp(1),
-    width: "85%",
+    marginTop: hp(0.5),
+    width: wp(35),
   },
   fillingStationInfoAll: {
     width: wp(50),
     justifyContent: "space-between",
-    marginTop: hp(1),
   },
   fillingStationName: {
     fontSize: hp(1.5),
     fontFamily: theme.fonts.heading,
     color: theme.colors.text.primary,
+    alignItems: "center",
+    lineHeight: 20,
+    textAlign: "center",
+  },
+  fillingStationNameAll: {
+    fontSize: hp(1.5),
+    fontFamily: theme.fonts.heading,
+    color: theme.colors.text.primary,
+    alignItems: "center",
+    lineHeight: 20,
+  },
+  fillingStationNameContainer: {
+    width: wp(35),
+    justifyContent: "center",
+    height: 40,
+  },
+  fillingStationNameAllContainer: {
+    width: wp(35),
+    height: 40,
   },
   fillingStationPrice: {
     fontSize: hp(1.5),
@@ -152,22 +181,18 @@ export const HomeScreenStyles = StyleSheet.create({
   fsButtonStyleAll: {
     backgroundColor: theme.colors.bg.primary,
     borderRadius: 50,
-    paddingVertical: hp(0.5),
-    paddingHorizontal: 40,
+    paddingVertical: hp(0.7),
+    paddingHorizontal: 30,
     marginLeft: "auto",
   },
   loadingImage: {
     position: "absolute",
-    marginHorizontal: wp(3),
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
     width: wp(35),
     height: hp(11),
     padding: wp(3),
-    borderRadius: 20,
-    // marginVertical:hp(2.5)
-    bottom: hp(10),
   },
   loadingImageAll: {
     position: "absolute",

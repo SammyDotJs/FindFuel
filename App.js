@@ -12,16 +12,16 @@ import { LocationContextProvider } from "./services/LocationContext";
 import UserContextProvider from "./services/user/UserContext";
 import { ExpoStatusBar } from "./navigation";
 import * as Location from "expo-location";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { UserLocationContext } from "./services/user/UserLocationContext";
 import { SelectMarkerContext } from "./services/SelectMarkerContext";
 import { BottomSheetProvider } from "./services/BottomSheetContext";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import {
   GestureHandlerRootView,
-  PanGestureHandler,
 } from "react-native-gesture-handler";
 import { MapViewProvider } from "./services/MapViewContext";
+import LottieView from "lottie-react-native";
 
 export default function App() {
   const [location, setLocation] = useState(null);
@@ -30,6 +30,7 @@ export default function App() {
   const [isFetching, setIsFetching] = useState(true);
   const [placeListData, setPlaceListData] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState({});
+  const [showDirections, setShowDirections] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -102,6 +103,8 @@ export default function App() {
                   setPlaceListData,
                   stationLocation,
                   setStationLocation,
+                  showDirections,
+                  setShowDirections,
                 }}
               >
                 <UserContextProvider>
@@ -125,7 +128,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "transparent",
+    backgroundColor: theme.colors.bg.primary,
   },
   loadingBox: {
     width: 70,

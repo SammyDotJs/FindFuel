@@ -68,7 +68,7 @@ const SkeletonLoader = () => {
           width={wp(35)}
           height={hp(11)}
         />
-        <Spacer />
+        <Spacer height={40} />
         <View style={{ alignItems: "center" }}>
           <Skeleton colorMode="light" width={wp(30)} height={hp(3)} />
           <Spacer />
@@ -95,6 +95,7 @@ export default function HomeScreen({ route, navigation }) {
     setIsFetching,
     setPlaceListData,
     stationLocation,
+    setShowDirections,
   } = useContext(UserLocationContext);
 
   const translateY = useSharedValue(0);
@@ -117,9 +118,10 @@ export default function HomeScreen({ route, navigation }) {
       const data = {
         latitude: stationLocation.coords.latitude,
         longitude: stationLocation.coords.longitude,
-        radius: 5000, 
+        radius: 5000,
       };
       const response = await GlobalApi.NewNearbyPlace(data);
+      console.log(response)
       setPlaceList(response?.results.slice(0, 10));
       setPlaceListData(response?.results.slice(0, 10));
       setIsFetching(false);
@@ -151,7 +153,6 @@ export default function HomeScreen({ route, navigation }) {
   useEffect(() => {
     // setUserName(loggedInDetails?.user.first_name)
     // setProfileLetter(loggedInDetails?.user.first_name?.charAt(0).toUpperCase())
-
     setUserName("Guest");
     setProfileLetter("G");
   }, [loggedInDetails]);
@@ -190,6 +191,7 @@ export default function HomeScreen({ route, navigation }) {
   );
 
   const locate = (item) => {
+    setShowDirections(false);
     setSelectedMarker(item);
     navigation.navigate("Map");
     sheetRef.current !== null && sheetRef.current?.present();

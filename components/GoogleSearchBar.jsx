@@ -69,13 +69,14 @@ const GoogleSearchBar = ({ searchedLocation, placeList, selectMarker }) => {
   };
 
   const renderRow = (rowData) => {
+    console.log(rowData)
     return (
-      <TouchableOpacity>
+      // <TouchableOpacity>
         <View style={styles.row}>
           <Feather name="map-pin" size={20} color={theme.colors.bg.primary} />
           <Text style={styles.placeName}>{rowData.description}</Text>
         </View>
-      </TouchableOpacity>
+      // {/* </TouchableOpacity> */}
     );
   };
 
@@ -156,7 +157,7 @@ const GoogleSearchBar = ({ searchedLocation, placeList, selectMarker }) => {
                   alignItems: "center",
                 },
               }}
-              // renderRow={renderRow} // Custom render for each row
+              renderRow={renderRow} // Custom render for each row
               // renderDescription={renderDescription} // Custom render for description
             />
             <TouchableOpacity onPress={handleBlur} style={{ marginTop: 10 }}>

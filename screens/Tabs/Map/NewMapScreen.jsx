@@ -1,8 +1,8 @@
 import {
   View,
-  Text,
   Image,
   TouchableWithoutFeedback,
+  Text,
   ImageBackground,
 } from "react-native";
 import React, {
@@ -18,32 +18,24 @@ import { UserLocationContext } from "../../../services/user/UserLocationContext"
 import GoogleSearchBar from "../../../components/GoogleSearchBar";
 import CustomMarkers from "./CustomMarkers";
 import BackButton from "../../../components/BackButton";
-import { useIsFocused } from "@react-navigation/native";
-import BottomSheet, {
-  BottomSheetView,
-  BottomSheetBackdrop,
-  BottomSheetModal,
-} from "@gorhom/bottom-sheet";
-import {
-  GestureHandlerRootView,
-  PanGestureHandler,
-  TapGestureHandler,
-} from "react-native-gesture-handler";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SelectMarkerContext } from "../../../services/SelectMarkerContext";
 import { useBottomSheet } from "../../../services/BottomSheetContext";
-import { theme } from "../../../infrastructure/theme";
-import { Button } from "@rneui/themed";
-import { Feather, AntDesign } from "@expo/vector-icons";
-import { styles as bs } from "./components/bottomSheet.styles.js";
-import GlobalApi from "../../../utils/GlobalApi";
 import { styles } from "./Styles/mapscreen.styles.js";
 import MapViewDirections from "react-native-maps-directions";
 import { useMapRef } from "../../../services/MapViewContext";
 import LocationIcon from "./components/LocationIcon";
+import { RenderBottomSheet } from "./components/BottomSheetView";
+import * as Animatable from "react-native-animatable";
+import { theme } from "../../../infrastructure/theme";
+import Modal from "react-native-modal";
+import GlobalApi from "../../../utils/GlobalApi";
+
+const PLACE_PHOTO_BASE_URL =
+  "https://maps.googleapis.com/maps/api/place/photo?";
 
 const NewMapScreen = ({ navigation }) => {
-  const PLACE_PHOTO_BASE_URL =
-    "https://maps.googleapis.com/maps/api/place/photo?";
   const GOOGLE_MAPS_APIKEY = "AIzaSyDZnqPKvw0Me0Q8Rg_wtQ6ExIfjggD9Mdo";
   const { selectedMarker, setSelectedMarker } = useContext(SelectMarkerContext);
   const bottomSheetRef = useBottomSheet();
@@ -53,15 +45,76 @@ const NewMapScreen = ({ navigation }) => {
     placeListData,
     stationLocation,
     setStationLocation,
+    showDirections,
+    setShowDirections,
   } = useContext(UserLocationContext);
-  const [isImageLoading, setIsImageLoading] = useState(true);
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
-  const [showDirections, setShowDirections] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [distance, setDistance] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
   const snapPoints = useMemo(() => ["1%", "60%"]);
   const mapRef = useMapRef(null);
-  const isFocused = useIsFocused();
+  const [findBtn, setFindBtn] = useState(false);
 
+  //UTIL FUNCTIONS
+  function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+  }
+  const truncateText = (text, maxLength) => {
+    if (text?.length <= maxLength) {
+      return text;
+    }
+    return text?.slice(0, maxLength) + "...";
+  };
+
+  useEffect(() => {
+    distance !== 0 && duration !== 0 && console.log(distance, duration);
+  }, [duration, distance]);
+
+  // useEffect(() => {
+  //   findBtn === false && setSelectedMarker({});
+  // }, [findBtn]);
+
+  // NAVIGATIONS
+  const backToHome = useCallback(() => {
+    navigation.navigate("Home");
+  }, [navigation]);
+
+  //BOTTOM SHEET
+  const handleSheetChanges = useCallback((index) => {
+    console.log("handle change", index);
+    if (findBtn === false && index === 0) {
+      console.log("close");
+    }
+  }, []);
+
+  const handleCloseSheet = () => {
+    bottomSheetRef?.current.dismiss();
+  };
+  const handleMarkerPress = (marker) => {
+    setShowDirections(false);
+    setSelectedMarker(marker);
+    console.log(bottomSheetRef.current);
+    bottomSheetRef.current !== null && bottomSheetRef?.current.present();
+    bottomSheetRef.current === null &&
+      setTimeout(() => {
+        bottomSheetRef.current?.present();
+      }, 1500); // Open the bottom sheet
+  };
+
+  const animateToRegion = () => {
+    const newRegion = {
+      latitude: location?.coords.latitude,
+      longitude: location?.coords.longitude,
+      latitudeDelta: 0.0022,
+      longitudeDelta: 0.0021,
+    };
+    mapRef.current.animateToRegion(newRegion, 1000); // 1000 ms for the transition
+  };
+  // MAP DIRECTIONS
   const moveTo = async (position) => {
     const camera = await mapRef.current?.getCamera();
     if (camera) {
@@ -69,13 +122,6 @@ const NewMapScreen = ({ navigation }) => {
       mapRef.current?.animateCamera(camera, { duration: 1000 });
     }
   };
-
-  useEffect(() => {
-    return () => {
-      // Cleanup function to reset showDirections when component unmounts or goes out of view
-      setShowDirections(false);
-    };
-  }, []);
   const onPLaceSelected = (details, flag) => {
     const set = flag === "origin" ? setOrigin : setDestination;
 
@@ -93,7 +139,7 @@ const NewMapScreen = ({ navigation }) => {
     moveTo(position);
   };
 
-  const edgePaddingValue = 70;
+  const edgePaddingValue = 300;
 
   const edgePadding = {
     top: edgePaddingValue,
@@ -102,56 +148,12 @@ const NewMapScreen = ({ navigation }) => {
     left: edgePaddingValue,
   };
 
-  const traceRoute = () => {
-    if (origin && destination) {
-      setShowDirections(true);
-      mapRef.current?.fitToCoordinates([origin, destination], { edgePadding });
+  const traceRouteOnReady = (args) => {
+    if (args) {
+      setDistance(args.distance);
+      setDuration(args.duration);
     }
-    bottomSheetRef.current?.dismiss();
   };
-
-  function isEmpty(obj) {
-    return Object.keys(obj).length === 0;
-  }
-
-  const backToHome = useCallback(() => {
-    navigation.navigate("Home");
-  }, [navigation]);
-
-  const handleSheetChanges = useCallback((index) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
-  const handleMarkerPress = (marker) => {
-    setShowDirections(false);
-    setSelectedMarker(marker);
-    bottomSheetRef.current !== null && bottomSheetRef.current?.present();
-    bottomSheetRef.current === null &&
-      setTimeout(() => {
-        bottomSheetRef.current?.present();
-      }, 1500); // Open the bottom sheet
-  };
-
-  const handleCloseSheet = () => {
-    bottomSheetRef.current?.close();
-  };
-  const truncateText = (text, maxLength) => {
-    if (text?.length <= maxLength) {
-      return text;
-    }
-    return text?.slice(0, maxLength) + "...";
-  };
-
-  const animateToRegion = () => {
-    const newRegion = {
-      latitude: location?.coords.latitude,
-      longitude: location?.coords.longitude,
-      latitudeDelta: 0.0022,
-      longitudeDelta: 0.0021,
-    };
-    mapRef.current.animateToRegion(newRegion, 1000); // 1000 ms for the transition
-  };
-
   useEffect(() => {
     const getRoutes = () => {
       if (location && selectedMarker) {
@@ -163,104 +165,15 @@ const NewMapScreen = ({ navigation }) => {
     };
     !isEmpty(selectedMarker) && getRoutes();
   }, [selectedMarker]);
-  const renderBottomSheet = () => {
-    rating = Math.round(selectedMarker?.rating ? selectedMarker.rating : 0);
-    const ratingArray = Array.from({ length: 5 }, (_, i) => i + 1);
-
-    for (let i = 0; i < rating; i++) {
-      ratingArray[i] = i;
+  const traceRoute = () => {
+    setFindBtn(true);
+    console.log(origin, destination);
+    if (origin && destination) {
+      setShowDirections(true);
+      mapRef.current?.fitToCoordinates([origin, destination], { edgePadding });
     }
-    const gasStationPrices = [
-      { name: "Fuel", price: 617.0, availability: "Available" },
-      { name: "Kerosene", price: 200.0, availability: "Available" },
-      { name: "Gas", price: 100.0, availability: "Available" },
-    ];
-
-    return !isEmpty(selectedMarker) ? (
-      <BottomSheetView style={styles.contentContainer}>
-        <View style={bs.container}>
-          {isImageLoading && (
-            <ImageBackground
-              style={bs.loadingImage}
-              imageStyle={bs.imageStyle}
-              source={require("../../../assets/ImageLoading.png")}
-            />
-          )}
-          <ImageBackground
-            style={bs.fillingStationImage}
-            imageStyle={bs.imageStyle}
-            source={
-              selectedMarker?.photos
-                ? {
-                    uri: `${PLACE_PHOTO_BASE_URL}maxwidth=1200&photo_reference=${selectedMarker?.photos[0].photo_reference}&key=${GlobalApi.API_KEY}`,
-                  }
-                : require("../../../assets/ImageLoading.png")
-            }
-            onLoadStart={() => setIsImageLoading(true)}
-            onLoadEnd={() => setIsImageLoading(false)}
-          />
-          <View>
-            <View style={bs.nameAvailabilityContainer}>
-              <Text style={bs.name}>
-                {truncateText(selectedMarker?.name, 20)}
-              </Text>
-              {selectedMarker.opening_hours ? (
-                <Text
-                  style={
-                    selectedMarker?.opening_hours.open_now === true
-                      ? bs.availability
-                      : bs.availabilityClosed
-                  }
-                >
-                  {selectedMarker?.opening_hours.open_now === true
-                    ? "Opened"
-                    : "Closed"}
-                </Text>
-              ) : (
-                <Text></Text>
-              )}
-            </View>
-            <View style={bs.rating}>
-              {ratingArray.map((_, i) => (
-                <AntDesign
-                  key={i}
-                  name={_ <= rating ? "star" : "staro"}
-                  size={15}
-                  color={theme.colors.bg.primary}
-                />
-              ))}
-            </View>
-            <View style={bs.row}>
-              <Feather
-                name="map-pin"
-                size={20}
-                color={theme.colors.bg.primary}
-              />
-              <Text style={bs.location}>{selectedMarker.vicinity}</Text>
-            </View>
-          </View>
-          <View>
-            {gasStationPrices.map((item, index) => (
-              <View key={index} style={bs.product}>
-                <Text style={bs.productName}>{item.name}:</Text>
-                <Text style={bs.productPrice}>{item.price}</Text>
-                <Text style={bs.productAvailability}>{item.availability}</Text>
-              </View>
-            ))}
-          </View>
-          <Button
-            title={"Find Fuel"}
-            buttonStyle={bs.buttonStyle}
-            containerStyle={bs.buttonContainerStyle}
-            onPress={traceRoute}
-          />
-        </View>
-      </BottomSheetView>
-    ) : (
-      <Text style={{ textAlign: "center", color: theme.colors.text.primary }}>
-        No Station Selected
-      </Text>
-    );
+    bottomSheetRef.current?.dismiss();
+    setIsModalVisible(true);
   };
   return (
     location?.coords.latitude && (
@@ -290,12 +203,10 @@ const NewMapScreen = ({ navigation }) => {
                   }
                   placeList={placeListData}
                   selectMarker={(item) => {
-                    // setShowDirections(false);
                     setSelectedMarker(item);
-                    // bottomSheetRef.current === null &&
                     setTimeout(() => {
                       bottomSheetRef.current?.present();
-                    }, 1500); // Open the bottom sheet
+                    }, 1500);
                   }}
                 />
               </View>
@@ -304,14 +215,14 @@ const NewMapScreen = ({ navigation }) => {
               ref={mapRef}
               style={styles.map}
               provider={PROVIDER_GOOGLE}
-              // customMapStyle={NewMapStyle}
+              customMapStyle={NewMapStyle}
               region={{
                 latitude: stationLocation?.coords.latitude,
                 longitude: stationLocation?.coords.longitude,
-                latitudeDelta: 0.05922,
-                longitudeDelta: 0.02731,
+                latitudeDelta: 0.005922,
+                longitudeDelta: 0.002731,
               }}
-              onPress={handleCloseSheet}
+              // onPress={handleCloseSheet}
               // onMapLoaded={{}}
             >
               {location ? (
@@ -346,12 +257,50 @@ const NewMapScreen = ({ navigation }) => {
                   origin={origin}
                   destination={destination}
                   apikey={GOOGLE_MAPS_APIKEY}
-                  strokeWidth={5}
+                  strokeWidth={6}
                   strokeColor="#5D43FF"
+                  onReady={traceRouteOnReady}
                 />
               )}
             </MapView>
-            {/* <PanGestureHandler> */}
+            {isModalVisible && distance && duration ? (
+              <View>
+                <Modal
+                  isVisible={isModalVisible}
+                  style={styles.modal}
+                  backdropOpacity={0}
+                  onBackdropPress={() => {
+                    setIsModalVisible(false);
+                    setSelectedMarker({});
+                  }}
+                >
+                  <View style={styles.modalView}>
+                    <Text style={styles.duration}>
+                      {Math.ceil(duration)} min away
+                    </Text>
+                    <View style={styles.imageContainer}>
+                      {isImageLoading && (
+                        <ImageBackground
+                          style={styles.loadingImage}
+                          imageStyle={hs.imageStyle}
+                          source={require("../../../assets/ImageLoading.png")}
+                        />
+                      )}
+                      <ImageBackground
+                        style={styles.fillingStationImage}
+                        imageStyle={styles.imageStyle}
+                        source={{
+                          uri: `${PLACE_PHOTO_BASE_URL}maxwidth=1200&maxheight=800&photo_reference=${selectedMarker?.photos[0].photo_reference}&key=${GlobalApi.API_KEY}`,
+                        }}
+                        onLoadStart={() => setIsImageLoading(true)}
+                        onLoadEnd={() => setIsImageLoading(false)}
+                      />
+                    </View>
+                    <Text style={styles.duration}>{selectedMarker?.name}</Text>
+                  </View>
+                </Modal>
+              </View>
+            ) : null}
             <BottomSheetModal
               ref={bottomSheetRef}
               onChange={handleSheetChanges}
@@ -367,10 +316,13 @@ const NewMapScreen = ({ navigation }) => {
                 backgroundColor: "#455A64",
               }}
             >
-              {renderBottomSheet()}
+              <RenderBottomSheet
+                selectedMarker={selectedMarker}
+                traceRoute={() => traceRoute()}
+              />
             </BottomSheetModal>
+
             <LocationIcon goTo={animateToRegion} />
-            {/* </PanGestureHandler> */}
           </View>
         </GestureHandlerRootView>
       </TouchableWithoutFeedback>

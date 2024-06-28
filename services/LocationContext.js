@@ -106,24 +106,7 @@ export const LocationContextProvider = ({ children }) => {
           });
           return Array.from(newStationsMap.values());
         });
-        // Use a Set to keep track of unique stations
-        // const newStationsSet = new Set([...uniqueStations]);
-        // data.results.forEach((station) => {
-        //   newStationsSet.add(station.place_id);
-        // });
-
-        // // Convert Set back to array and filter unique stations
-        // const uniqueStationsArray = Array.from(newStationsSet).map((id) =>
-        //   data.results.find((station) => station.place_id === id)
-        // );
-
-        // setFillingStations(uniqueStationsArray);
-        // setUniqueStations(newStationsSet);
-        // setFillingStationsData(uniqueStationsArray);
-
-
         setIsLoading(false);
-
         if (data.next_page_token) {
           setTimeout(() => {
             fetchFillingStations(latitude, longitude, data.next_page_token);
