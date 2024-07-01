@@ -15,11 +15,10 @@ export const loginStyles = StyleSheet.create({
     fontFamily: theme.fonts.heading,
     padding: 0,
     textAlign: "left",
-    marginTop: hp(1),
   },
   authTextInput: {
     width: wp(90),
-    height: hp(3.5),
+    height: hp(3),
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.text.foundation,
     fontSize: hp(2),
@@ -27,7 +26,7 @@ export const loginStyles = StyleSheet.create({
   },
   authTextInputP: {
     width: wp(78),
-    height: hp(3.5),
+    height: hp(3),
     fontSize: hp(2),
     fontFamily: theme.fonts.medium,
   },
@@ -55,14 +54,12 @@ export const loginStyles = StyleSheet.create({
     alignItems: "center",
     color: theme.colors.text.secondary,
     fontSize: hp(1.6),
-    // flex: 1
   },
   accountQuestion: {
     justifyContent: "center",
     alignItems: "center",
     color: theme.colors.text.secondary,
     fontSize: hp(1.6),
-    // flex: 1
   },
   forgotPasswordText: {
     marginTop: hp(3),
@@ -75,9 +72,10 @@ export const loginStyles = StyleSheet.create({
     margin: hp(1),
   },
   or: {
-    marginTop: hp(1),
     flexDirection: "row",
     margin: "auto",
+    height:hp(4),
+    alignItems:"center"
   },
   ortext: {
     color: theme.colors.text.primary,
@@ -86,13 +84,11 @@ export const loginStyles = StyleSheet.create({
     fontFamily: theme.fonts.body,
   },
   btns: {
-    // flex: 2
+    marginTop:hp(2)
   },
   mt: {
-    marginTop: hp(2),
     justifyContent: "center",
     alignItems: "center",
-    // flex: 1
   },
   signup: {
     marginTop: hp(3),
@@ -115,7 +111,8 @@ export const loginStyles = StyleSheet.create({
     fontFamily: theme.fonts.body,
   },
   intro: {
-    marginTop: hp(1),
-    // flex: 1
+    marginTop: hp(3),
+    justifyContent:"center",
+    alignItems:"center"
   },
 });

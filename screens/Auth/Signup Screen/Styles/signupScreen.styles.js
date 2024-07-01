@@ -16,11 +16,11 @@ export const signupStyles = StyleSheet.create({
     fontFamily: theme.fonts.heading,
     padding: 0,
     textAlign: "left",
-    marginTop: hp(0.5),
+    // marginTop: hp(0.5),
   },
   authTextInput: {
     width: wp(90),
-    height: hp(3.5),
+    height: hp(3),
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.text.foundation,
     fontSize: hp(2),
@@ -28,7 +28,7 @@ export const signupStyles = StyleSheet.create({
   },
   authTextInputP: {
     width: wp(80),
-    height: hp(3.5),
+    height: hp(3),
     fontSize: hp(2),
     fontFamily: theme.fonts.medium,
   },
@@ -43,9 +43,11 @@ export const signupStyles = StyleSheet.create({
     margin: hp(1),
   },
   or: {
-    marginTop: hp(2),
+    // marginTop: hp(2),
     flexDirection: "row",
     margin: "auto",
+    height:hp(4),
+    alignItems:"center"
   },
   ortext: {
     color: theme.colors.text.primary,
@@ -54,7 +56,7 @@ export const signupStyles = StyleSheet.create({
     fontFamily: theme.fonts.body,
   },
   mt: {
-    marginTop: hp(2),
+    // marginTop: hp(2),
   },
   signup: {
     marginTop: hp(3),

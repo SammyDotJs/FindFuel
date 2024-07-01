@@ -17,7 +17,7 @@ export default function AuthTextInput(props) {
           onBlur={customOnBlur}
           style={styles.authTextInput}
           onChangeText={(newText) => setText(newText)}
-          defaultValue={text}
+          value={text}
         />
       </View>
     </AuthInput>

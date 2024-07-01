@@ -162,9 +162,7 @@ export default function OnboardingScreen() {
             ),
             title: "",
             subtitle:
-              //   <Text style={styles.titleStyles}>
               "Receive instant alerts on fuel availability and price fluctuations.",
-              //   </Text>
             subTitleStyles: {
               textAlign: "left",
             },

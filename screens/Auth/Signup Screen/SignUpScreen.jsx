@@ -104,13 +104,12 @@ export default function SignUpScreen() {
   const { userDetails, setDetails } = useContext(UserContext);
 
   const handleSignup = () => {
-    //backend config
     console.log("sign up");
   };
   const handleLogin = () => {
     navigation.navigate("Login");
   };
-  ////////////////////////////////////////////////////////////////////////////////////////////////
+  
   useEffect(() => {
     const updatedUserDetails = {
       first_name: firstName,
@@ -122,15 +121,12 @@ export default function SignUpScreen() {
     setDetails(updatedUserDetails);
   }, [password, email, firstName, lastName, phoneNo]);
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  useEffect(() => {
-    const fullname = name.split(" ");
-    setFirstName(fullname[0]);
-    setLastName(fullname[1] || "");
-  }, [name]);
 
-  const fullNameHandler = (fname) => {
-    setName(fname);
+  const firstNameHandler = (fname) => {
+    setFirstName(fname);
+  };
+  const lastNameHandler = (lname) => {
+    setLastName(lname);
   };
   const emailChangeHandler = (mail) => {
     setEmail(mail);
@@ -191,7 +187,7 @@ export default function SignUpScreen() {
   const handleOtp = async () => {
     !conditionsMet && Alert.alert("Please fill in your details");
 
-    const url = "http://8569-105-112-113-222.ngrok-free.app/api/auth/register/";
+    const url = "http://possible-gar-partially.ngrok-free.app/api/auth/register/";
     try {
       const response = await axios.post(
         url,
@@ -228,14 +224,26 @@ export default function SignUpScreen() {
             <Text style={signupStyles.subWelcome}>Let’s get you started</Text>
           </View>
           <View style={signupStyles.form}>
-            {/* full name */}
+            {/* first name */}
             <AuthInput>
               <View>
-                <Text style={signupStyles.authTextLabel}>Full Name</Text>
+                <Text style={signupStyles.authTextLabel}>First Name</Text>
                 <TextInput
                   style={signupStyles.authTextInput}
-                  onChangeText={fullNameHandler}
-                  defaultValue={name}
+                  onChangeText={firstNameHandler}
+                  value={firstName}
+                />
+              </View>
+              <Text style={inputErrorStyles}></Text>
+            </AuthInput>
+             {/* last name */}
+             <AuthInput>
+              <View>
+                <Text style={signupStyles.authTextLabel}>Last Name</Text>
+                <TextInput
+                  style={signupStyles.authTextInput}
+                  onChangeText={lastNameHandler}
+                  value={lastName}
                 />
               </View>
               <Text style={inputErrorStyles}></Text>
@@ -248,7 +256,7 @@ export default function SignUpScreen() {
                   keyboardType="email-address"
                   style={signupStyles.authTextInput}
                   onChangeText={emailChangeHandler}
-                  defaultValue={email}
+                  value={email}
                 />
               </View>
               <Text style={inputErrorStyles}>{emailError}</Text>
@@ -258,7 +266,7 @@ export default function SignUpScreen() {
               <View>
                 <Text style={signupStyles.authTextLabel}>Phone Number</Text>
                 <PhoneInput
-                  // defaultValue={phoneNo}
+                  // value={phoneNo}
                   autoFormat={true}
                   initialCountry={"us"}
                   initialValue="234"
@@ -295,7 +303,7 @@ export default function SignUpScreen() {
                     secureTextEntry={showPassword}
                     style={signupStyles.authTextInputP}
                     onChangeText={passwordChangeHandler}
-                    defaultValue={password}
+                    value={password}
                   />
                   <TouchableOpacity
                     onPress={() => setShowPassword(!showPassword)}
@@ -315,7 +323,7 @@ export default function SignUpScreen() {
                     secureTextEntry={showCpassword}
                     style={signupStyles.authTextInputP}
                     onChangeText={(newcPassword) => setCpassword(newcPassword)}
-                    defaultValue={cpassword}
+                    value={cpassword}
                   />
                   <TouchableOpacity
                     onPress={() => setShowCpassword(!showCpassword)}

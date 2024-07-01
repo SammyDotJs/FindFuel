@@ -13,7 +13,7 @@ export default function AuthButton(props) {
       buttonStyle={{
         backgroundColor: props.backgroundColor,
         width: wp(90),
-        borderRadius: 20,
+        borderRadius: 23,
         color: props.color,
         borderWidth: props.borderWidth,
         borderColor: props.borderColor,

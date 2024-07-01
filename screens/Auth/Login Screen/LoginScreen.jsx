@@ -94,6 +94,9 @@ export default function LoginScreen(props) {
     } catch (error) {
       console.error("Error sending data:", error);
       setLoginFailedModalVisible(true);
+      setTimeout(() => {
+      setLoginFailedModalVisible(false);
+      }, 2000);
     } finally {
       setIsLoading(false);
     }
@@ -165,7 +168,7 @@ export default function LoginScreen(props) {
                   onBlur={customEmailOnBlur}
                   style={loginStyles.authTextInput}
                   onChangeText={(mail) => emailChangeHandler(mail)}
-                  defaultValue={email}
+                  value={email}
                   keyboardType="email-address"
                 />
               </View>
@@ -191,7 +194,7 @@ export default function LoginScreen(props) {
                     secureTextEntry={showPassword}
                     style={loginStyles.authTextInputP}
                     onChangeText={(pass) => passwordChangeHandler(pass)}
-                    defaultValue={password}
+                    value={password}
                     keyboardType="password"
                   />
                   <TouchableOpacity
