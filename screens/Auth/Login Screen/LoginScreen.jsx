@@ -8,7 +8,7 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { theme } from "../../../infrastructure/theme";
 import AuthButton from "../../../components/AuthButton";
@@ -72,8 +72,12 @@ export default function LoginScreen(props) {
   const { setLoggedDetails } = useContext(UserContext);
 
   const handleLogin = async () => {
+    setTimeout(() => {
+      setLoginSuccessModalVisible(true);
+    }, 2000);
+
     setIsLoading(true);
-    const url = "http://8569-105-112-113-222.ngrok-free.app/api/auth/login/";
+    const url = "http://possible-gar-partially.ngrok-free.app/api/auth/login/";
     try {
       const response = await axios.post(
         url,
@@ -88,14 +92,17 @@ export default function LoginScreen(props) {
         }
       );
       console.log("Data sent successfully! Response:", response.data);
-      response.data.user && setLoginSuccessModalVisible(true);
+      response.data.user &&
+        setTimeout(() => {
+          setLoginSuccessModalVisible(true);
+        }, 2000);
       setLoggedDetails(response.data);
       response.data.user ? navigation.navigate("Tabs") : console.log("null");
     } catch (error) {
       console.error("Error sending data:", error);
       setLoginFailedModalVisible(true);
       setTimeout(() => {
-      setLoginFailedModalVisible(false);
+        setLoginFailedModalVisible(false);
       }, 2000);
     } finally {
       setIsLoading(false);
@@ -129,6 +136,10 @@ export default function LoginScreen(props) {
   const passwordChangeHandler = (pass) => {
     setPassword(pass);
   };
+
+  // useEffect(() => {
+  //   setLoginSuccessModalVisible(true);
+  // }, []);
 
   return isLoading ? (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

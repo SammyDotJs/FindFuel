@@ -104,6 +104,7 @@ export default function SignUpScreen() {
   const { userDetails, setDetails } = useContext(UserContext);
 
   const handleSignup = () => {
+    navigation.navigate("SignUpSuccess")
     console.log("sign up");
   };
   const handleLogin = () => {
@@ -199,6 +200,7 @@ export default function SignUpScreen() {
         }
       );
       console.log("Data sent successfully! Response:", response);
+      response.data.user.created? navigation.navigate("SignUpSuccess"):console.log("Sign Up Failed")
     } catch (error) {
       console.error("Error sending data:", error);
     }

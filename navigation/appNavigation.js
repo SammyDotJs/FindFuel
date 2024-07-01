@@ -11,6 +11,7 @@ import {
   LoginScreen,
   SignUpScreen,
   OtpScreen,
+  SignUpSuccess
 } from "./index";
 import Chatbot from "../screens/Tabs/Chatbot/Chatbot.jsx";
 
@@ -59,6 +60,11 @@ const AppNavigation = () => {
           name="otp"
           options={ScreenOptions}
           component={OtpScreen}
+        />
+        <Stack.Screen
+          name="SignUpSuccess"
+          options={ScreenOptions}
+          component={SignUpSuccess}
         />
         <Stack.Screen
           name="chatbot"

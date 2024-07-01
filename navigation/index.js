@@ -5,6 +5,7 @@ import AuthScreen from "../screens/AuthNavigation/AuthScreen";
 import LoginScreen from "../screens/Auth/Login Screen/LoginScreen";
 import SignUpScreen from "../screens/Auth/Signup Screen/SignUpScreen";
 import OtpScreen from "../screens/Auth/Otp Screen/OtpScreen";
+import SignUpSuccess from "../screens/Auth/SignUp Success/SignUpSuccess";
 
 export {
   OnboardingScreen,
@@ -14,4 +15,5 @@ export {
   LoginScreen,
   SignUpScreen,
   OtpScreen,
+  SignUpSuccess,
 };

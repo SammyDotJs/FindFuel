@@ -12,7 +12,7 @@ export default function AuthButton(props) {
       title={props.title}
       buttonStyle={{
         backgroundColor: props.backgroundColor,
-        width: wp(90),
+        width: props.width ? props.width : wp(90),
         borderRadius: 23,
         color: props.color,
         borderWidth: props.borderWidth,
@@ -26,8 +26,9 @@ export default function AuthButton(props) {
       titleStyle={{
         color: props.color,
         fontFamily: theme.fonts.bold,
-        fontSize: hp(2),
+        fontSize: props.fontSize ? props.fontSize : hp(2),
         fontWeight: "600",
+        paddingVertical: props.paddingVertical && hp(0.6),
       }}
       onPress={props.handleAction}
     />
